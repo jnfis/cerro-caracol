@@ -1,6 +1,7 @@
 {
  "rayadito": {
   "file": "rayadito.jpg",
+  "via": "lead",
   "source": "Aphrastura spinicauda (Thorn-tailed Rayodito).jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Aphrastura%20spinicauda%20(Thorn-tailed%20Rayodito).jpg",
   "author": "Arthur Chapman",
@@ -9,22 +10,25 @@
  },
  "comesebo": {
   "file": "comesebo.jpg",
-  "source": "White-throated Treerunner Pygarrhichas albogularis.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:White-throated%20Treerunner%20Pygarrhichas%20albogularis.jpg",
-  "author": "Richard Crawshay",
-  "license": "Public domain",
-  "licenseUrl": ""
+  "via": "search:Pygarrhichas albogularis",
+  "source": "White-throated Treerummer (Pygarrhichas albogularis) (15774411279) (cropped).jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:White-throated%20Treerummer%20(Pygarrhichas%20albogularis)%20(15774411279)%20(cropped).jpg",
+  "author": "Dominic Sherony",
+  "license": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
  },
  "picaflor-chico": {
   "file": "picaflor-chico.jpg",
-  "source": "Sephanoides sephaniodes 184078939.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Sephanoides%20sephaniodes%20184078939.jpg",
-  "author": "Diego Almendras G.",
-  "license": "CC BY 4.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+  "via": "lead",
+  "source": "Green-backed firecrown (Sephanoides sephaniodes) female Tricao.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Green-backed%20firecrown%20(Sephanoides%20sephaniodes)%20female%20Tricao.jpg",
+  "author": "Charles J. Sharp",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "colilarga": {
   "file": "colilarga.jpg",
+  "via": "search:Sylviorthorhynchus desmursii",
   "source": "Sylviorthorhynchus desmursii 1849.jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Sylviorthorhynchus%20desmursii%201849.jpg",
   "author": "Marc Athanase Parfait Œillet Des Murs (1804-1878)",
@@ -33,30 +37,34 @@
  },
  "viudita": {
   "file": "viudita.jpg",
-  "source": "Myiopagis cotta 1.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Myiopagis%20cotta%201.jpg",
-  "author": "dominic sherony",
-  "license": "CC BY-SA 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+  "via": "search:Colorhamphus parvirostris",
+  "source": "Viudita (Colorhamphus parvirostris)-4056-1500px-Ignacio-Azocar.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Viudita%20(Colorhamphus%20parvirostris)-4056-1500px-Ignacio-Azocar.jpg",
+  "author": "Quimico2014",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "carpinterito": {
   "file": "carpinterito.jpg",
-  "source": "Striped Woodpecker.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Striped%20Woodpecker.jpg",
-  "author": "Ben Tubby",
-  "license": "CC BY 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+  "via": "lead",
+  "source": "Striped woodpecker (Picoides lignarius) - Torres del Paine National Park 08.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Striped%20woodpecker%20(Picoides%20lignarius)%20-%20Torres%20del%20Paine%20National%20Park%2008.jpg",
+  "author": "Thomas Fuhrmann",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "hued-hued": {
   "file": "hued-hued.jpg",
-  "source": "HylactesCastaneusSmit.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:HylactesCastaneusSmit.jpg",
-  "author": "Joseph Smit",
-  "license": "Public domain",
-  "licenseUrl": ""
+  "via": "search:Pteroptochos castaneus",
+  "source": "Hued Hued Castaño, Refugio Cayala 28feb16.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Hued%20Hued%20Casta%C3%B1o%2C%20Refugio%20Cayala%2028feb16.jpg",
+  "author": "Gabriel Barrera Maffioletti",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "cometocino": {
   "file": "cometocino.jpg",
+  "via": "lead",
   "source": "Phrygilus patagonicus, Santa Cruz, Argentina 1.jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Phrygilus%20patagonicus%2C%20Santa%20Cruz%2C%20Argentina%201.jpg",
   "author": "Calyponte",
@@ -65,6 +73,7 @@
  },
  "concon": {
   "file": "concon.jpg",
+  "via": "lead",
   "source": "Rufous-legged owl.jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Rufous-legged%20owl.jpg",
   "author": "Julian Tysoe",
@@ -73,118 +82,133 @@
  },
  "turca": {
   "file": "turca.jpg",
-  "source": "Pteroptochos megapodius.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Pteroptochos%20megapodius.jpg",
-  "author": "Alastair Rae from London, United Kingdom",
-  "license": "CC BY-SA 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+  "via": "lead",
+  "source": "Pteroptochos megapodius 188366152.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Pteroptochos%20megapodius%20188366152.jpg",
+  "author": "Juan Rodolfo Lillo Lobos",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
  },
  "tiuque": {
   "file": "tiuque.jpg",
-  "source": "Milvago chimango -Rio Grande, Rio Grande do Sul, Brazil-8.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Milvago%20chimango%20-Rio%20Grande%2C%20Rio%20Grande%20do%20Sul%2C%20Brazil-8.jpg",
-  "author": "Cláudio Dias Timm from Rio Grande do Sul",
-  "license": "CC BY-SA 2.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+  "via": "lead",
+  "source": "Chimango caracara (Daptrius chimango temucoensis) female Puerto Varas.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Chimango%20caracara%20(Daptrius%20chimango%20temucoensis)%20female%20Puerto%20Varas.jpg",
+  "author": "Charles J. Sharp",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "zorzal": {
   "file": "zorzal.jpg",
-  "source": "Austral Thrush - Turdus falcklandii magellanicus.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Austral%20Thrush%20-%20Turdus%20falcklandii%20magellanicus.jpg",
-  "author": "No machine-readable author provided. Gvasquez assumed (based on copyright claims).",
-  "license": "CC BY-SA 2.5",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5"
+  "via": "lead",
+  "source": "Austral thrush (Turdus falcklandii magellanicus) Leona Amarga.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Austral%20thrush%20(Turdus%20falcklandii%20magellanicus)%20Leona%20Amarga.jpg",
+  "author": "Charles J. Sharp",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "monito-del-monte": {
   "file": "monito-del-monte.jpg",
-  "source": "Dromiciops gliroides.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Dromiciops%20gliroides.jpg",
-  "author": "Drawn by Dixi from pl.wikipedia",
-  "license": "CC BY-SA 3.0",
-  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+  "via": "search:Dromiciops gliroides",
+  "source": "Dromiciops gliroides 26803915.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Dromiciops%20gliroides%2026803915.jpg",
+  "author": "Romi Galeota Lencina",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
  },
  "guina": {
   "file": "guina.jpg",
-  "source": "Guigna 2.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Guigna%202.jpg",
-  "author": "Lycaon.cl",
-  "license": "CC BY-SA 3.0",
-  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+  "via": "lead",
+  "source": "Leopardus guigna.jpeg",
+  "url": "https://commons.wikimedia.org/wiki/File:Leopardus%20guigna.jpeg",
+  "author": "Mauro Tammone",
+  "license": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
  },
  "zorro-chilla": {
   "file": "zorro-chilla.jpg",
-  "source": "Lycalopex griseus (zorro). Parque nacional Pan de Azúcar. Región de Atacama. Chile.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Lycalopex%20griseus%20(zorro).%20Parque%20nacional%20Pan%20de%20Az%C3%BAcar.%20Regi%C3%B3n%20de%20Atacama.%20Chile.jpg",
-  "author": "CARLOS TEIXIDOR CADENAS",
+  "via": "lead",
+  "source": "South American grey fox (Lycalopex griseus) feeding Santa Cruz.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:South%20American%20grey%20fox%20(Lycalopex%20griseus)%20feeding%20Santa%20Cruz.jpg",
+  "author": "Charles J. Sharp",
   "license": "CC BY-SA 4.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "conejo": {
   "file": "conejo.jpg",
-  "source": "Oryctolagus cuniculus Helsinki.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Oryctolagus%20cuniculus%20Helsinki.jpg",
-  "author": "Thermos",
-  "license": "CC BY-SA 4.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
- },
- "rana-antifaz": {
-  "file": "rana-antifaz.jpg",
-  "source": "Batrachyla teniata.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Batrachyla%20teniata.jpg",
-  "author": "Original uploader was José Grau de Puerto Montt at en.wikipedia (Original text : José Grau de Puerto Montt (talk))",
+  "via": "lead",
+  "source": "Oryctolagus cuniculus Tasmania 2.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Oryctolagus%20cuniculus%20Tasmania%202.jpg",
+  "author": "JJ Harrison (https://www.jjharrison.com.au/)",
   "license": "CC BY-SA 3.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
  },
+ "rana-antifaz": {
+  "file": "rana-antifaz.jpg",
+  "via": "lead",
+  "source": "Batrachyla taeniata 255956082 (cropped).jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Batrachyla%20taeniata%20255956082%20(cropped).jpg",
+  "author": "Inao Vasquez",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+ },
  "rana-hojarasca": {
   "file": "rana-hojarasca.jpg",
-  "source": "Eupsophus roseus.JPG",
-  "url": "https://commons.wikimedia.org/wiki/File:Eupsophus%20roseus.JPG",
+  "via": "lead",
+  "source": "Eupsophus roseus 3.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Eupsophus%20roseus%203.jpg",
   "author": "Diucón",
-  "license": "CC BY-SA 4.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
  },
  "lagartija-esbelta": {
   "file": "lagartija-esbelta.jpg",
-  "source": "Kaldari Liolaemus tenuis 01.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Kaldari%20Liolaemus%20tenuis%2001.jpg",
-  "author": "Kaldari",
-  "license": "CC0",
-  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+  "via": "lead",
+  "source": "Liolaemus Tenuis.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Liolaemus%20Tenuis.jpg",
+  "author": "Lauchaseca",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
  },
  "culebra-cola-larga": {
   "file": "culebra-cola-larga.jpg",
-  "source": "Cola larga.JPG",
-  "url": "https://commons.wikimedia.org/wiki/File:Cola%20larga.JPG",
+  "via": "lead",
+  "source": "Culebra de cola larga.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Culebra%20de%20cola%20larga.jpg",
   "author": "Lycaon.cl",
   "license": "CC BY-SA 4.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "madre-de-la-culebra": {
   "file": "madre-de-la-culebra.jpg",
-  "source": "Madre de la culebra Hualo.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Madre%20de%20la%20culebra%20Hualo.jpg",
-  "author": "Diego Alarcón",
-  "license": "CC BY-SA 3.0",
-  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
- },
- "ciervo-volante": {
-  "file": "ciervo-volante.jpg",
-  "source": "Chiasognathus grantii 1004.JPG",
-  "url": "https://commons.wikimedia.org/wiki/File:Chiasognathus%20grantii%201004.JPG",
-  "author": "Anaxibia",
+  "via": "lead",
+  "source": "Acanthinodera cumingi.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Acanthinodera%20cumingi.jpg",
+  "author": "Andrey Butko",
   "license": "CC BY-SA 3.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
  },
+ "ciervo-volante": {
+  "file": "ciervo-volante.jpg",
+  "via": "lead",
+  "source": "Chiasognathus grantii 258167419 (cropped, rotated).jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Chiasognathus%20grantii%20258167419%20(cropped%2C%20rotated).jpg",
+  "author": "Diego González",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+ },
  "pololo-verde": {
   "file": "pololo-verde.jpg",
-  "source": "Coleoptera 16 11 2010.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Coleoptera%2016%2011%202010.jpg",
-  "author": "Penarc",
+  "via": "lead",
+  "source": "Hylamorpha elegans.JPG",
+  "url": "https://commons.wikimedia.org/wiki/File:Hylamorpha%20elegans.JPG",
+  "author": "Rodrigo Fernández",
   "license": "CC BY-SA 3.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
  },
  "peorro": {
   "file": "peorro.jpg",
+  "via": "lead",
   "source": "Carabidae - Ceroglossus chilensis.jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Carabidae%20-%20Ceroglossus%20chilensis.jpg",
   "author": "Hectonichus",
@@ -193,6 +217,7 @@
  },
  "coliguacho": {
   "file": "coliguacho.jpg",
+  "via": "lead",
   "source": "Scaptia lata 11 Feb 2010 Volcan Osorno Chile.jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Scaptia%20lata%2011%20Feb%202010%20Volcan%20Osorno%20Chile.jpg",
   "author": "Jason Quinn and Anna Iwanicka",
@@ -201,14 +226,16 @@
  },
  "chicharra": {
   "file": "chicharra.jpg",
-  "source": "Chicharra común, Tettigades chilensis - panoramio.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Chicharra%20com%C3%BAn%2C%20Tettigades%20chilensis%20-%20panoramio.jpg",
-  "author": "^ozo^",
-  "license": "CC BY 3.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+  "via": "search:Tettigades chilensis",
+  "source": "Tettigades chilensis (27867174594).jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Tettigades%20chilensis%20(27867174594).jpg",
+  "author": "Pato Novoa from Valparaíso, Chile",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
  },
  "abejorro-chileno": {
   "file": "abejorro-chileno.jpg",
+  "via": "lead",
   "source": "Bombus dahlbomii.jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Bombus%20dahlbomii.jpg",
   "author": "Pato Novoa",
@@ -217,22 +244,25 @@
  },
  "chinita": {
   "file": "chinita.jpg",
-  "source": "Eriopis connexa lateral.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Eriopis%20connexa%20lateral.jpg",
-  "author": "Caroline Harding, MAF",
-  "license": "CC BY 3.0 au",
-  "licenseUrl": "https://creativecommons.org/licenses/by/3.0/au/deed.en"
+  "via": "lead",
+  "source": "Eriopis connexa 164468668.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Eriopis%20connexa%20164468668.jpg",
+  "author": "Facundo Chieffo",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
  },
  "arana-pollito": {
   "file": "arana-pollito.jpg",
-  "source": "Grammostola rosea 2.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Grammostola%20rosea%202.jpg",
-  "author": "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is included in the section entitled GNU Free Documentation License.http://www.gnu.org/copyleft/fdl.htmlGFDLGNU Free Documentation Licensetruetrue This file is licensed under the Creative Commons Attribution-Share Alike 3.0 Unported license. You are free: to share – to copy, distribute and transmit the work to remix – to adapt the work Under the following conditions: attribution – You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. share alike – If you remix, transform, or build upon the material, you must distribute your contributions under the same or compatible license as the original. This licensing tag was added to this file as part of the GFDL licensing update.http://creativecommons.org/licenses/by-sa/3.0/CC BY-SA 3.0Creative Commons Attribution-Share Alike 3.0truetrue",
+  "via": "lead",
+  "source": "Grammostola cf. porteri adult male.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Grammostola%20cf.%20porteri%20adult%20male.jpg",
+  "author": "Viki",
   "license": "CC BY-SA 3.0",
   "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
  },
  "arana-del-boldo": {
   "file": "arana-del-boldo.jpg",
+  "via": "lead",
   "source": "Molinaranea clymene (hembra). Individuo nº2 (15320577745).jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Molinaranea%20clymene%20(hembra).%20Individuo%20n%C2%BA2%20(15320577745).jpg",
   "author": "Agustín Amenabar L. from Santiago, Chile",
@@ -240,39 +270,44 @@
   "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
  },
  "peumo": {
-  "file": "peumo.png",
-  "source": "Cryptocarya.PNG",
-  "url": "https://commons.wikimedia.org/wiki/File:Cryptocarya.PNG",
-  "author": "Penarc",
-  "license": "CC BY-SA 3.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  "file": "peumo.jpg",
+  "via": "lead",
+  "source": "Cryptocarya alba 1w.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Cryptocarya%20alba%201w.jpg",
+  "author": "Consultaplantas",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "boldo": {
   "file": "boldo.jpg",
-  "source": "Peumus boldus - Köhler–s Medizinal-Pflanzen-104.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Peumus%20boldus%20-%20K%C3%B6hler%E2%80%93s%20Medizinal-Pflanzen-104.jpg",
-  "author": "Franz Eugen Köhler, Köhler's Medizinal-Pflanzen",
-  "license": "Public domain",
-  "licenseUrl": ""
+  "via": "search:Peumus boldus",
+  "source": "Peumus boldus kz1.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Peumus%20boldus%20kz1.jpg",
+  "author": "Krzysztof Ziarnek, Kenraiz",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "quillay": {
   "file": "quillay.jpg",
-  "source": "Quillaja saponaria - Köhler–s Medizinal-Pflanzen-119.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Quillaja%20saponaria%20-%20K%C3%B6hler%E2%80%93s%20Medizinal-Pflanzen-119.jpg",
-  "author": "Franz Eugen Köhler, Köhler's Medizinal-Pflanzen",
-  "license": "Public domain",
-  "licenseUrl": ""
+  "via": "search:Quillaja saponaria",
+  "source": "Quillaja saponaria kz01.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Quillaja%20saponaria%20kz01.jpg",
+  "author": "Krzysztof Ziarnek, Kenraiz",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "arrayan": {
   "file": "arrayan.jpg",
-  "source": "Luma apiculata-Arrayán (flor).JPG",
-  "url": "https://commons.wikimedia.org/wiki/File:Luma%20apiculata-Array%C3%A1n%20(flor).JPG",
-  "author": "Lin linao",
-  "license": "Public domain",
-  "licenseUrl": ""
+  "via": "lead",
+  "source": "Luma apiculata 2019.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Luma%20apiculata%202019.jpg",
+  "author": "Aeveraal",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "roble-hualle": {
   "file": "roble-hualle.jpg",
+  "via": "lead",
   "source": "Roble (Nothofagus obliqua).JPG",
   "url": "https://commons.wikimedia.org/wiki/File:Roble%20(Nothofagus%20obliqua).JPG",
   "author": "Diucón",
@@ -281,6 +316,7 @@
  },
  "rauli": {
   "file": "rauli.jpg",
+  "via": "lead",
   "source": "Nothofagus alpina, Raulí by Pato Novoa.jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Nothofagus%20alpina%2C%20Raul%C3%AD%20by%20Pato%20Novoa.jpg",
   "author": "Pato Novoa",
@@ -289,6 +325,7 @@
  },
  "lingue": {
   "file": "lingue.jpg",
+  "via": "lead",
   "source": "Persea lingue.JPG",
   "url": "https://commons.wikimedia.org/wiki/File:Persea%20lingue.JPG",
   "author": "User:Daga",
@@ -297,6 +334,7 @@
  },
  "olivillo": {
   "file": "olivillo.jpg",
+  "via": "search:Aextoxicon punctatum",
   "source": "Abtao-Parque Nacional Chiloé.jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Abtao-Parque%20Nacional%20Chilo%C3%A9.jpg",
   "author": "No machine-readable author provided. Lin linao assumed (based on copyright claims).",
@@ -305,6 +343,7 @@
  },
  "canelo": {
   "file": "canelo.jpg",
+  "via": "lead",
   "source": "Drimys winteri.jpg",
   "url": "https://commons.wikimedia.org/wiki/File:Drimys%20winteri.jpg",
   "author": "Eric Hunt",
@@ -313,30 +352,34 @@
  },
  "copihue": {
   "file": "copihue.jpg",
-  "source": "Lapageria rosea1.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Lapageria%20rosea1.jpg",
-  "author": "KENPEI",
-  "license": "CC BY-SA 3.0",
-  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
- },
- "mayu": {
-  "file": "mayu.jpg",
-  "source": "Sophora macrocarpa 6 7 08 009.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Sophora%20macrocarpa%206%207%2008%20009.jpg",
-  "author": "Penarc",
+  "via": "lead",
+  "source": "Lapageria rosea - Wilhelma 01.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Lapageria%20rosea%20-%20Wilhelma%2001.jpg",
+  "author": "H. Zell",
   "license": "CC BY-SA 3.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
  },
+ "mayu": {
+  "file": "mayu.jpg",
+  "via": "lead",
+  "source": "Sophora macrocarpa (8433388439).jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Sophora%20macrocarpa%20(8433388439).jpg",
+  "author": "Dick Culbert from Gibsons, B.C., Canada",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+ },
  "pitao": {
   "file": "pitao.jpg",
-  "source": "Pitao.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Pitao.jpg",
-  "author": "Quimico2014",
+  "via": "lead",
+  "source": "Pitavia punctata in the Biobio River, Concepción Province, Chile.jpeg",
+  "url": "https://commons.wikimedia.org/wiki/File:Pitavia%20punctata%20in%20the%20Biobio%20River%2C%20Concepci%C3%B3n%20Province%2C%20Chile.jpeg",
+  "author": "Tadeoska",
   "license": "CC BY-SA 4.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
  "michay-araucano": {
   "file": "michay-araucano.jpg",
+  "via": "lead",
   "source": "Berberis negeriana, Parque Nacional Nonguén, Chiguayante, Chile Aug 27, 2023 02-46-15 PM.jpeg",
   "url": "https://commons.wikimedia.org/wiki/File:Berberis%20negeriana%2C%20Parque%20Nacional%20Nongu%C3%A9n%2C%20Chiguayante%2C%20Chile%20Aug%2027%2C%202023%2002-46-15%20PM.jpeg",
   "author": "Tadeoska",
@@ -345,34 +388,38 @@
  },
  "pino-insigne": {
   "file": "pino-insigne.jpg",
-  "source": "Resin from Pinus Radiata Stump.JPG",
-  "url": "https://commons.wikimedia.org/wiki/File:Resin%20from%20Pinus%20Radiata%20Stump.JPG",
+  "via": "search:Pinus radiata tree",
+  "source": "Pinus Radiata Resin.JPG",
+  "url": "https://commons.wikimedia.org/wiki/File:Pinus%20Radiata%20Resin.JPG",
   "author": "Tony Wills",
   "license": "CC BY 2.5",
   "licenseUrl": "https://creativecommons.org/licenses/by/2.5"
  },
  "eucalipto": {
   "file": "eucalipto.jpg",
-  "source": "Blue gum or fever tree (Eucalyptus globulus Wellcome V0043015.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Blue%20gum%20or%20fever%20tree%20(Eucalyptus%20globulus%20Wellcome%20V0043015.jpg",
-  "author": "https://wellcomeimages.org/indexplus/obf_images/e4/cf/795ae3973edd633f5f6c3e86b524.jpg Gallery: https://wellcomeimages.org/indexplus/image/V0043015.html",
-  "license": "CC BY 4.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+  "via": "search:Eucalyptus globulus",
+  "source": "Eucalyptus globulus - Levada da Serra do Faial - Madeira 01.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Eucalyptus%20globulus%20-%20Levada%20da%20Serra%20do%20Faial%20-%20Madeira%2001.jpg",
+  "author": "H. Zell",
+  "license": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
  },
  "aromo": {
   "file": "aromo.jpg",
-  "source": "Acacia dealbata Garden 060407w.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Acacia%20dealbata%20Garden%20060407w.jpg",
-  "author": "Strobilomyces",
-  "license": "CC BY-SA 3.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  "via": "lead",
+  "source": "Acacia dealbata (37540484220).jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Acacia%20dealbata%20(37540484220).jpg",
+  "author": "Donald Hobern from Copenhagen, Denmark",
+  "license": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
  },
  "zarzamora": {
   "file": "zarzamora.jpg",
-  "source": "Blackberries Rubus ulmifolius2.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Blackberries%20Rubus%20ulmifolius2.jpg",
-  "author": "Simonjoan",
-  "license": "CC BY-SA 3.0",
-  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+  "via": "lead",
+  "source": "Rubus ulmifolius, flowers and buds, Vias, Hérault 01.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Rubus%20ulmifolius%2C%20flowers%20and%20buds%2C%20Vias%2C%20H%C3%A9rault%2001.jpg",
+  "author": "Christian Ferrer",
+  "license": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  }
 }
