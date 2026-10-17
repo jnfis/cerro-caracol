@@ -146,9 +146,21 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
 .chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .species{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
 .sp{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0;display:grid;grid-template-rows:auto 1fr;border-left:5px solid var(--g);min-width:0;overflow:hidden}
-.sp .ph{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--surface-2)}
+.sp .ph{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;background:var(--surface-2);cursor:zoom-in}
 .sp.noimg .ph{display:none}
-.sp-body{padding:12px;display:grid;gap:6px;align-content:start}
+.sp.noimg{grid-template-columns:1fr}
+.sp-body{padding:12px;display:grid;gap:6px;align-content:start;min-width:0}
+@media (max-width:520px){
+  .species{grid-template-columns:1fr}
+  .sp{grid-template-rows:none;grid-template-columns:136px 1fr}
+  .sp .ph{aspect-ratio:auto;height:100%;min-height:150px}
+  .sp-body{padding:10px 12px}
+}
+.lightbox{position:fixed;inset:0;z-index:20;background:rgba(10,16,12,.92);display:grid;grid-template-rows:1fr auto;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.lightbox img{max-width:100%;max-height:100%;width:auto;height:auto;margin:auto;object-fit:contain;border-radius:8px}
+.lightbox .cap{color:#e8efe4;text-align:center;font-size:.9rem;padding-top:10px}
+.lightbox .cap b{display:block;font-family:var(--font-display);font-size:1.2rem}
+.lightbox .cap small{color:#b5c3b4}
 .sp .credit{font-size:.7rem;color:var(--fg-3);margin-top:2px;overflow-wrap:anywhere}
 .sp .credit a{color:inherit}
 .sp .grp{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--fg-3)}
@@ -742,7 +754,11 @@ function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','
 function renderSpecies(g){curGroup=g;const box=$('species');box.innerHTML='';SP.filter(s=>g==='all'||s.g===g).forEach(s=>{const d=document.createElement('article');d.className='sp g-'+s.g;const cr=CREDITS[s.id];const file='img/'+(cr?cr.file:s.id+'.jpg');
   const credit=cr?'<div class="credit">Foto: '+esc(cr.author)+' · '+(cr.url?'<a href="'+esc(cr.url)+'" target="_blank" rel="noopener">'+esc(cr.license)+'</a>':esc(cr.license))+'</div>':'';
   d.innerHTML='<img class="ph" src="'+file+'" alt="'+esc(s.n)+' ('+esc(s.s)+')" loading="lazy" decoding="async"><div class="sp-body"><div class="grp">'+GNAME[s.g]+'</div><h3>'+s.n+'</h3><div class="sci">'+s.s+'</div><p>'+s.t+'</p><div class="tags">'+(s.reg?'<span class="tag reg">Registrado en el cerro</span>':'<span class="tag prob">Probable</span>')+(s.cons?'<span class="tag cons">'+s.cons+'</span>':'')+(s.exo?'<span class="tag exo">Introducida</span>':'')+'</div>'+credit+'</div>';
-  d.querySelector('img').addEventListener('error',()=>d.classList.add('noimg'));box.appendChild(d);});}
+  const im=d.querySelector('img');im.addEventListener('error',()=>d.classList.add('noimg'));im.addEventListener('click',()=>openLightbox(file,s,cr));box.appendChild(d);});}
+function openLightbox(file,s,cr){const lb=document.createElement('div');lb.className='lightbox';lb.setAttribute('role','dialog');lb.setAttribute('aria-label',s.n);
+  lb.innerHTML='<img src="'+file+'" alt="'+esc(s.n)+'"><div class="cap"><b>'+esc(s.n)+'</b><i>'+esc(s.s)+'</i>'+(cr?'<br><small>Foto: '+esc(cr.author)+' · '+esc(cr.license)+'</small>':'')+'<br><small>Toca para cerrar</small></div>';
+  const close=()=>{lb.remove();document.removeEventListener('keydown',onKey);};const onKey=e=>{if(e.key==='Escape')close();};
+  lb.addEventListener('click',close);document.addEventListener('keydown',onKey);document.body.appendChild(lb);}
 renderSpecies('all');
 fetch('img/credits.json').then(r=>r.ok?r.json():{}).then(c=>{CREDITS=c||{};renderSpecies(curGroup);}).catch(()=>{});
 $('chips').addEventListener('click',ev=>{const b=ev.target.closest('.chip');if(!b)return;document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');renderSpecies(b.dataset.g);});
