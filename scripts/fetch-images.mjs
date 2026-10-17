@@ -45,9 +45,13 @@ async function fileInfo(file, lang) {
 
 // 3) Búsqueda en Commons si el artículo no tiene imagen.
 async function commonsSearch(term) {
-  const q = await getJSON(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(term + ' filetype:bitmap')}&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url|extmetadata|mime&iiurlwidth=${WIDTH}&format=json`);
+  const q = await getJSON(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(term + ' filetype:bitmap')}&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url|extmetadata|mime&iiurlwidth=${WIDTH}&format=json`);
   const pages = q && q.query ? Object.values(q.query.pages) : [];
-  const hit = pages.find((p) => p.imageinfo && p.imageinfo[0] && /^image\/(jpeg|png)$/.test(p.imageinfo[0].mime));
+  const bad = /drawing|illustration|sketch|köhler|kohler|smit|keulemans|gould|plate|map|distribution|range|skull|specimen|museum|herbarium|\.png$|\.svg$/i;
+  const ranked = pages
+    .filter((p) => p.imageinfo && p.imageinfo[0] && p.imageinfo[0].mime === 'image/jpeg' && !bad.test(p.title))
+    .sort((a, b) => (a.index || 0) - (b.index || 0));
+  const hit = ranked[0];
   if (!hit) return null;
   return { file: hit.title.replace(/^File:/, ''), info: { ...hit.imageinfo[0], host: 'commons.wikimedia.org' } };
 }
@@ -61,13 +65,20 @@ async function download(url, dest) {
 let ok = 0, fail = 0;
 for (const sp of species) {
   const existing = credits[sp.id];
-  if (existing && !FORCE) {
+  const via = sp.search ? 'search:' + sp.search : 'lead';
+  if (existing && !FORCE && existing.via === via) {
     try { await fs.access(path.join('img', existing.file)); ok++; continue; } catch {}
   }
   const titles = [sp.title, ...(sp.alt || [])];
   let picked = null;
   try {
+    if (sp.search) {
+      // Búsqueda directa en Commons (cuando el artículo de Wikipedia trae un dibujo o una foto poco útil).
+      const s = await commonsSearch(sp.search);
+      if (s) picked = { file: s.file, info: s.info, from: 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(s.file) };
+    }
     for (const t of titles) {
+      if (picked) break;
       const lead = await leadImage(t);
       if (lead) {
         const info = await fileInfo(lead.file, lead.lang);
@@ -86,8 +97,10 @@ for (const sp of species) {
     const dest = `${sp.id}.${ext}`;
     await download(picked.info.thumburl, path.join('img', dest));
     const md = picked.info.extmetadata || {};
+    if (existing && existing.file !== dest) { try { await fs.unlink(path.join('img', existing.file)); } catch {} }
     credits[sp.id] = {
       file: dest,
+      via,
       source: picked.file,
       url: `https://${picked.info.host}/wiki/File:${encodeURIComponent(picked.file)}`,
       author: strip(md.Artist?.value) || strip(md.Credit?.value) || 'Autor no indicado',

@@ -1,49 +1,268 @@
 [
-  {"id": "rayadito", "title": "Aphrastura spinicauda"},
-  {"id": "comesebo", "title": "Pygarrhichas albogularis"},
-  {"id": "picaflor-chico", "title": "Sephanoides sephaniodes"},
-  {"id": "colilarga", "title": "Sylviorthorhynchus desmursii"},
-  {"id": "viudita", "title": "Colorhamphus parvirostris"},
-  {"id": "carpinterito", "title": "Striped woodpecker", "alt": ["Dryobates lignarius", "Veniliornis lignarius"]},
-  {"id": "hued-hued", "title": "Pteroptochos castaneus", "alt": ["Chestnut-throated huet-huet"]},
-  {"id": "cometocino", "title": "Phrygilus patagonicus", "alt": ["Patagonian sierra finch"]},
-  {"id": "concon", "title": "Strix rufipes", "alt": ["Rufous-legged owl"]},
-  {"id": "turca", "title": "Pteroptochos megapodius", "alt": ["Moustached turca"]},
-  {"id": "tiuque", "title": "Milvago chimango", "alt": ["Chimango caracara"]},
-  {"id": "zorzal", "title": "Turdus falcklandii", "alt": ["Austral thrush"]},
-  {"id": "monito-del-monte", "title": "Dromiciops gliroides", "alt": ["Monito del monte"]},
-  {"id": "guina", "title": "Leopardus guigna", "alt": ["Kodkod"]},
-  {"id": "zorro-chilla", "title": "Lycalopex griseus", "alt": ["South American gray fox"]},
-  {"id": "conejo", "title": "Oryctolagus cuniculus", "alt": ["European rabbit"]},
-  {"id": "rana-antifaz", "title": "Batrachyla taeniata"},
-  {"id": "rana-hojarasca", "title": "Eupsophus roseus", "alt": ["Eupsophus"]},
-  {"id": "lagartija-esbelta", "title": "Liolaemus tenuis"},
-  {"id": "culebra-cola-larga", "title": "Philodryas chamissonis"},
-  {"id": "madre-de-la-culebra", "title": "Acanthinodera cumingii", "alt": ["Acanthinodera"]},
-  {"id": "ciervo-volante", "title": "Chiasognathus grantii", "alt": ["Chiasognathus granti"]},
-  {"id": "pololo-verde", "title": "Hylamorpha elegans"},
-  {"id": "peorro", "title": "Ceroglossus chilensis", "alt": ["Ceroglossus"]},
-  {"id": "coliguacho", "title": "Scaptia lata"},
-  {"id": "chicharra", "title": "Tettigades chilensis", "alt": ["Tettigades"]},
-  {"id": "abejorro-chileno", "title": "Bombus dahlbomii"},
-  {"id": "chinita", "title": "Eriopis connexa", "alt": ["Eriopis"]},
-  {"id": "arana-pollito", "title": "Grammostola rosea"},
-  {"id": "arana-del-boldo", "title": "Molinaranea clymene", "alt": ["Molinaranea"]},
-  {"id": "peumo", "title": "Cryptocarya alba"},
-  {"id": "boldo", "title": "Peumus boldus"},
-  {"id": "quillay", "title": "Quillaja saponaria"},
-  {"id": "arrayan", "title": "Luma apiculata"},
-  {"id": "roble-hualle", "title": "Nothofagus obliqua"},
-  {"id": "rauli", "title": "Nothofagus alpina", "alt": ["Nothofagus nervosa"]},
-  {"id": "lingue", "title": "Persea lingue"},
-  {"id": "olivillo", "title": "Aextoxicon punctatum", "alt": ["Aextoxicon"]},
-  {"id": "canelo", "title": "Drimys winteri"},
-  {"id": "copihue", "title": "Lapageria rosea", "alt": ["Lapageria"]},
-  {"id": "mayu", "title": "Sophora macrocarpa"},
-  {"id": "pitao", "title": "Pitavia punctata", "alt": ["Pitavia"]},
-  {"id": "michay-araucano", "title": "Berberis negeriana"},
-  {"id": "pino-insigne", "title": "Pinus radiata"},
-  {"id": "eucalipto", "title": "Eucalyptus globulus"},
-  {"id": "aromo", "title": "Acacia dealbata"},
-  {"id": "zarzamora", "title": "Rubus ulmifolius"}
+ {
+  "id": "rayadito",
+  "title": "Aphrastura spinicauda"
+ },
+ {
+  "id": "comesebo",
+  "title": "Pygarrhichas albogularis",
+  "search": "Pygarrhichas albogularis"
+ },
+ {
+  "id": "picaflor-chico",
+  "title": "Sephanoides sephaniodes"
+ },
+ {
+  "id": "colilarga",
+  "title": "Sylviorthorhynchus desmursii",
+  "search": "Sylviorthorhynchus desmursii"
+ },
+ {
+  "id": "viudita",
+  "title": "Colorhamphus parvirostris",
+  "search": "Colorhamphus parvirostris"
+ },
+ {
+  "id": "carpinterito",
+  "title": "Striped woodpecker",
+  "alt": [
+   "Dryobates lignarius",
+   "Veniliornis lignarius"
+  ]
+ },
+ {
+  "id": "hued-hued",
+  "title": "Pteroptochos castaneus",
+  "alt": [
+   "Chestnut-throated huet-huet"
+  ],
+  "search": "Pteroptochos castaneus"
+ },
+ {
+  "id": "cometocino",
+  "title": "Phrygilus patagonicus",
+  "alt": [
+   "Patagonian sierra finch"
+  ]
+ },
+ {
+  "id": "concon",
+  "title": "Strix rufipes",
+  "alt": [
+   "Rufous-legged owl"
+  ]
+ },
+ {
+  "id": "turca",
+  "title": "Pteroptochos megapodius",
+  "alt": [
+   "Moustached turca"
+  ]
+ },
+ {
+  "id": "tiuque",
+  "title": "Milvago chimango",
+  "alt": [
+   "Chimango caracara"
+  ]
+ },
+ {
+  "id": "zorzal",
+  "title": "Turdus falcklandii",
+  "alt": [
+   "Austral thrush"
+  ]
+ },
+ {
+  "id": "monito-del-monte",
+  "title": "Dromiciops gliroides",
+  "alt": [
+   "Monito del monte"
+  ],
+  "search": "Dromiciops gliroides"
+ },
+ {
+  "id": "guina",
+  "title": "Leopardus guigna",
+  "alt": [
+   "Kodkod"
+  ]
+ },
+ {
+  "id": "zorro-chilla",
+  "title": "Lycalopex griseus",
+  "alt": [
+   "South American gray fox"
+  ]
+ },
+ {
+  "id": "conejo",
+  "title": "Oryctolagus cuniculus",
+  "alt": [
+   "European rabbit"
+  ]
+ },
+ {
+  "id": "rana-antifaz",
+  "title": "Batrachyla taeniata"
+ },
+ {
+  "id": "rana-hojarasca",
+  "title": "Eupsophus roseus",
+  "alt": [
+   "Eupsophus"
+  ]
+ },
+ {
+  "id": "lagartija-esbelta",
+  "title": "Liolaemus tenuis"
+ },
+ {
+  "id": "culebra-cola-larga",
+  "title": "Philodryas chamissonis"
+ },
+ {
+  "id": "madre-de-la-culebra",
+  "title": "Acanthinodera cumingii",
+  "alt": [
+   "Acanthinodera"
+  ]
+ },
+ {
+  "id": "ciervo-volante",
+  "title": "Chiasognathus grantii",
+  "alt": [
+   "Chiasognathus granti"
+  ]
+ },
+ {
+  "id": "pololo-verde",
+  "title": "Hylamorpha elegans"
+ },
+ {
+  "id": "peorro",
+  "title": "Ceroglossus chilensis",
+  "alt": [
+   "Ceroglossus"
+  ]
+ },
+ {
+  "id": "coliguacho",
+  "title": "Scaptia lata"
+ },
+ {
+  "id": "chicharra",
+  "title": "Tettigades chilensis",
+  "alt": [
+   "Tettigades"
+  ],
+  "search": "Tettigades chilensis"
+ },
+ {
+  "id": "abejorro-chileno",
+  "title": "Bombus dahlbomii"
+ },
+ {
+  "id": "chinita",
+  "title": "Eriopis connexa",
+  "alt": [
+   "Eriopis"
+  ]
+ },
+ {
+  "id": "arana-pollito",
+  "title": "Grammostola rosea"
+ },
+ {
+  "id": "arana-del-boldo",
+  "title": "Molinaranea clymene",
+  "alt": [
+   "Molinaranea"
+  ]
+ },
+ {
+  "id": "peumo",
+  "title": "Cryptocarya alba"
+ },
+ {
+  "id": "boldo",
+  "title": "Peumus boldus",
+  "search": "Peumus boldus"
+ },
+ {
+  "id": "quillay",
+  "title": "Quillaja saponaria",
+  "search": "Quillaja saponaria"
+ },
+ {
+  "id": "arrayan",
+  "title": "Luma apiculata"
+ },
+ {
+  "id": "roble-hualle",
+  "title": "Nothofagus obliqua"
+ },
+ {
+  "id": "rauli",
+  "title": "Nothofagus alpina",
+  "alt": [
+   "Nothofagus nervosa"
+  ]
+ },
+ {
+  "id": "lingue",
+  "title": "Persea lingue"
+ },
+ {
+  "id": "olivillo",
+  "title": "Aextoxicon punctatum",
+  "alt": [
+   "Aextoxicon"
+  ],
+  "search": "Aextoxicon punctatum"
+ },
+ {
+  "id": "canelo",
+  "title": "Drimys winteri"
+ },
+ {
+  "id": "copihue",
+  "title": "Lapageria rosea",
+  "alt": [
+   "Lapageria"
+  ]
+ },
+ {
+  "id": "mayu",
+  "title": "Sophora macrocarpa"
+ },
+ {
+  "id": "pitao",
+  "title": "Pitavia punctata",
+  "alt": [
+   "Pitavia"
+  ]
+ },
+ {
+  "id": "michay-araucano",
+  "title": "Berberis negeriana"
+ },
+ {
+  "id": "pino-insigne",
+  "title": "Pinus radiata",
+  "search": "Pinus radiata tree"
+ },
+ {
+  "id": "eucalipto",
+  "title": "Eucalyptus globulus",
+  "search": "Eucalyptus globulus"
+ },
+ {
+  "id": "aromo",
+  "title": "Acacia dealbata"
+ },
+ {
+  "id": "zarzamora",
+  "title": "Rubus ulmifolius"
+ }
 ]
