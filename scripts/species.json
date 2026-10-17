@@ -6,17 +6,20 @@
  {
   "id": "comesebo",
   "title": "Pygarrhichas albogularis",
-  "search": "Pygarrhichas albogularis"
+  "search": "Pygarrhichas albogularis",
+  "exclude": "18\\d\\d|19[0-4]\\d|plate|lámina"
  },
  {
   "id": "picaflor-chico",
   "title": "Sephanoides sephaniodes",
-  "search": "Sephanoides sephaniodes male"
+  "search": "Sephanoides sephaniodes",
+  "exclude": "nest|egg|nido|huevo|specimen|museum|skin"
  },
  {
   "id": "colilarga",
   "title": "Sylviorthorhynchus desmursii",
-  "search": "Sylviorthorhynchus desmursii"
+  "search": "Sylviorthorhynchus desmursii",
+  "exclude": "18\\d\\d|19[0-4]\\d|plate|lámina"
  },
  {
   "id": "viudita",
@@ -221,7 +224,8 @@
   "alt": [
    "Aextoxicon"
   ],
-  "search": "Aextoxicon punctatum"
+  "search": "Aextoxicon punctatum",
+  "exclude": "Abtao|Chiloé|paisaje|landscape"
  },
  {
   "id": "canelo",
@@ -252,7 +256,8 @@
  {
   "id": "pino-insigne",
   "title": "Pinus radiata",
-  "search": "Pinus radiata tree"
+  "search": "Pinus radiata",
+  "exclude": "resin|resina|cone|pi.a|bark|corteza|seed|wood|timber|log|stump|needle"
  },
  {
   "id": "eucalipto",

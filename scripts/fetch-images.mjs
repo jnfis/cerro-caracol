@@ -14,27 +14,28 @@ try { credits = JSON.parse(await fs.readFile('img/credits.json', 'utf8')); } cat
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function getJSON(url) {
-  const r = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' }, redirect: 'follow' });
-  if (!r.ok) return null;
-  return r.json();
+  try {
+    const r = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' }, redirect: 'follow' });
+    if (!r.ok) return null;
+    return await r.json();
+  } catch { return null; }
 }
 const strip = (html) => (html || '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+// Títulos de archivo que suelen ser dibujos, mapas, especímenes o fotos poco útiles para identificar.
+const BAD = /drawing|dibujo|illustration|ilustraci|sketch|köhler|kohler|smit|keulemans|gould|plate|lámina|map|mapa|distribution|range|skull|cráneo|specimen|museum|herbarium|\b1[0-8]\d\d\b|\b19[0-4]\d\b/i;
 
-// 1) Imagen principal del artículo de Wikipedia (en, luego es).
-async function leadImage(title) {
-  for (const lang of ['en', 'es']) {
-    const s = await getJSON(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
-    if (s && s.type !== 'disambiguation' && s.originalimage && s.originalimage.source) {
-      const file = decodeURIComponent(s.originalimage.source.split('/').pop());
-      return { file, lang, page: s.content_urls?.desktop?.page };
-    }
-  }
-  return null;
+async function summary(lang, title) {
+  const s = await getJSON(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+  return s && s.type !== 'disambiguation' ? s : null;
 }
-
-// 2) Metadatos y miniatura de un archivo, en Commons o en la wiki local.
+// Imagen representativa en Wikidata (P18) a partir del artículo.
+async function wikidataImage(qid) {
+  const c = await getJSON(`https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=${qid}&property=P18&format=json`);
+  return c?.claims?.P18?.[0]?.mainsnak?.datavalue?.value || null;
+}
+// Metadatos y miniatura de un archivo, en Commons o en la wiki local.
 async function fileInfo(file, lang) {
-  for (const host of ['commons.wikimedia.org', `${lang}.wikipedia.org`]) {
+  for (const host of ['commons.wikimedia.org', `${lang || 'en'}.wikipedia.org`]) {
     const q = await getJSON(`https://${host}/w/api.php?action=query&titles=${encodeURIComponent('File:' + file)}&prop=imageinfo&iiprop=url|extmetadata|mime&iiurlwidth=${WIDTH}&format=json`);
     const page = q && q.query && Object.values(q.query.pages)[0];
     const ii = page && page.imageinfo && page.imageinfo[0];
@@ -42,62 +43,63 @@ async function fileInfo(file, lang) {
   }
   return null;
 }
-
-// 3) Búsqueda en Commons si el artículo no tiene imagen.
+// Búsqueda en Commons, ordenada por relevancia.
 async function commonsSearch(term) {
-  const q = await getJSON(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(term + ' filetype:bitmap')}&gsrnamespace=6&gsrlimit=12&prop=imageinfo&iiprop=url|extmetadata|mime&iiurlwidth=${WIDTH}&format=json`);
+  const q = await getJSON(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(term + ' filetype:bitmap')}&gsrnamespace=6&gsrlimit=20&prop=imageinfo&iiprop=url|extmetadata|mime&iiurlwidth=${WIDTH}&format=json`);
   const pages = q && q.query ? Object.values(q.query.pages) : [];
-  const bad = /drawing|illustration|sketch|köhler|kohler|smit|keulemans|gould|plate|map|distribution|range|skull|specimen|museum|herbarium|\.png$|\.svg$/i;
-  const ranked = pages
-    .filter((p) => p.imageinfo && p.imageinfo[0] && p.imageinfo[0].mime === 'image/jpeg' && !bad.test(p.title))
-    .sort((a, b) => (a.index || 0) - (b.index || 0));
-  const hit = ranked[0];
-  if (!hit) return null;
-  return { file: hit.title.replace(/^File:/, ''), info: { ...hit.imageinfo[0], host: 'commons.wikimedia.org' } };
+  return pages.filter((p) => p.imageinfo && p.imageinfo[0]).sort((a, b) => (a.index || 0) - (b.index || 0))
+    .map((p) => ({ file: p.title.replace(/^File:/, ''), info: { ...p.imageinfo[0], host: 'commons.wikimedia.org' } }));
 }
-
 async function download(url, dest) {
   const r = await fetch(url, { headers: { 'User-Agent': UA } });
   if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url);
   await fs.writeFile(dest, Buffer.from(await r.arrayBuffer()));
 }
 
+// Candidatos en orden de preferencia. Con `search` manda la búsqueda; si no, Wikidata y el artículo.
+async function candidates(sp) {
+  const titles = [sp.title, ...(sp.alt || [])];
+  const fromSearch = [], fromWiki = [];
+  if (sp.search) fromSearch.push(...await commonsSearch(sp.search));
+  for (const t of titles) {
+    for (const lang of ['en', 'es']) {
+      const s = await summary(lang, t);
+      if (!s) continue;
+      if (s.wikibase_item) { const f = await wikidataImage(s.wikibase_item); if (f) fromWiki.push({ file: f, lang }); }
+      if (s.originalimage) fromWiki.push({ file: decodeURIComponent(s.originalimage.source.split('/').pop()), lang });
+    }
+    if (fromWiki.length) break;
+  }
+  if (!sp.search) for (const t of titles) { const r = await commonsSearch(t); if (r.length) { fromSearch.push(...r); break; } }
+  const all = sp.search ? [...fromSearch, ...fromWiki] : [...fromWiki, ...fromSearch];
+  const seen = new Set();
+  return all.filter((c) => { const k = c.file.replace(/_/g, ' '); if (seen.has(k)) return false; seen.add(k); return true; });
+}
+
 let ok = 0, fail = 0;
 for (const sp of species) {
   const existing = credits[sp.id];
-  const via = sp.search ? 'search:' + sp.search : 'lead';
+  const via = 'v2:' + (sp.search || '') + '|' + (sp.exclude || '');
   if (existing && !FORCE && existing.via === via) {
     try { await fs.access(path.join('img', existing.file)); ok++; continue; } catch {}
   }
-  const titles = [sp.title, ...(sp.alt || [])];
+  const exclude = sp.exclude ? new RegExp(sp.exclude, 'i') : null;
   let picked = null;
   try {
-    if (sp.search) {
-      // Búsqueda directa en Commons (cuando el artículo de Wikipedia trae un dibujo o una foto poco útil).
-      const s = await commonsSearch(sp.search);
-      if (s) picked = { file: s.file, info: s.info, from: 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(s.file) };
-    }
-    for (const t of titles) {
-      if (picked) break;
-      const lead = await leadImage(t);
-      if (lead) {
-        const info = await fileInfo(lead.file, lead.lang);
-        if (info && /^image\/(jpeg|png)$/.test(info.mime)) { picked = { file: lead.file, info, from: lead.page || t }; break; }
-      }
-      await sleep(150);
-    }
-    if (!picked) {
-      for (const t of titles) {
-        const s = await commonsSearch(t);
-        if (s) { picked = { file: s.file, info: s.info, from: 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(s.file) }; break; }
-      }
+    for (const c of await candidates(sp)) {
+      if (BAD.test(c.file) || (exclude && exclude.test(c.file))) continue;
+      const info = c.info || await fileInfo(c.file, c.lang);
+      if (!info || info.mime !== 'image/jpeg') continue;
+      const desc = strip(info.extmetadata?.ImageDescription?.value || '');
+      if (exclude && exclude.test(desc)) continue;
+      picked = { file: c.file, info };
+      break;
     }
     if (!picked) { console.log('SIN FOTO', sp.id); fail++; continue; }
-    const ext = picked.info.mime === 'image/png' ? 'png' : 'jpg';
-    const dest = `${sp.id}.${ext}`;
+    const dest = `${sp.id}.jpg`;
     await download(picked.info.thumburl, path.join('img', dest));
-    const md = picked.info.extmetadata || {};
     if (existing && existing.file !== dest) { try { await fs.unlink(path.join('img', existing.file)); } catch {} }
+    const md = picked.info.extmetadata || {};
     credits[sp.id] = {
       file: dest,
       via,
@@ -112,7 +114,7 @@ for (const sp of species) {
   } catch (e) {
     console.log('ERROR', sp.id, e.message); fail++;
   }
-  await sleep(250);
+  await sleep(200);
 }
 await fs.writeFile('img/credits.json', JSON.stringify(credits, null, 1));
 console.log(`\n${ok} con foto, ${fail} sin foto`);
