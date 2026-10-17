@@ -35,4 +35,6 @@ await fs.mkdir('_site', { recursive: true });
 await fs.writeFile('_site/index.html', html);
 await fs.writeFile('_site/.nojekyll', '');
 try { await fs.cp('img', '_site/img', { recursive: true }); } catch { console.log('sin carpeta img todavía'); }
+await fs.mkdir('_site/data', { recursive: true });
+for (const f of ['terrain.json', 'route.json']) { try { await fs.copyFile('data/' + f, '_site/data/' + f); } catch { console.log('falta data/' + f); } }
 console.log('_site listo');

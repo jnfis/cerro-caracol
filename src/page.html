@@ -27,6 +27,7 @@
   --shadow:0 1px 2px rgba(21,34,26,.08),0 6px 18px rgba(21,34,26,.08);
   --font-display:"Bricolage Grotesque","Avenir Next Condensed","Arial Narrow",system-ui,sans-serif;
   --font-body:"Atkinson Hyperlegible","Segoe UI",Roboto,system-ui,sans-serif;
+  --sky-1:#d6e5f1;--sky-2:#e8eee6;
   --radius:14px;
 }
 @media (prefers-color-scheme: dark){
@@ -34,14 +35,14 @@
     --bg:#0f1712;--surface:#172119;--surface-2:#1f2c22;--fg:#e8efe4;--fg-2:#b5c3b4;--fg-3:#8a9a8a;--line:#2d3b30;
     --accent:#e0a83f;--accent-ink:#1d1606;--green:#6fb27a;--green-soft:#22382a;--blue:#7fb8d9;--stone:#a3a79b;
     --ok:#5fc27a;--warn:#e3a04a;--bad:#ea7a68;--grade-1:#6fb27a;--grade-2:#e0b24a;--grade-3:#e07a66;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);color-scheme:dark;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);--sky-1:#0a1522;--sky-2:#0f1a16;color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#0f1712;--surface:#172119;--surface-2:#1f2c22;--fg:#e8efe4;--fg-2:#b5c3b4;--fg-3:#8a9a8a;--line:#2d3b30;
   --accent:#e0a83f;--accent-ink:#1d1606;--green:#6fb27a;--green-soft:#22382a;--blue:#7fb8d9;--stone:#a3a79b;
   --ok:#5fc27a;--warn:#e3a04a;--bad:#ea7a68;--grade-1:#6fb27a;--grade-2:#e0b24a;--grade-3:#e07a66;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);color-scheme:dark;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);--sky-1:#0a1522;--sky-2:#0f1a16;color-scheme:dark;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.5;margin:0;-webkit-text-size-adjust:100%}
@@ -88,7 +89,12 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
 @media (max-width:520px){.tiles{grid-template-columns:repeat(2,1fr)}}
 
 /* 3D */
-.scene{position:relative;background:var(--surface-2);aspect-ratio:4/3;max-width:100%;touch-action:none;user-select:none}
+.scene{position:relative;background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 55%,var(--bg) 100%);aspect-ratio:4/3;max-width:100%;touch-action:none;user-select:none}
+@media (max-width:520px){.scene{aspect-ratio:1/1}}
+.ctx{position:absolute;transform:translate(-50%,-50%);font-size:.66rem;letter-spacing:.07em;text-transform:uppercase;color:var(--fg-2);pointer-events:none;white-space:nowrap;text-shadow:0 0 6px var(--bg),0 0 3px var(--bg),0 0 1px var(--bg)}
+.loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--fg-2);font-size:.9rem}
+.pin.active .n{animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 55%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
 .scene canvas{display:block;width:100%;height:100%}
 .scene .labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .pin{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none}
@@ -96,7 +102,6 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
 .pin.active .n{background:var(--accent);color:var(--accent-ink)}
 .pin .t{font-size:.72rem;font-weight:700;background:var(--surface);padding:2px 7px;border-radius:6px;white-space:nowrap;box-shadow:var(--shadow);display:none}
 .pin.active .t{display:block}
-.compass{position:absolute;left:10px;bottom:10px;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);background:color-mix(in srgb,var(--surface) 80%,transparent);padding:4px 8px;border-radius:8px}
 .scene-tools{display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;border-top:1px solid var(--line);align-items:center}
 .scene-tools .spacer{flex:1}
 .hint{position:absolute;top:10px;right:10px;font-size:.72rem;color:var(--fg-2);background:color-mix(in srgb,var(--surface) 85%,transparent);padding:4px 8px;border-radius:8px}
@@ -255,42 +260,43 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
     </div>
 
     <div class="tiles" aria-label="Resumen de la ruta">
-      <div class="tile"><div class="lab">Distancia</div><div class="val">2,7 km</div><div class="sub">solo ida · 5,4 km ida y vuelta</div></div>
-      <div class="tile"><div class="lab">Desnivel</div><div class="val">+210 m</div><div class="sub">de 25 m a unos 232 m</div></div>
-      <div class="tile"><div class="lab">Tiempo familiar</div><div class="val">1 h 15</div><div class="sub">a 1 h 45 subiendo · 2,5–3 h total</div></div>
-      <div class="tile"><div class="lab">Dificultad</div><div class="val">Moderada</div><div class="sub">pendiente media 8 %, tramos de 12 %</div></div>
+      <div class="tile"><div class="lab">Distancia</div><div class="val">2,1 km</div><div class="sub">solo ida por el camino principal · 4,2 km ida y vuelta</div></div>
+      <div class="tile"><div class="lab">Desnivel</div><div class="val">+225 m</div><div class="sub">de 48 m a 240 m</div></div>
+      <div class="tile"><div class="lab">Tiempo familiar</div><div class="val">1 h 10</div><div class="sub">a 1 h 30 subiendo · 2 a 2,5 h total</div></div>
+      <div class="tile"><div class="lab">Dificultad</div><div class="val">Moderada</div><div class="sub">pendiente media 11 %, tramos de 15 a 20 %</div></div>
     </div>
 
     <div class="card flush">
       <div class="scene" id="scene">
-        <canvas id="gl" aria-label="Modelo 3D del Cerro Caracol con el sendero al Mirador Alemán"></canvas>
+        <canvas id="gl" aria-label="Modelo 3D del Cerro Caracol con el camino al Mirador Alemán"></canvas>
         <div class="labels" id="labels"></div>
         <div class="hint" id="hint">Arrastra para girar · pellizca para acercar</div>
-        <div class="compass">Ciudad y bahía ↖ · Nonguén ↘</div>
+        <div class="loading" id="loading">Cargando relieve…</div>
       </div>
       <div class="scene-tools">
         <button class="btn primary small" id="play" aria-pressed="false">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg><span id="play-label">Recorrer</span>
         </button>
-        <button class="btn small" id="view-top">Vista aérea</button>
-        <button class="btn small" id="view-reset">Vista 3D</button>
+        <button class="btn small" id="view-follow">Seguir</button>
+        <button class="btn small" id="view-top">Aérea</button>
+        <button class="btn small" id="view-reset">3D</button>
         <span class="spacer"></span>
-        <span class="muted">Relieve esquemático, altura ×1,6</span>
+        <span class="muted" id="caption">Cargando…</span>
       </div>
     </div>
 
     <div class="card">
       <div class="readout">
         <div>
-          <div class="big" id="ro-alt">25<small> m</small></div>
+          <div class="big" id="ro-alt">48<small> m</small></div>
           <div class="muted" id="ro-km">km 0,0</div>
         </div>
         <div>
           <h3 id="ro-name">Portón principal</h3>
           <div class="meta" style="margin:4px 0 6px">
             <span>Pendiente aquí <b id="ro-grade">—</b></span>
-            <span>Falta al mirador <b id="ro-left">2,7 km · +207 m</b></span>
-            <span>Tiempo estimado <b id="ro-eta">1 h 15</b></span>
+            <span>Falta al mirador <b id="ro-left">2,1 km · +225 m</b></span>
+            <span>Tiempo estimado <b id="ro-eta">1 h 10</b></span>
           </div>
           <p class="muted" id="ro-desc">Detrás de las canchas de tenis del Parque Ecuador, por Veteranos del 79 (calle Dr. Wilhelm).</p>
         </div>
@@ -299,13 +305,13 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
 
     <div class="card">
       <div class="section-title"><h2>Perfil de altura</h2><span class="muted">Toca o arrastra</span></div>
-      <svg class="profile" id="profile" viewBox="0 0 640 260" role="img" aria-label="Perfil de altura de la ruta, desde 25 metros en el portón hasta 232 metros en el Mirador Alemán"></svg>
+      <svg class="profile" id="profile" viewBox="0 0 640 260" role="img" aria-label="Perfil de altura de la ruta, desde 48 metros en el portón hasta 240 metros en el Mirador Alemán"></svg>
       <div class="legend">
-        <span><i style="background:var(--grade-1)"></i>Suave, menos de 6 %</span>
-        <span><i style="background:var(--grade-2)"></i>Moderada, 6 a 10 %</span>
-        <span><i style="background:var(--grade-3)"></i>Exigente, más de 10 %</span>
+        <span><i style="background:var(--grade-1)"></i>Suave, menos de 8 %</span>
+        <span><i style="background:var(--grade-2)"></i>Moderada, 8 a 14 %</span>
+        <span><i style="background:var(--grade-3)"></i>Exigente, más de 14 %</span>
       </div>
-      <p class="muted" style="margin-top:8px">Las cotas vienen de tracks de Wikiloc, AllTrails y Wikiexplora (mirador a 220–250 m según la fuente). La forma exacta entre hitos es una aproximación.</p>
+      <p class="muted" style="margin-top:8px">Relieve del modelo SRTM de 30 m y trazado por las vías de OpenStreetMap. Los tracks de Wikiloc y AllTrails marcan 2,5 a 2,8 km por variantes del mismo camino; la cota del mirador va de 220 a 250 m según la fuente.</p>
     </div>
 
     <div class="card">
@@ -316,12 +322,12 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
     <div class="card">
       <h2>Plan sugerido para una mañana</h2>
       <ol class="plan">
-        <li><span class="t">09:30</span><span class="d">Llegada al Parque Ecuador. Baño, agua y bloqueador. Entrar por el portón de Veteranos del 79.</span></li>
-        <li><span class="t">09:45</span><span class="d">Garita y primer tramo en caracol. Buscar rayaditos y escuchar al carpinterito en los troncos.</span></li>
-        <li><span class="t">10:15</span><span class="d">Mirador Dos: primera vista a la ciudad y colación corta. Las ruinas eran un restaurante en los años 60.</span></li>
-        <li><span class="t">10:45</span><span class="d">Anfiteatro natural y entrada al bosque. Oler una hoja de peumo y una de eucalipto y compararlas.</span></li>
-        <li><span class="t">11:15</span><span class="d">Mirador Alemán. Picnic con vista a la bahía, Talcahuano, San Pedro y el río Biobío.</span></li>
-        <li><span class="t">12:00</span><span class="d">Bajada por el mismo camino, 45 a 60 minutos. Cerrar el bingo de naturaleza abajo.</span></li>
+        <li><span class="t">09:30</span><span class="d">Llegada al Parque Ecuador. Baño, agua y bloqueador. Entrar por el portón de Veteranos del 79 y registrarse en la garita.</span></li>
+        <li><span class="t">09:40</span><span class="d">Mirador El Castillo y primeras curvas del camino de piedra. Buscar rayaditos y escuchar al carpinterito en los troncos.</span></li>
+        <li><span class="t">10:00</span><span class="d">Mirador Cerro Caracol: primera vista completa de la ciudad y colación corta. Las ruinas eran un restaurante en los años 60.</span></li>
+        <li><span class="t">10:30</span><span class="d">Bosque nativo en recuperación. Oler una hoja de peumo y una de eucalipto y compararlas; contar plantines con tutor.</span></li>
+        <li><span class="t">10:50</span><span class="d">Cumbre y Mirador Alemán. Picnic con vista a la bahía, Talcahuano, San Pedro y el río Biobío.</span></li>
+        <li><span class="t">11:45</span><span class="d">Bajada por el mismo camino, 45 minutos. Cerrar el bingo de naturaleza abajo.</span></li>
       </ol>
     </div>
 
@@ -331,6 +337,7 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
         <div><span class="k">Senderos oficiales</span><span class="v">Los Canelos, Los Olivillos, Confluencia y Los Copihues: entre <b>2 y 11 km</b>, de dificultad media-baja a alta (Revista Nos).</span></div>
         <div><span class="k">Circuito Agüita de la Perdiz</span><span class="v">Vuelta de <b>6 km</b> y +250 m por el valle del estero, saliendo por Los Aguilera. Más sombra, más barro en invierno.</span></div>
         <div><span class="k">Travesía a la UdeC</span><span class="v"><b>8,1 km</b> y +328 m: portón, Mirador Alemán y bajada por el fundo forestal hasta el estadio de la Universidad (Wikiexplora). Apta en bicicleta.</span></div>
+        <div><span class="k">Desde Agüita de la Perdiz</span><span class="v">Camino de servicio que sube desde el barrio por el costado este y se une al camino principal. Más corto para quien viene de la Universidad.</span></div>
         <div><span class="k">Manquimávida</span><span class="v">Cresta larga hacia Chiguayante, <b>15 a 17 km</b> y más de 500 m de subida acumulada. Solo para adultos entrenados.</span></div>
       </div>
     </div>
@@ -395,7 +402,7 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
         <li><div class="yr">1921</div><div><h3>Torre Bismarck</h3><p>La colonia alemana levanta en primavera el Mirador Alemán, diseñado por Roderich von Stillfried en terreno donado por Arturo Junge. Es la única Torre Bismarck de América.</p></div></li>
         <li><div class="yr">1931</div><div><h3>Parque del Cerro Amarillo</h3><p>Se inaugura por iniciativa del alcalde José Ramón Soto y su director de obras Ramón del Castillo. El Parque Ecuador consolida el borde urbano del cerro.</p></div></li>
         <li><div class="yr">1939<small>1960 · 2010</small></div><div><h3>Terremotos</h3><p>La torre, de piedra sin refuerzo metálico, pierde el segundo nivel en 1939 y queda cerrada por riesgo de derrumbe durante décadas.</p></div></li>
-        <li><div class="yr">1966<small>a 1970</small></div><div><h3>Torre Entel</h3><p>En la cumbre se levanta la torre de microondas de 70 m que enlazó el sur con Santiago tras el terremoto de 1960. Hoy es el perfil más reconocible del cerro.</p></div></li>
+        <li><div class="yr">1966<small>a 1970</small></div><div><h3>Torre Entel</h3><p>En la loma baja del cerro, sobre el Parque Ecuador, se levanta la torre de microondas de 70 m que enlazó el sur con Santiago tras el terremoto de 1960. Hoy es el perfil más reconocible del cerro.</p></div></li>
         <li><div class="yr">2015<small>aprox.</small></div><div><h3>Parque Metropolitano</h3><p>El municipio entrega 105 ha en comodato al Serviu por 20 años. Es el primer parque fuera de Santiago en la red de parques urbanos del Minvu. Se despejan miradores y se construye un anfiteatro natural junto al Mirador Alemán.</p></div></li>
         <li><div class="yr">2018<small>a 2021</small></div><div><h3>La torre vuelve</h3><p>El Club Deportivo Alemán restaura escaleras, cúpula y nave central; se reinaugura en 2019 y celebra su centenario en 2021. El acceso al interior ha variado desde entonces: pregunten en la garita.</p></div></li>
         <li><div class="yr">2019<small>en adelante</small></div><div><h3>Restauración del bosque</h3><p>Más de 7.500 árboles nativos plantados. En 2025, CONAF y FAO sumaron 1.400 raulíes, coihues, quillayes, peumos y mayus en 1,4 ha para reemplazar pinos sobremaduros.</p></div></li>
@@ -521,177 +528,239 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
 'use strict';
 /* ---------------------------------------------------------------- datos */
 const HITOS=[
-  {n:1,d:0,name:'Portón principal',desc:'Detrás de las canchas de tenis del Parque Ecuador, por Veteranos del 79 (calle Dr. Wilhelm). Baños y agua: aquí, no arriba.'},
-  {n:2,d:200,name:'Garita del parque',desc:'Registro de visitantes y comienzo del camino de maicillo. Aquí pueden preguntar si la torre está abierta.'},
-  {n:3,d:800,name:'Mirador Dos (ex Mirador Chileno)',desc:'Primera vista a la ciudad, a unos 25 minutos. Las ruinas fueron un restaurante en los años 60. Buen punto de regreso con niños chicos.'},
-  {n:4,d:1300,name:'Desvío a Agüita de la Perdiz',desc:'Bifurcación: a la izquierda baja el circuito del estero; para el mirador seguir por el camino principal, a la derecha.'},
-  {n:5,d:1800,name:'Anfiteatro natural',desc:'Graderías de tierra y troncos construidas por el Minvu. Zona de pinos sobremaduros: con viento fuerte no detenerse bajo ellos.'},
-  {n:6,d:2300,name:'Entrada al bosque',desc:'El maicillo da paso a un sendero de tierra señalizado que sube entre peumos, arrayanes y eucaliptos. Es el tramo más empinado.'},
-  {n:7,d:2700,name:'Mirador Alemán (Torre Bismarck)',desc:'Torre de piedra de 1921, la única Torre Bismarck de América. Vista a la bahía, Talcahuano, San Pedro y el Biobío. Picnic aquí.'},
-  {n:8,d:3400,name:'Torre Entel (cumbre, opcional)',desc:'Cumbre del cerro, 256 m, con la torre de microondas de 70 m construida entre 1966 y 1970. Sendero más abierto y sin sombra; recinto cerrado.'}
+  {n:1,key:'porton',d:0,short:'Portón',name:'Portón principal',desc:'Detrás de las canchas de tenis del Parque Ecuador, al final de Veteranos del 79 y calle Dr. Wilhelm. Registro en la garita. Baños y agua: aquí, no arriba.'},
+  {n:2,key:'mirador_castillo',d:130,short:'Mirador El Castillo',name:'Mirador El Castillo',desc:'Primer balcón sobre el Parque Ecuador, a 5 minutos. Desde aquí el camino de piedra y maicillo empieza a subir en caracol.'},
+  {n:3,key:'mirador_cerro_caracol',d:420,short:'Mirador Cerro Caracol',name:'Mirador Cerro Caracol (Mirador Dos)',desc:'A unos 20 minutos, la primera vista completa de la ciudad. Las ruinas de al lado fueron un restaurante en los años 60. Buen punto de regreso con niños chicos.'},
+  {n:4,key:'torre_entel',d:530,short:'Desvío Torre Entel',name:'Desvío a la Torre Entel',desc:'A la derecha sale el camino a la torre de microondas de 70 m (1966–1970), en una loma de unos 160 m. Recinto cerrado; seguir por el camino principal.'},
+  {n:5,key:'bosque_nativo',d:1270,short:'Bosque nativo',name:'Bosque nativo en recuperación',desc:'Plantaciones de raulí, peumo, quillay y boldo entre pinos viejos. Buscar plantines con tutor. Con viento fuerte, no detenerse bajo los pinos.'},
+  {n:6,key:'cumbre',d:1950,short:'Cumbre',name:'Cumbre del cerro',desc:'El punto más alto del Cerro Caracol, 256 m según la carta IGM. El camino pasa junto a la cima, ya sin pendiente, entre eucaliptos y matorral.'},
+  {n:7,key:'mirador_aleman',d:2100,short:'Mirador Alemán',name:'Mirador Alemán (Torre Bismarck)',desc:'Torre de piedra de 1921, la única Torre Bismarck de América. Vista a la bahía, Talcahuano, San Pedro y el Biobío. Picnic aquí.'}
 ];
-const MIRADOR_D=2700;
 
-/* Relieve esquemático. Origen = portón. x al este, z al sur, metros. */
-function gauss(x,z,cx,cz,s,h){const dx=(x-cx)/s,dz=(z-cz)/s;return h*Math.exp(-(dx*dx+dz*dz));}
-const T0=[[0,0],[60,110],[20,230],[-90,330],[-40,460],[90,520],[230,470],[330,560],[330,700],[230,820],[280,960],[430,1030],[590,960],[660,820],[570,700],[480,640],[560,560],[700,540],[840,620],[920,760],[880,900],[800,1030],[700,1130],[620,1250]];
-const TV=[];for(let i=0;i<T0.length;i++){if(i){const a=T0[i-1],c=T0[i];const L=Math.hypot(c[0]-a[0],c[1]-a[1]);const n=Math.max(1,Math.round(L/60));for(let k=1;k<=n;k++){const t=k/n;TV.push([a[0]+(c[0]-a[0])*t,a[1]+(c[1]-a[1])*t]);}}else TV.push(T0[0]);}
-const TD=[0];for(let i=1;i<TV.length;i++)TD.push(TD[i-1]+Math.hypot(TV[i][0]-TV[i-1][0],TV[i][1]-TV[i-1][1]));
-const TOTAL=TD[TD.length-1];
-const COTAS=[[0,25],[200,38],[800,110],[1300,140],[1800,172],[2300,205],[2700,232],[3100,236],[3400,256]];
-function target(d){for(let i=1;i<COTAS.length;i++){if(d<=COTAS[i][0]){const a=COTAS[i-1],b=COTAS[i];return a[1]+(b[1]-a[1])*(d-a[0])/(b[0]-a[0]);}}return COTAS[COTAS.length-1][1];}
-function base(x,z){let e=20;e+=gauss(x,z,850,900,700,200);e+=gauss(x,z,-500,900,450,120);e+=gauss(x,z,1500,300,500,140);e-=gauss(x,z,80,1000,220,40);e+=3*Math.sin(x*0.017)*Math.cos(z*0.013)+2*Math.sin(x*0.041+z*0.029);return e;}
-const AMP=TV.map(()=>0),SIG=110;
-function elev(x,z){let e=base(x,z);for(let i=0;i<TV.length;i++)e+=gauss(x,z,TV[i][0],TV[i][1],SIG,AMP[i]);return Math.max(12,e);}
-for(let it=0;it<60;it++)for(let i=0;i<TV.length;i++)AMP[i]+=0.7*(target(TD[i])-elev(TV[i][0],TV[i][1]));
-
-/* Muestras del sendero cada 10 m */
-const STEP=10;const S=[];
-(function(){let acc=0;for(let i=1;i<TV.length;i++){const a=TV[i-1],b=TV[i];const L=Math.hypot(b[0]-a[0],b[1]-a[1]);const n=Math.max(1,Math.round(L/STEP));for(let k=(i===1?0:1);k<=n;k++){const t=k/n;const x=a[0]+(b[0]-a[0])*t,z=a[1]+(b[1]-a[1])*t;const d=TD[i-1]+L*t;S.push({d,x,z,e:elev(x,z)});}}})();
-function at(d){d=Math.max(0,Math.min(TOTAL,d));let i=Math.min(S.length-2,Math.floor(d/STEP));while(i<S.length-2&&S[i+1].d<d)i++;while(i>0&&S[i].d>d)i--;const a=S[i],b=S[i+1];const t=(d-a.d)/Math.max(1e-6,b.d-a.d);return {d,x:a.x+(b.x-a.x)*t,z:a.z+(b.z-a.z)*t,e:a.e+(b.e-a.e)*t};}
-function grade(d){const w=60;const a=at(d-w),b=at(d+w);return (b.e-a.e)/Math.max(1,b.d-a.d);}
-function gradeClass(g){g=Math.abs(g);return g<0.06?1:g<0.10?2:3;}
-function gain(d0,d1){let g=0;for(let d=d0+STEP;d<=d1;d+=STEP){const de=at(d).e-at(d-STEP).e;if(de>0)g+=de;}return g;}
+/* ---------------------------------------------------------------- modelo del terreno y la ruta */
+const VX=1.5;            /* exageración vertical */
+let S=[],TOTAL=1,MIRADOR_D=1,MODEL=null,GRID=null;
+function at(d){d=Math.max(0,Math.min(TOTAL,d));let lo=0,hi=S.length-1;while(hi-lo>1){const m=(lo+hi)>>1;if(S[m].d<=d)lo=m;else hi=m;}const a=S[lo],b=S[Math.min(S.length-1,lo+1)];const t=(d-a.d)/Math.max(1e-6,b.d-a.d);return {d,x:a.x+(b.x-a.x)*t,z:a.z+(b.z-a.z)*t,e:a.e+(b.e-a.e)*t};}
+function grade(d){const w=80;const a=at(d-w),b=at(d+w);return (b.e-a.e)/Math.max(1,b.d-a.d);}
+function gradeClass(g){g=Math.abs(g);return g<0.08?1:g<0.14?2:3;}
+function gain(d0,d1){let g=0;for(let d=d0+10;d<=d1;d+=10){const de=at(d).e-at(d-10).e;if(de>0)g+=de;}return g;}
 function fmtKm(m){return (m/1000).toFixed(1).replace('.',',');}
 function fmtTime(min){min=Math.round(min);if(min<60)return min+' min';const h=Math.floor(min/60),m=min%60;return h+' h '+(m<10?'0':'')+m;}
-function etaMin(d0,d1){const dist=Math.max(0,d1-d0),g=gain(d0,d1);return dist/3000*60+g/500*60;} /* 3 km/h + 500 m/h de subida, ritmo familiar */
+function etaMin(d0,d1){const dist=Math.max(0,d1-d0),g=gain(d0,d1);return dist/3000*60+g/450*60;} /* 3 km/h + 450 m/h de subida, ritmo familiar */
+function gridH(x,z){const g=GRID;if(!g)return 0;const fi=(x-g.x0)/g.dx,fj=(z-g.z0)/g.dz;const i=Math.max(0,Math.min(g.cols-2,Math.floor(fi))),j=Math.max(0,Math.min(g.rows-2,Math.floor(fj)));const a=Math.max(0,Math.min(1,fi-i)),b=Math.max(0,Math.min(1,fj-j));const h=g.h,c=g.cols;return (h[j*c+i]*(1-a)+h[j*c+i+1]*a)*(1-b)+(h[(j+1)*c+i]*(1-a)+h[(j+1)*c+i+1]*a)*b;}
+
+/* Relieve real (SRTM, tiles Terrarium) + ruta por vías de OpenStreetMap, preparados en data/. */
+function buildFromData(t,r){
+  const bin=atob(t.z);const u8=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u8[i]=bin.charCodeAt(i);const u16=new Uint16Array(u8.buffer);
+  const h=new Float32Array(u16.length);for(let i=0;i<u16.length;i++)h[i]=u16[i]/10;
+  const x0=(t.lon0-r.origin.lon)*r.mx,dx=(t.lon1-t.lon0)*r.mx/(t.cols-1);const z0=-(t.lat1-r.origin.lat)*r.my,dz=(t.lat1-t.lat0)*r.my/(t.rows-1);
+  GRID={cols:t.cols,rows:t.rows,x0,z0,dx,dz,h};
+  S=r.points.map(p=>({x:p[0],z:p[1],e:p[2],d:p[3]}));TOTAL=r.total;MIRADOR_D=r.mirador;
+  HITOS.forEach(hh=>{if(r.hitos[hh.key]!=null)hh.d=r.hitos[hh.key];});
+  MODEL={lines:r.lines,labels:r.labels,real:true};
+}
+/* Respaldo esquemático si los datos no cargan. */
+function buildSchematic(){
+  const gauss=(x,z,cx,cz,s,hh)=>{const dx=(x-cx)/s,dz=(z-cz)/s;return hh*Math.exp(-(dx*dx+dz*dz));};
+  const T0=[[0,0],[60,110],[20,230],[-90,330],[-40,460],[90,520],[230,470],[330,560],[330,700],[230,820],[280,960],[430,1030],[590,960],[660,820],[570,700],[480,640],[560,560],[700,540],[840,620],[920,760]];
+  const TV=[];for(let i=0;i<T0.length;i++){if(i){const a=T0[i-1],c=T0[i];const L=Math.hypot(c[0]-a[0],c[1]-a[1]);const n=Math.max(1,Math.round(L/60));for(let k=1;k<=n;k++){const t=k/n;TV.push([a[0]+(c[0]-a[0])*t,a[1]+(c[1]-a[1])*t]);}}else TV.push(T0[0]);}
+  const TD=[0];for(let i=1;i<TV.length;i++)TD.push(TD[i-1]+Math.hypot(TV[i][0]-TV[i-1][0],TV[i][1]-TV[i-1][1]));
+  const total=TD[TD.length-1];const COTAS=[[0,45],[130,60],[420,105],[530,120],[1270,160],[1950,245],[total,240]];
+  const target=d=>{for(let i=1;i<COTAS.length;i++){if(d<=COTAS[i][0]){const a=COTAS[i-1],b=COTAS[i];return a[1]+(b[1]-a[1])*(d-a[0])/(b[0]-a[0]);}}return COTAS[COTAS.length-1][1];};
+  const base=(x,z)=>20+gauss(x,z,850,900,700,200)+gauss(x,z,-500,900,450,120)+gauss(x,z,1500,300,500,140)-gauss(x,z,80,1000,220,40)+3*Math.sin(x*0.017)*Math.cos(z*0.013);
+  const AMP=TV.map(()=>0);const elev=(x,z)=>{let e=base(x,z);for(let i=0;i<TV.length;i++)e+=gauss(x,z,TV[i][0],TV[i][1],110,AMP[i]);return Math.max(5,e);};
+  for(let it=0;it<50;it++)for(let i=0;i<TV.length;i++)AMP[i]+=0.7*(target(TD[i])-elev(TV[i][0],TV[i][1]));
+  const cols=120,rows=120,x0=-1500,z0=-1200,dx=3000/(cols-1),dz=3000/(rows-1);const h=new Float32Array(cols*rows);
+  for(let j=0;j<rows;j++)for(let i=0;i<cols;i++)h[j*cols+i]=elev(x0+i*dx,z0+j*dz);
+  GRID={cols,rows,x0,z0,dx,dz,h};S=[];
+  for(let i=1;i<TV.length;i++){const a=TV[i-1],b=TV[i];const L=Math.hypot(b[0]-a[0],b[1]-a[1]);const n=Math.max(1,Math.round(L/10));for(let k=(i===1?0:1);k<=n;k++){const t=k/n;const x=a[0]+(b[0]-a[0])*t,z=a[1]+(b[1]-a[1])*t;S.push({d:TD[i-1]+L*t,x,z,e:gridH(x,z)});}}
+  TOTAL=total;MIRADOR_D=total;const fr=[0,130,420,530,1270,1950,total];HITOS.forEach((hh,i)=>hh.d=Math.min(total,fr[i]||0));
+  MODEL={lines:[],labels:[],real:false};
+}
+async function loadModel(){
+  try{const [t,r]=await Promise.all([fetch('data/terrain.json'),fetch('data/route.json')]);if(!t.ok||!r.ok)throw new Error('sin datos');buildFromData(await t.json(),await r.json());}
+  catch(e){buildSchematic();}
+}
 
 /* ------------------------------------------------------------- estado */
 let cur=0;let playing=false;let hitoIdx=0;
 const $=id=>document.getElementById(id);
 function nearestHito(d){let best=0;for(let i=0;i<HITOS.length;i++){if(HITOS[i].d<=d+1)best=i;}return best;}
-function setPos(d,fromUser){cur=Math.max(0,Math.min(TOTAL,d));const p=at(cur);const g=grade(cur);hitoIdx=nearestHito(cur);
+function setPos(d){cur=Math.max(0,Math.min(TOTAL,d));const p=at(cur);const g=grade(cur);hitoIdx=nearestHito(cur);
   $('ro-alt').innerHTML=Math.round(p.e)+'<small> m</small>';$('ro-km').textContent='km '+fmtKm(cur);
   const h=HITOS[hitoIdx];const nextH=HITOS[hitoIdx+1];
-  $('ro-name').textContent=(Math.abs(cur-h.d)<40)?h.name:'Entre '+h.name.replace(/ \(.*\)/,'')+' y '+(nextH?nextH.name.replace(/ \(.*\)/,''):'la cumbre');
+  $('ro-name').textContent=(Math.abs(cur-h.d)<40||!nextH)?h.name:'Entre '+h.short+' y '+nextH.short;
   $('ro-desc').textContent=h.desc;
   const gp=Math.round(g*100);const gc=gradeClass(g);
   $('ro-grade').innerHTML=(gp>0?'+':'')+gp+' % <span class="grade-pill"><i style="background:var(--grade-'+gc+')"></i>'+(gc===1?'suave':gc===2?'moderada':'exigente')+'</span>';
-  if(cur<MIRADOR_D){$('ro-left').textContent=fmtKm(MIRADOR_D-cur)+' km · +'+Math.round(gain(cur,MIRADOR_D))+' m';$('ro-eta').textContent=fmtTime(etaMin(cur,MIRADOR_D));}
-  else if(cur<TOTAL-20){$('ro-left').textContent='a la cumbre '+fmtKm(TOTAL-cur)+' km';$('ro-eta').textContent=fmtTime(etaMin(cur,TOTAL));}
-  else{$('ro-left').textContent='cumbre';$('ro-eta').textContent='bajada 60 a 75 min';}
+  if(cur<TOTAL-15){$('ro-left').textContent=fmtKm(TOTAL-cur)+' km · +'+Math.round(gain(cur,TOTAL))+' m';$('ro-eta').textContent=fmtTime(etaMin(cur,TOTAL));}
+  else{$('ro-left').textContent='llegaste';$('ro-eta').textContent='bajada 45 a 60 min';}
   document.querySelectorAll('.hito-btn').forEach((b,i)=>b.setAttribute('aria-current',i===hitoIdx?'true':'false'));
-  updateProfileCursor();updateHiker();
+  updateProfileCursor();hikerPos=p;if(fallback)fallback.draw();
 }
 
 /* ------------------------------------------------------------- hitos */
-(function(){const ol=$('hitos');HITOS.forEach((h,i)=>{const li=document.createElement('li');const e=at(h.d);
+function buildHitos(){const ol=$('hitos');ol.innerHTML='';HITOS.forEach((h,i)=>{const li=document.createElement('li');const e=at(h.d);
   li.innerHTML='<button class="hito-btn" type="button" aria-current="false"><span class="n">'+h.n+'</span><span><span class="name">'+h.name+'</span><div class="desc">'+h.desc+'</div></span><span class="stat"><b>'+Math.round(e.e)+' m</b>km '+fmtKm(h.d)+'<br>'+(h.d?fmtTime(etaMin(0,h.d)):'inicio')+'</span></button>';
-  li.querySelector('button').addEventListener('click',()=>{stopPlay();setPos(h.d,true);$('scene').scrollIntoView({behavior:'smooth',block:'nearest'});});ol.appendChild(li);});})();
+  li.querySelector('button').addEventListener('click',()=>{stopPlay();setPos(h.d);$('scene').scrollIntoView({behavior:'smooth',block:'nearest'});});ol.appendChild(li);});}
 
 /* ------------------------------------------------------------- perfil */
 const PW=640,PH=260,PL=44,PR=16,PT=30,PB=36;
-const EMIN=0,EMAX=280;
+let EMIN=0,EMAX=280;
 const px=d=>PL+(d/TOTAL)*(PW-PL-PR), py=e=>PT+(1-(e-EMIN)/(EMAX-EMIN))*(PH-PT-PB);
 let profCursor,profCursorDot,profCursorLab;
-(function(){const svg=$('profile');const ns='http://www.w3.org/2000/svg';const el=(t,a)=>{const n=document.createElementNS(ns,t);for(const k in a)n.setAttribute(k,a[k]);return n;};
-  for(let e=0;e<=250;e+=50){svg.appendChild(el('line',{x1:PL,x2:PW-PR,y1:py(e),y2:py(e),class:'axis'}));const t=el('text',{x:PL-6,y:py(e)+4,'text-anchor':'end'});t.textContent=e+' m';svg.appendChild(t);}
+function buildProfile(){const svg=$('profile');svg.innerHTML='';const ns='http://www.w3.org/2000/svg';const el=(t,a)=>{const n=document.createElementNS(ns,t);for(const k in a)n.setAttribute(k,a[k]);return n;};
+  const emax=Math.max(...S.map(p=>p.e));EMIN=0;EMAX=Math.ceil((emax+30)/50)*50;
+  for(let e=0;e<=EMAX-25;e+=50){svg.appendChild(el('line',{x1:PL,x2:PW-PR,y1:py(e),y2:py(e),class:'axis'}));const t=el('text',{x:PL-6,y:py(e)+4,'text-anchor':'end'});t.textContent=e+' m';svg.appendChild(t);}
   for(let d=0;d<=TOTAL;d+=500){const t=el('text',{x:px(d),y:PH-14,'text-anchor':'middle'});t.textContent=(d/1000).toFixed(1).replace('.',',')+(d===0?' km':'');svg.appendChild(t);}
   let area='M'+px(0)+' '+py(EMIN);S.forEach(p=>{area+=' L'+px(p.d).toFixed(1)+' '+py(p.e).toFixed(1);});area+=' L'+px(TOTAL)+' '+py(EMIN)+' Z';svg.appendChild(el('path',{d:area,class:'area'}));
-  /* segmentos por pendiente */
   let i=0;while(i<S.length-1){const c=gradeClass(grade(S[i].d));let j=i;let dstr='M'+px(S[i].d).toFixed(1)+' '+py(S[i].e).toFixed(1);while(j<S.length-1&&gradeClass(grade(S[j+1].d))===c){j++;dstr+=' L'+px(S[j].d).toFixed(1)+' '+py(S[j].e).toFixed(1);}if(j===i){j++;dstr+=' L'+px(S[j].d).toFixed(1)+' '+py(S[j].e).toFixed(1);}
     svg.appendChild(el('path',{d:dstr,class:'seg',stroke:'var(--grade-'+c+')'}));i=j;}
-  /* tramo opcional a la cumbre, punteado encima */
-  const opt=S.filter(p=>p.d>=MIRADOR_D);let od='';opt.forEach((p,k)=>{od+=(k?' L':'M')+px(p.d).toFixed(1)+' '+py(p.e).toFixed(1);});svg.appendChild(el('path',{d:od,fill:'none',stroke:'var(--surface)',"stroke-width":3,"stroke-dasharray":'3 7',"stroke-linecap":'round'}));
-  HITOS.forEach(h=>{const p=at(h.d);svg.appendChild(el('circle',{cx:px(h.d),cy:py(p.e),r:5,class:'hito-dot'}));const t=el('text',{x:px(h.d),y:py(p.e)-10,'text-anchor':h.n===1?'start':h.n===8?'end':'middle',class:'hito-lab'});t.textContent=h.n;svg.appendChild(t);});
+  HITOS.forEach(h=>{const p=at(h.d);svg.appendChild(el('circle',{cx:px(h.d),cy:py(p.e),r:5,class:'hito-dot'}));const t=el('text',{x:px(h.d),y:py(p.e)-10,'text-anchor':h.n===1?'start':h.n===HITOS.length?'end':'middle',class:'hito-lab'});t.textContent=h.n;svg.appendChild(t);});
   profCursor=el('line',{x1:px(0),x2:px(0),y1:PT-6,y2:PH-PB,class:'cur'});svg.appendChild(profCursor);
-  profCursorDot=el('circle',{cx:px(0),cy:py(25),r:6,fill:'var(--fg)',stroke:'var(--surface)','stroke-width':2});svg.appendChild(profCursorDot);
+  profCursorDot=el('circle',{cx:px(0),cy:py(S[0].e),r:6,fill:'var(--fg)',stroke:'var(--surface)','stroke-width':2});svg.appendChild(profCursorDot);
   profCursorLab=el('text',{x:px(0)+8,y:PT+2,class:'hito-lab'});svg.appendChild(profCursorLab);
-  const toD=ev=>{const r=svg.getBoundingClientRect();const x=(ev.clientX-r.left)/r.width*PW;return (x-PL)/(PW-PL-PR)*TOTAL;};
-  let drag=false;svg.addEventListener('pointerdown',ev=>{drag=true;svg.setPointerCapture(ev.pointerId);stopPlay();setPos(toD(ev),true);});
-  svg.addEventListener('pointermove',ev=>{if(drag)setPos(toD(ev),true);});
-  svg.addEventListener('pointerup',()=>{drag=false;});svg.addEventListener('pointercancel',()=>{drag=false;});
-})();
-function updateProfileCursor(){const p=at(cur);const x=px(cur);profCursor.setAttribute('x1',x);profCursor.setAttribute('x2',x);profCursorDot.setAttribute('cx',x);profCursorDot.setAttribute('cy',py(p.e));
+  if(!svg.dataset.wired){svg.dataset.wired='1';const toD=ev=>{const r=svg.getBoundingClientRect();const x=(ev.clientX-r.left)/r.width*PW;return (x-PL)/(PW-PL-PR)*TOTAL;};
+    let drag=false;svg.addEventListener('pointerdown',ev=>{drag=true;svg.setPointerCapture(ev.pointerId);stopPlay();setPos(toD(ev));});
+    svg.addEventListener('pointermove',ev=>{if(drag)setPos(toD(ev));});svg.addEventListener('pointerup',()=>{drag=false;});svg.addEventListener('pointercancel',()=>{drag=false;});}
+}
+function updateProfileCursor(){if(!profCursor)return;const p=at(cur);const x=px(cur);profCursor.setAttribute('x1',x);profCursor.setAttribute('x2',x);profCursorDot.setAttribute('cx',x);profCursorDot.setAttribute('cy',py(p.e));
   profCursorLab.textContent=Math.round(p.e)+' m · km '+fmtKm(cur);const flip=x>PW-150;profCursorLab.setAttribute('x',flip?x-8:x+8);profCursorLab.setAttribute('text-anchor',flip?'end':'start');}
 
-/* ------------------------------------------------------------- 3D */
-const VX=1.6;const GX0=-700,GZ0=-400,GW=2200,GN=88;
+/* ------------------------------------------------------------- 3D: mapa topográfico */
 const tokens=()=>{const cs=getComputedStyle(document.documentElement);return k=>cs.getPropertyValue(k).trim();};
-let three=null;let hikerPos=null;const labelsEl=$('labels');const pins=[];
+let hikerPos=null;const labelsEl=$('labels');const pins=[];let fallback=null;let follow=false;
 function themeIsDark(){const t=document.documentElement.getAttribute('data-theme');if(t)return t==='dark';return matchMedia('(prefers-color-scheme: dark)').matches;}
-function terrainColor(e,dark){ /* bajo: ciudad verde-gris; medio: bosque; alto: bosque claro con roca */
-  const t=Math.max(0,Math.min(1,(e-15)/245));
-  const lo=dark?[0.16,0.25,0.18]:[0.62,0.74,0.56],mid=dark?[0.22,0.40,0.26]:[0.34,0.56,0.36],hi=dark?[0.46,0.50,0.36]:[0.66,0.70,0.50];
-  const mix=(a,b,k)=>a.map((v,i)=>v+(b[i]-v)*k);return t<0.5?mix(lo,mid,t/0.5):mix(mid,hi,(t-0.5)/0.5);}
+const PAL={light:{low:'#c3cdb9',mid:'#5c9263',high:'#e4d7a8',water:'#8fb8d6',line:'#1d2d22',street:'#1d2d22',path:'#8a5f12'},
+           dark:{low:'#1c2a21',mid:'#2f6039',high:'#8d8150',water:'#2b4a68',line:'#d8e4d2',street:'#d8e4d2',path:'#f0c060'}};
+const VERT=`uniform float uVX;varying vec3 vN;varying float vE;varying vec3 vW;varying float vDepth;
+void main(){vN=normal;vE=position.y/uVX;vW=position;vec4 mv=modelViewMatrix*vec4(position,1.0);vDepth=-mv.z;gl_Position=projectionMatrix*mv;}`;
+const FRAG=`precision highp float;uniform vec3 uLow,uMid,uHigh,uWater,uFog,uLine,uSun;uniform float uMin,uMax,uFogNear,uFogFar,uWaterLvl,uWaterX,uDark;
+varying vec3 vN;varying float vE;varying vec3 vW;varying float vDepth;
+void main(){
+  float t=clamp((vE-uMin)/(uMax-uMin),0.0,1.0);
+  vec3 col=t<0.42?mix(uLow,uMid,t/0.42):mix(uMid,uHigh,(t-0.42)/0.58);
+  bool water=vE<uWaterLvl&&vW.x<uWaterX;
+  if(water)col=uWater;
+  vec3 n=normalize(vN);float diff=max(dot(n,normalize(uSun)),0.0);float hemi=0.55+0.45*n.y;
+  float light=0.42*hemi+0.68*diff;col*=light;
+  if(!water){
+    float c=vE/10.0;float fw=fwidth(c)*1.3;float f=abs(fract(c-0.5)-0.5);float minor=(1.0-smoothstep(0.0,fw,f))*(1.0-smoothstep(0.25,0.5,fw));
+    float c5=vE/50.0;float fw5=fwidth(c5)*1.3;float f5=abs(fract(c5-0.5)-0.5);float major=(1.0-smoothstep(0.0,fw5,f5))*(1.0-smoothstep(0.3,0.5,fw5));
+    float amt=max(minor*0.16,major*0.34);col=mix(col,uLine,amt);
+  }
+  float fog=smoothstep(uFogNear,uFogFar,vDepth);col=mix(col,uFog,fog);
+  gl_FragColor=vec4(col,1.0);}`;
+const TVERT=`attribute float aT;varying float vT;varying float vDepth;void main(){vT=aT;vec4 mv=modelViewMatrix*vec4(position,1.0);vDepth=-mv.z;gl_Position=projectionMatrix*mv;}`;
+const TFRAG=`precision highp float;uniform vec3 uA,uB,uFog;uniform float uP,uFogNear,uFogFar;varying float vT;varying float vDepth;
+void main(){vec3 col=vT<=uP?uA:uB;float pulse=exp(-abs(vT-uP)*120.0);col=mix(col,vec3(1.0),pulse*0.6);float fog=smoothstep(uFogNear,uFogFar,vDepth);col=mix(col,uFog,fog*0.8);gl_FragColor=vec4(col,1.0);}`;
+
 function initThree(){
-  if(!window.THREE){$('hint').hidden=true;initFallback();return;}
-  const canvas=$('gl');const scene=new THREE.Scene();
-  const camera=new THREE.PerspectiveCamera(42,4/3,10,12000);
-  const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
-  const geo=new THREE.BufferGeometry();const pos=[],col=[],idx=[];const dark=themeIsDark();
-  for(let j=0;j<=GN;j++)for(let i=0;i<=GN;i++){const x=GX0+i/GN*GW,z=GZ0+j/GN*GW;const e=elev(x,z);pos.push(x,e*VX,z);const c=terrainColor(e,dark);col.push(c[0],c[1],c[2]);}
-  for(let j=0;j<GN;j++)for(let i=0;i<GN;i++){const a=j*(GN+1)+i,b=a+1,c=a+GN+1,d=c+1;idx.push(a,c,b,b,c,d);}
-  geo.setIndex(idx);geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));geo.computeVertexNormals();
-  const terrain=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({vertexColors:true,flatShading:true,roughness:0.95,metalness:0}));scene.add(terrain);
-  /* falda: borde del bloque */
-  const skirt=new THREE.Mesh(new THREE.BoxGeometry(GW,30,GW),new THREE.MeshStandardMaterial({color:0x5a5f55,roughness:1}));skirt.position.set(GX0+GW/2,0,GZ0+GW/2);scene.add(skirt);
-  /* sendero principal y tramo opcional */
-  const mk=(from,to,color,r)=>{const pts=S.filter(p=>p.d>=from&&p.d<=to).map(p=>new THREE.Vector3(p.x,p.e*VX+3,p.z));const curve=new THREE.CatmullRomCurve3(pts);const tube=new THREE.TubeGeometry(curve,pts.length*2,r,6,false);const m=new THREE.Mesh(tube,new THREE.MeshStandardMaterial({color,roughness:.8}));scene.add(m);return m;};
-  const trailMain=mk(0,MIRADOR_D,0xffffff,7),trailOpt=mk(MIRADOR_D,TOTAL,0xffffff,4);
+  if(!window.THREE){initFallback();return;}
+  const canvas=$('gl');const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));renderer.setClearColor(0,0);
+  const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera(42,4/3,5,40000);
+  const g=GRID;const {cols,rows}=g;
+  /* terreno */
+  const pos=new Float32Array(cols*rows*3);const idx=[];
+  let emin=1e9,emax=-1e9;
+  for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){const k=j*cols+i;const e=g.h[k];pos[k*3]=g.x0+i*g.dx;pos[k*3+1]=e*VX;pos[k*3+2]=g.z0+j*g.dz;if(e<emin)emin=e;if(e>emax)emax=e;}
+  for(let j=0;j<rows-1;j++)for(let i=0;i<cols-1;i++){const a=j*cols+i,b=a+1,c=a+cols,d=c+1;idx.push(a,c,b,b,c,d);}
+  const geo=new THREE.BufferGeometry();geo.setIndex(idx);geo.setAttribute('position',new THREE.BufferAttribute(pos,3));geo.computeVertexNormals();
+  const U={uVX:{value:VX},uLow:{value:new THREE.Color()},uMid:{value:new THREE.Color()},uHigh:{value:new THREE.Color()},uWater:{value:new THREE.Color()},uFog:{value:new THREE.Color()},uLine:{value:new THREE.Color()},
+    uSun:{value:new THREE.Vector3(-0.45,0.8,-0.55)},uMin:{value:Math.max(0,emin)},uMax:{value:emax},uFogNear:{value:2500},uFogFar:{value:9000},uWaterLvl:{value:MODEL.real?7.3:-1},uWaterX:{value:-1500},uDark:{value:0}};
+  const mat=new THREE.ShaderMaterial({uniforms:U,vertexShader:VERT,fragmentShader:FRAG});mat.extensions.derivatives=true;
+  scene.add(new THREE.Mesh(geo,mat));
+  /* calles, senderos y agua como líneas sobre el relieve */
+  const lineGroups={};
+  function addLines(kind,color,opacity,lift){const segs=[];MODEL.lines.filter(l=>l.k===kind).forEach(l=>{for(let i=1;i<l.p.length;i++){const a=l.p[i-1],b=l.p[i];segs.push(a[0],gridH(a[0],a[1])*VX+lift,a[1],b[0],gridH(b[0],b[1])*VX+lift,b[1]);}});
+    if(!segs.length)return;const lg=new THREE.BufferGeometry();lg.setAttribute('position',new THREE.Float32BufferAttribute(segs,3));const lm=new THREE.LineBasicMaterial({color,transparent:true,opacity,depthWrite:false});const ls=new THREE.LineSegments(lg,lm);scene.add(ls);lineGroups[kind]=lm;}
+  addLines('street',0x000000,0.16,2);addLines('water',0x4a86b4,0.7,2);addLines('path',0x8a5f12,0.5,2.5);
+  /* sendero principal: tubo con progreso + halo */
+  const pts=S.filter((p,i)=>i%2===0||i===S.length-1).map(p=>new THREE.Vector3(p.x,p.e*VX+3,p.z));const curve=new THREE.CatmullRomCurve3(pts,false,'centripetal');
+  const segN=Math.max(60,Math.round(TOTAL/8));
+  const TU={uA:{value:new THREE.Color()},uB:{value:new THREE.Color()},uFog:{value:U.uFog.value},uP:{value:0},uFogNear:{value:2500},uFogFar:{value:9000}};
+  function tube(r){const tg=new THREE.TubeGeometry(curve,segN,r,8,false);const n=tg.getAttribute('position').count;const aT=new Float32Array(n);for(let k=0;k<n;k++)aT[k]=Math.floor(k/9)/segN;tg.setAttribute('aT',new THREE.BufferAttribute(aT,1));return tg;}
+  const trail=new THREE.Mesh(tube(5.5),new THREE.ShaderMaterial({uniforms:TU,vertexShader:TVERT,fragmentShader:TFRAG}));scene.add(trail);
+  const halo=new THREE.Mesh(tube(13),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.18,depthWrite:false}));scene.add(halo);
   /* hitos */
-  HITOS.forEach(h=>{const p=at(h.d);const post=new THREE.Mesh(new THREE.CylinderGeometry(2.5,2.5,40,6),new THREE.MeshStandardMaterial({color:0xffffff}));post.position.set(p.x,p.e*VX+20,p.z);scene.add(post);const pin=document.createElement('div');pin.className='pin';pin.innerHTML='<span class="n">'+h.n+'</span><span class="t">'+h.name.replace(/ \(.*\)/,'')+'</span>';labelsEl.appendChild(pin);pins.push({el:pin,v:new THREE.Vector3(p.x,p.e*VX+42,p.z),post});});
-  /* torre Entel y torre Bismarck como volúmenes */
-  const pe=at(TOTAL);const entel=new THREE.Mesh(new THREE.CylinderGeometry(4,9,70*VX,8),new THREE.MeshStandardMaterial({color:0xd8dcd4}));entel.position.set(pe.x+40,pe.e*VX+35*VX,pe.z+30);scene.add(entel);
-  const pm=at(MIRADOR_D);const torre=new THREE.Mesh(new THREE.CylinderGeometry(6,8,10*VX,8),new THREE.MeshStandardMaterial({color:0x9a9d92}));torre.position.set(pm.x+18,pm.e*VX+5*VX,pm.z-14);scene.add(torre);
+  HITOS.forEach(h=>{const p=at(h.d);const post=new THREE.Mesh(new THREE.CylinderGeometry(1.6,1.6,34,6),new THREE.MeshBasicMaterial({color:0xffffff}));post.position.set(p.x,p.e*VX+17,p.z);scene.add(post);
+    const pin=document.createElement('div');pin.className='pin';pin.innerHTML='<span class="n">'+h.n+'</span><span class="t">'+h.short+'</span>';labelsEl.appendChild(pin);pins.push({el:pin,v:new THREE.Vector3(p.x,p.e*VX+36,p.z),post});});
+  /* etiquetas de contexto */
+  const ctx=[];MODEL.labels.forEach(l=>{const el=document.createElement('div');el.className='ctx';el.textContent=l.t;labelsEl.appendChild(el);ctx.push({el,v:new THREE.Vector3(l.x,l.e*VX+30,l.z)});});
+  /* torre Bismarck y torre Entel como volúmenes */
+  const pm=at(MIRADOR_D);const torre=new THREE.Mesh(new THREE.CylinderGeometry(5,6.5,10*VX,10),new THREE.MeshLambertMaterial({color:0xb9b4a5}));torre.position.set(pm.x+12,pm.e*VX+5*VX,pm.z-10);scene.add(torre);
+  const entelH=HITOS.find(h=>h.key==='torre_entel');if(entelH&&MODEL.real){const ex=-10,ez=-330;/* posición aproximada respecto al portón: 83 m al oeste del camino */const te=at(entelH.d);const tx=te.x-60,tz=te.z-40;const ent=new THREE.Mesh(new THREE.CylinderGeometry(2.5,6,70*VX,8),new THREE.MeshLambertMaterial({color:0xd9dcd6}));ent.position.set(tx,gridH(tx,tz)*VX+35*VX,tz);scene.add(ent);}
   /* caminante */
-  const hiker=new THREE.Group();const body=new THREE.Mesh(new THREE.SphereGeometry(14,12,10),new THREE.MeshStandardMaterial({color:0xffffff}));body.position.y=22;hiker.add(body);const halo=new THREE.Mesh(new THREE.RingGeometry(18,26,24),new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide,transparent:true,opacity:.6}));halo.rotation.x=-Math.PI/2;halo.position.y=2;hiker.add(halo);scene.add(hiker);
-  /* luces */
-  const hemi=new THREE.HemisphereLight(0xffffff,0x334433,0.9);scene.add(hemi);const sun=new THREE.DirectionalLight(0xffffff,0.9);sun.position.set(-900,1200,-500);scene.add(sun);
-  const center=new THREE.Vector3(GX0+GW*0.5,120*VX,GZ0+GW*0.5);
-  const orbit={az:-2.35,el:0.62,dist:2400,target:center};
-  const defaults={...orbit};
-  function applyTheme(){const t=tokens();const dark=themeIsDark();const bg=new THREE.Color(t('--surface-2')||(dark?'#1f2c22':'#e2e8dc'));scene.background=bg;scene.fog=new THREE.Fog(bg,2800,6000);
-    const acc=new THREE.Color(t('--accent')||'#b8821f');trailMain.material.color.copy(acc);trailOpt.material.color.copy(acc);const fg=new THREE.Color(t('--fg')||'#15221a');body.material.color.copy(fg);halo.material.color.copy(acc);pins.forEach(p=>p.post.material.color.copy(fg));
-    const colAttr=geo.getAttribute('color');for(let k=0;k<colAttr.count;k++){const e=geo.getAttribute('position').getY(k)/VX;const c=terrainColor(e,dark);colAttr.setXYZ(k,c[0],c[1],c[2]);}colAttr.needsUpdate=true;
-    hemi.intensity=dark?0.55:0.9;sun.intensity=dark?0.7:0.9;skirt.material.color.set(dark?0x2a3028:0x5a5f55);}
-  applyTheme();
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);new MutationObserver(applyTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  const hiker=new THREE.Group();const body=new THREE.Mesh(new THREE.SphereGeometry(9,14,12),new THREE.MeshBasicMaterial({color:0xffffff}));body.position.y=16;hiker.add(body);
+  const pole=new THREE.Mesh(new THREE.CylinderGeometry(1,1,16,6),new THREE.MeshBasicMaterial({color:0xffffff}));pole.position.y=8;hiker.add(pole);
+  const ring=new THREE.Mesh(new THREE.RingGeometry(14,19,32),new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide,transparent:true,opacity:0.7,depthWrite:false}));ring.rotation.x=-Math.PI/2;ring.position.y=1.5;hiker.add(ring);scene.add(hiker);
+  scene.add(new THREE.HemisphereLight(0xffffff,0x445544,0.9));const sun=new THREE.DirectionalLight(0xffffff,0.6);sun.position.set(-900,1400,-1100);scene.add(sun);
+  /* cámara */
+  const pa=at(0),pb=at(TOTAL);const target=new THREE.Vector3(pa.x*0.42+pb.x*0.58,(pa.e*0.42+pb.e*0.58)*VX,pa.z*0.42+pb.z*0.58);
+  const orbit={az:-2.05,el:0.58,dist:2650,vAz:0,vEl:0};const home={...orbit};
+  const camPos=new THREE.Vector3(),camLook=new THREE.Vector3();let smoothPos=null,smoothLook=null;
+  function applyTheme(){const t=tokens();const dark=themeIsDark();const P=dark?PAL.dark:PAL.light;
+    U.uLow.value.set(P.low);U.uMid.value.set(P.mid);U.uHigh.value.set(P.high);U.uWater.value.set(P.water);U.uLine.value.set(P.line);U.uFog.value.set(t('--bg')||(dark?'#0f1712':'#eef2ea'));U.uDark.value=dark?1:0;
+    const acc=new THREE.Color(t('--accent')||'#b8821f');TU.uA.value.copy(acc);TU.uB.value.set(dark?'#f3e2b8':'#ffffff');halo.material.color.copy(acc);
+    const fg=new THREE.Color(t('--fg')||'#15221a');body.material.color.copy(fg);pole.material.color.copy(fg);ring.material.color.set(dark?'#ffffff':'#ffffff');pins.forEach(p=>p.post.material.color.copy(fg));
+    if(lineGroups.street)lineGroups.street.color.set(P.street);if(lineGroups.path)lineGroups.path.color.set(P.path);if(lineGroups.water)lineGroups.water.color.set(dark?'#6fa6d6':'#3d78a8');}
+  applyTheme();matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);new MutationObserver(applyTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   function resize(){const r=canvas.parentElement.getBoundingClientRect();const w=Math.max(1,Math.round(r.width)),h=Math.max(1,Math.round(r.height));renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
   resize();addEventListener('resize',resize);
-  /* control de cámara: un dedo gira, dos acercan, rueda acerca */
+  /* control: un dedo gira (con inercia), dos dedos acercan, rueda acerca */
   const ptrs=new Map();let lastPinch=0;let idleAuto=true;const el3=$('scene');
-  el3.addEventListener('pointerdown',ev=>{ptrs.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});el3.setPointerCapture(ev.pointerId);idleAuto=false;$('hint').hidden=true;});
-  el3.addEventListener('pointermove',ev=>{if(!ptrs.has(ev.pointerId))return;const p=ptrs.get(ev.pointerId);if(ptrs.size===1){orbit.az-=(ev.clientX-p.x)*0.006;orbit.el=Math.max(0.12,Math.min(1.45,orbit.el+(ev.clientY-p.y)*0.005));}
-    p.x=ev.clientX;p.y=ev.clientY;if(ptrs.size===2){const a=[...ptrs.values()];const dpx=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);if(lastPinch)orbit.dist=Math.max(700,Math.min(5000,orbit.dist*lastPinch/dpx));lastPinch=dpx;}});
+  el3.addEventListener('pointerdown',ev=>{ptrs.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});el3.setPointerCapture(ev.pointerId);idleAuto=false;follow=false;orbit.vAz=0;orbit.vEl=0;$('hint').hidden=true;});
+  el3.addEventListener('pointermove',ev=>{if(!ptrs.has(ev.pointerId))return;const p=ptrs.get(ev.pointerId);const dx=ev.clientX-p.x,dy=ev.clientY-p.y;p.x=ev.clientX;p.y=ev.clientY;
+    if(ptrs.size===1){orbit.vAz=-dx*0.0055;orbit.vEl=dy*0.0045;orbit.az+=orbit.vAz;orbit.el=Math.max(0.15,Math.min(1.45,orbit.el+orbit.vEl));}
+    if(ptrs.size===2){const a=[...ptrs.values()];const dpx=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);if(lastPinch)orbit.dist=Math.max(500,Math.min(7000,orbit.dist*lastPinch/dpx));lastPinch=dpx;}});
   const up=ev=>{ptrs.delete(ev.pointerId);if(ptrs.size<2)lastPinch=0;};el3.addEventListener('pointerup',up);el3.addEventListener('pointercancel',up);
-  el3.addEventListener('wheel',ev=>{ev.preventDefault();orbit.dist=Math.max(700,Math.min(5000,orbit.dist*(1+Math.sign(ev.deltaY)*0.08)));idleAuto=false;},{passive:false});
-  $('view-top').addEventListener('click',()=>{orbit.el=1.45;orbit.dist=2600;orbit.az=-Math.PI/2;idleAuto=false;});
-  $('view-reset').addEventListener('click',()=>{Object.assign(orbit,defaults);idleAuto=true;});
+  el3.addEventListener('wheel',ev=>{ev.preventDefault();orbit.dist=Math.max(500,Math.min(7000,orbit.dist*(1+Math.sign(ev.deltaY)*0.08)));idleAuto=false;follow=false;},{passive:false});
+  $('view-top').addEventListener('click',()=>{follow=false;idleAuto=false;orbit.el=1.42;orbit.dist=2700;orbit.az=Math.PI/2;});
+  $('view-reset').addEventListener('click',()=>{follow=false;Object.assign(orbit,home);idleAuto=true;});
+  $('view-follow').addEventListener('click',()=>{follow=true;idleAuto=false;});
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let last=performance.now();
+  const tmp=new THREE.Vector3();let last=performance.now();
   function frame(now){const dt=Math.min(0.1,(now-last)/1000);last=now;
-    if(idleAuto&&!reduce)orbit.az+=dt*0.06;
-    if(playing){setPos(cur+dt*(reduce?400:220));if(cur>=TOTAL)stopPlay();}
-    camera.position.set(orbit.target.x+orbit.dist*Math.cos(orbit.el)*Math.cos(orbit.az),orbit.target.y+orbit.dist*Math.sin(orbit.el),orbit.target.z+orbit.dist*Math.cos(orbit.el)*Math.sin(orbit.az));camera.lookAt(orbit.target);
-    if(hikerPos){hiker.position.set(hikerPos.x,hikerPos.e*VX+3,hikerPos.z);}
+    if(playing){setPos(cur+dt*(reduce?300:150));if(cur>=TOTAL)stopPlay();}
+    if(!ptrs.size){orbit.az+=orbit.vAz;orbit.el=Math.max(0.15,Math.min(1.45,orbit.el+orbit.vEl));orbit.vAz*=0.9;orbit.vEl*=0.9;}
+    if(idleAuto&&!reduce&&!follow)orbit.az+=dt*0.05;
+    if(hikerPos)hiker.position.set(hikerPos.x,hikerPos.e*VX+2,hikerPos.z);
+    if(follow&&hikerPos){const a=at(Math.max(0,cur-20)),b=at(Math.min(TOTAL,cur+20));const tx=b.x-a.x,tz=b.z-a.z;const L=Math.hypot(tx,tz)||1;const ux=tx/L,uz=tz/L;
+      camPos.set(hikerPos.x-ux*260,hikerPos.e*VX+150,hikerPos.z-uz*260);camLook.set(hikerPos.x+ux*120,hikerPos.e*VX+10,hikerPos.z+uz*120);
+      camPos.y=Math.max(camPos.y,gridH(camPos.x,camPos.z)*VX+60);}
+    else{camPos.set(target.x+orbit.dist*Math.cos(orbit.el)*Math.cos(orbit.az),target.y+orbit.dist*Math.sin(orbit.el),target.z+orbit.dist*Math.cos(orbit.el)*Math.sin(orbit.az));camLook.copy(target);}
+    if(!smoothPos){smoothPos=camPos.clone();smoothLook=camLook.clone();}else{const k=follow?0.06:0.18;smoothPos.lerp(camPos,k);smoothLook.lerp(camLook,k);}
+    camera.position.copy(smoothPos);camera.lookAt(smoothLook);
+    TU.uP.value=cur/TOTAL;ring.scale.setScalar(1+0.12*Math.sin(now/300));
     renderer.render(scene,camera);
-    const w=canvas.clientWidth,h=canvas.clientHeight;const v=new THREE.Vector3();pins.forEach((p,i)=>{v.copy(p.v).project(camera);const vis=v.z<1;p.el.style.display=vis?'':'none';if(vis){p.el.style.left=((v.x+1)/2*w)+'px';p.el.style.top=((1-v.y)/2*h)+'px';p.el.classList.toggle('active',i===hitoIdx);}});
+    const w=canvas.clientWidth,h=canvas.clientHeight;
+    pins.forEach((p,i)=>{tmp.copy(p.v).project(camera);const vis=tmp.z<1&&Math.abs(tmp.x)<1.2&&Math.abs(tmp.y)<1.2;p.el.style.display=vis?'':'none';if(vis){p.el.style.left=((tmp.x+1)/2*w)+'px';p.el.style.top=((1-tmp.y)/2*h)+'px';p.el.classList.toggle('active',i===hitoIdx);}});
+    ctx.forEach(c=>{tmp.copy(c.v).project(camera);const vis=tmp.z<1&&Math.abs(tmp.x)<0.92&&Math.abs(tmp.y)<0.95;c.el.style.display=vis?'':'none';if(vis){c.el.style.left=((tmp.x+1)/2*w)+'px';c.el.style.top=((1-tmp.y)/2*h)+'px';c.el.style.opacity=follow?0.35:0.85;}});
     requestAnimationFrame(frame);}
-  requestAnimationFrame(frame);three={ok:true};
+  requestAnimationFrame(frame);
 }
-function updateHiker(){hikerPos=at(cur);if(fallback)fallback.draw();}
 
 /* Respaldo sin WebGL ni librería: relieve en canvas 2D */
-let fallback=null;
-function initFallback(){const canvas=$('gl');const ctx=canvas.getContext('2d');if(!ctx)return;const N=44;let az=-2.35;
-  function draw(){const r=canvas.parentElement.getBoundingClientRect();const W=canvas.width=Math.round(r.width*(devicePixelRatio||1)),H=canvas.height=Math.round(r.height*(devicePixelRatio||1));const t=tokens();const dark=themeIsDark();
-    ctx.fillStyle=t('--surface-2');ctx.fillRect(0,0,W,H);const ca=Math.cos(az),sa=Math.sin(az);const cx=GX0+GW/2,cz=GZ0+GW/2;const sc=W/(GW*1.5);
-    const proj=(x,y,z)=>{const dx=x-cx,dz=z-cz;const rx=dx*ca-dz*sa,rz=dx*sa+dz*ca;return [W/2+rx*sc,H*0.62-y*VX*sc*0.9+rz*sc*0.5,rz];};
-    const quads=[];for(let j=0;j<N;j++)for(let i=0;i<N;i++){const pts=[[i,j],[i+1,j],[i+1,j+1],[i,j+1]].map(([a,b])=>{const x=GX0+a/N*GW,z=GZ0+b/N*GW;const e=elev(x,z);return {p:proj(x,e,z),e};});const em=pts.reduce((s,p)=>s+p.e,0)/4;const depth=pts.reduce((s,p)=>s+p.p[2],0)/4;const shade=0.75+0.25*Math.max(0,(pts[1].e-pts[3].e)/25);quads.push({pts,em,depth,shade});}
-    quads.sort((a,b)=>a.depth-b.depth);quads.forEach(q=>{const c=terrainColor(q.em,dark).map(v=>Math.round(Math.min(1,v*q.shade)*255));ctx.fillStyle='rgb('+c.join(',')+')';ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=1;ctx.beginPath();q.pts.forEach((p,k)=>k?ctx.lineTo(p.p[0],p.p[1]):ctx.moveTo(p.p[0],p.p[1]));ctx.closePath();ctx.fill();ctx.stroke();});
-    ctx.strokeStyle=t('--accent');ctx.lineWidth=3*(devicePixelRatio||1);ctx.lineJoin='round';ctx.beginPath();S.forEach((p,k)=>{const q=proj(p.x,p.e+4,p.z);k?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});ctx.stroke();
-    ctx.fillStyle=t('--fg');HITOS.forEach(h=>{const p=at(h.d);const q=proj(p.x,p.e+6,p.z);ctx.beginPath();ctx.arc(q[0],q[1],4*(devicePixelRatio||1),0,7);ctx.fill();});
-    if(hikerPos){const q=proj(hikerPos.x,hikerPos.e+8,hikerPos.z);ctx.fillStyle=t('--accent');ctx.beginPath();ctx.arc(q[0],q[1],7*(devicePixelRatio||1),0,7);ctx.fill();}}
+function initFallback(){const canvas=$('gl');const ctx=canvas.getContext('2d');if(!ctx)return;let az=-2.05;const g=GRID;const step=Math.max(1,Math.floor(g.cols/48));
+  function draw(){const r=canvas.parentElement.getBoundingClientRect();const dpr=devicePixelRatio||1;const W=canvas.width=Math.round(r.width*dpr),H=canvas.height=Math.round(r.height*dpr);const t=tokens();const dark=themeIsDark();const P=dark?PAL.dark:PAL.light;
+    ctx.clearRect(0,0,W,H);const ca=Math.cos(az),sa=Math.sin(az);const pa=at(0),pb=at(TOTAL);const cx=(pa.x+pb.x)/2,cz=(pa.z+pb.z)/2;const span=g.cols*g.dx;const sc=W/(Math.min(span,4000)*1.3);
+    const proj=(x,y,z)=>{const dx=x-cx,dz=z-cz;const rx=dx*ca-dz*sa,rz=dx*sa+dz*ca;return [W/2+rx*sc,H*0.6-y*VX*sc*0.9+rz*sc*0.5,rz];};
+    const hex=s=>[parseInt(s.slice(1,3),16),parseInt(s.slice(3,5),16),parseInt(s.slice(5,7),16)];const lo=hex(P.low),mi=hex(P.mid),hi=hex(P.high);
+    const emin=0,emax=270;const quads=[];
+    for(let j=0;j<g.rows-step;j+=step)for(let i=0;i<g.cols-step;i+=step){const pts=[[i,j],[i+step,j],[i+step,j+step],[i,j+step]].map(([a,b])=>{const x=g.x0+a*g.dx,z=g.z0+b*g.dz;const e=g.h[b*g.cols+a];return {p:proj(x,e,z),e};});if(Math.abs(pts[0].p[0]-W/2)>W||Math.abs(pts[0].p[1]-H/2)>H)continue;const em=pts.reduce((s,p)=>s+p.e,0)/4;const depth=pts.reduce((s,p)=>s+p.p[2],0)/4;const shade=0.72+0.28*Math.max(0,(pts[0].e-pts[2].e)/30);quads.push({pts,em,depth,shade});}
+    quads.sort((a,b)=>a.depth-b.depth);quads.forEach(q=>{const tt=Math.max(0,Math.min(1,(q.em-emin)/(emax-emin)));const c=(tt<0.42?lo.map((v,k)=>v+(mi[k]-v)*tt/0.42):mi.map((v,k)=>v+(hi[k]-v)*(tt-0.42)/0.58)).map(v=>Math.round(Math.min(255,v*q.shade)));ctx.fillStyle=ctx.strokeStyle='rgb('+c.join(',')+')';ctx.lineWidth=1;ctx.beginPath();q.pts.forEach((p,k)=>k?ctx.lineTo(p.p[0],p.p[1]):ctx.moveTo(p.p[0],p.p[1]));ctx.closePath();ctx.fill();ctx.stroke();});
+    ctx.strokeStyle=t('--accent');ctx.lineWidth=3*dpr;ctx.lineJoin='round';ctx.beginPath();S.forEach((p,k)=>{const q=proj(p.x,p.e+4,p.z);k?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});ctx.stroke();
+    ctx.fillStyle=t('--fg');HITOS.forEach(h=>{const p=at(h.d);const q=proj(p.x,p.e+6,p.z);ctx.beginPath();ctx.arc(q[0],q[1],4*dpr,0,7);ctx.fill();});
+    if(hikerPos){const q=proj(hikerPos.x,hikerPos.e+8,hikerPos.z);ctx.fillStyle=t('--accent');ctx.beginPath();ctx.arc(q[0],q[1],7*dpr,0,7);ctx.fill();}}
   fallback={draw};draw();addEventListener('resize',draw);
   let sx=null;const el3=$('scene');el3.addEventListener('pointerdown',e=>{sx=e.clientX;});el3.addEventListener('pointermove',e=>{if(sx!==null){az-=(e.clientX-sx)*0.006;sx=e.clientX;draw();}});el3.addEventListener('pointerup',()=>{sx=null;});
-  let last=performance.now();function tick(now){const dt=Math.min(0.1,(now-last)/1000);last=now;if(playing){setPos(cur+dt*220);if(cur>=TOTAL)stopPlay();}requestAnimationFrame(tick);}requestAnimationFrame(tick);
-  $('view-top').addEventListener('click',()=>{});$('view-reset').addEventListener('click',()=>{az=-2.35;draw();});
+  let last=performance.now();function tick(now){const dt=Math.min(0.1,(now-last)/1000);last=now;if(playing){setPos(cur+dt*150);if(cur>=TOTAL)stopPlay();}requestAnimationFrame(tick);}requestAnimationFrame(tick);
+  $('view-reset').addEventListener('click',()=>{az=-2.05;draw();});
 }
 
 /* ------------------------------------------------------------- play */
 function stopPlay(){playing=false;$('play').setAttribute('aria-pressed','false');$('play-label').textContent='Recorrer';}
-$('play').addEventListener('click',()=>{if(playing){stopPlay();return;}if(cur>=TOTAL-5)cur=0;playing=true;$('play').setAttribute('aria-pressed','true');$('play-label').textContent='Pausa';});
+$('play').addEventListener('click',()=>{if(playing){stopPlay();return;}if(cur>=TOTAL-5)cur=0;playing=true;follow=true;$('play').setAttribute('aria-pressed','true');$('play-label').textContent='Pausa';});
 
 /* ------------------------------------------------------------- especies */
 const SP=[
@@ -785,7 +854,7 @@ showTab(location.hash.replace('#','')||'ruta',false);
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&b.getAttribute('aria-pressed')==='true'&&!lock)on();});})();
 
 /* ------------------------------------------------------------- arranque */
-try{initThree();}catch(e){if(!fallback)initFallback();}
-setPos(0,false);
+async function boot(){await loadModel();$('loading').hidden=true;$('caption').textContent=MODEL.real?'Relieve SRTM 30 m · vías OSM · altura ×1,5':'Relieve esquemático · altura ×1,5';buildHitos();buildProfile();try{initThree();}catch(e){if(!fallback)initFallback();}setPos(0);}
+boot();
 })();
 </script>

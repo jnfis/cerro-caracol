@@ -11,6 +11,8 @@ flora e insectos con foto, línea de tiempo histórica y guía práctica.
 - `src/page.html`: la página (una sola, sin dependencias salvo Three.js y Google Fonts).
 - `scripts/species.json`: especies y sus títulos en Wikipedia, para buscar la foto.
 - `scripts/fetch-images.mjs`: descarga una foto libre por especie desde Wikimedia Commons a `img/` y escribe `img/credits.json` (autor y licencia).
+- `scripts/fetch-terrain.mjs`: descarga el relieve (tiles Terrarium, base SRTM) y las vías de OpenStreetMap a `data/`.
+- `scripts/build-route.py`: calcula la ruta real al Mirador Alemán por las vías de OSM, el perfil con cotas del relieve y las líneas del mapa (`data/route.json`).
 - `scripts/build.mjs`: arma `_site/` para GitHub Pages.
 - `.github/workflows/site.yml`: en cada push a `main` descarga las fotos que falten, las guarda en el repo y publica el sitio.
 
