@@ -145,7 +145,12 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-size:.85rem;font-weight:700;white-space:nowrap;cursor:pointer;flex:none}
 .chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .species{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
-.sp{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:6px;border-left:5px solid var(--g);min-width:0}
+.sp{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0;display:grid;grid-template-rows:auto 1fr;border-left:5px solid var(--g);min-width:0;overflow:hidden}
+.sp .ph{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--surface-2)}
+.sp.noimg .ph{display:none}
+.sp-body{padding:12px;display:grid;gap:6px;align-content:start}
+.sp .credit{font-size:.7rem;color:var(--fg-3);margin-top:2px;overflow-wrap:anywhere}
+.sp .credit a{color:inherit}
 .sp .grp{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--fg-3)}
 .sp h3{font-size:1.05rem}
 .sp .sci{font-style:italic;color:var(--fg-2);font-size:.85rem}
@@ -474,6 +479,7 @@ main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px
         <li><a href="https://www.biobiochile.cl/noticias/nacional/region-del-bio-bio/2025/12/31/parque-metropolitano-cerro-caracol-permanece-cerrado-hasta-nuevo-aviso-por-riesgo-de-incendios.shtml" target="_blank" rel="noopener">BioBioChile: cierre por riesgo de incendios</a> (dic. 2025)</li>
         <li><a href="https://www.infraestructurapublica.cl/teleferico-en-cerro-caracol-minvu-termina-estudio-clave-y-busca-avanzar-hacia-su-concrecion/" target="_blank" rel="noopener">CPI: estudio del teleférico</a></li>
         <li><a href="https://es.wikipedia.org/wiki/Reserva_nacional_Nongu%C3%A9n" target="_blank" rel="noopener">Parque Nacional Nonguén, Wikipedia</a> (insectos del bosque vecino)</li>
+        <li>Fotos de especies: Wikipedia y Wikimedia Commons, con autor y licencia en cada tarjeta.</li>
         <li><a href="https://www.eldinamo.cl/d-economia/mejor-mercado/2024/08/23/asi-es-la-infraestructura-que-entel-ha-habilitado-en-el-pais-en-estos-60-anos/" target="_blank" rel="noopener">El Dínamo: Torre Entel de Concepción</a></li>
       </ol>
     </div>
@@ -677,63 +683,68 @@ $('play').addEventListener('click',()=>{if(playing){stopPlay();return;}if(cur>=T
 /* ------------------------------------------------------------- especies */
 const SP=[
  /* aves */
- {g:'aves',n:'Rayadito',s:'Aphrastura spinicauda',reg:1,t:'Pequeño, rayado, con la cola en punta. Anda en grupos bulliciosos por los troncos buscando insectos. Es el ave que más se oye en el bosque.'},
- {g:'aves',n:'Comesebo grande',s:'Pygarrhichas albogularis',reg:1,t:'Trepa los troncos como un trepador, con el pecho blanco. Revisa la corteza de pinos y robles.'},
- {g:'aves',n:'Picaflor chico',s:'Sephanoides sephaniodes',reg:1,t:'El colibrí más común de Chile y polinizador clave del bosque. Búsquenlo en flores rojas: copihue, notro, fucsia.'},
- {g:'aves',n:'Colilarga',s:'Sylviorthorhynchus desmursii',reg:1,t:'Una cola larguísima de plumas sueltas que usa para equilibrarse entre matorrales y quilas. Se oye más de lo que se ve.'},
- {g:'aves',n:'Viudita',s:'Colorhamphus parvirostris',reg:1,t:'Plumaje gris oscuro y vuelo ágil. Caza insectos al vuelo desde una rama baja.'},
- {g:'aves',n:'Carpinterito',s:'Dryobates lignarius',reg:1,t:'El carpintero chico de Chile, con la cabeza con rojo en el macho. Escuchen el tamborileo en los troncos secos.'},
- {g:'aves',n:'Hued-hued castaño',s:'Pteroptochos castaneus',reg:1,cons:'Endémica',t:'Rechoncho, de color castaño, camina por el suelo entre la hojarasca. Su canto “hued-hued” da nombre al ave. Endémico del centro-sur de Chile.'},
- {g:'aves',n:'Cometocino patagónico',s:'Phrygilus patagonicus',reg:1,t:'Pecho amarillo y cabeza gris azulada. Visita el borde del bosque y los claros.'},
- {g:'aves',n:'Concón',s:'Strix rufipes',reg:1,t:'El búho del bosque templado. De día duerme en los pinos densos; de noche se escucha su “co-con”.'},
- {g:'aves',n:'Turca',s:'Pteroptochos megapodius',reg:1,cons:'Endémica',t:'Endémica de Chile, de la IV a la VIII región. Corre con la cola levantada por laderas con matorral y roca.'},
- {g:'aves',n:'Tiuque',s:'Milvago chimango',reg:0,t:'Rapaz marrón muy común en Concepción, que grita desde los árboles del Parque Ecuador. Fácil de reconocer para los niños.'},
- {g:'aves',n:'Zorzal',s:'Turdus falcklandii',reg:0,t:'Canta al amanecer y busca lombrices en el maicillo húmedo. Patas y pico amarillos.'},
+ {id:'rayadito',g:'aves',n:'Rayadito',s:'Aphrastura spinicauda',reg:1,t:'Pequeño, rayado, con la cola en punta. Anda en grupos bulliciosos por los troncos buscando insectos. Es el ave que más se oye en el bosque.'},
+ {id:'comesebo',g:'aves',n:'Comesebo grande',s:'Pygarrhichas albogularis',reg:1,t:'Trepa los troncos como un trepador, con el pecho blanco. Revisa la corteza de pinos y robles.'},
+ {id:'picaflor-chico',g:'aves',n:'Picaflor chico',s:'Sephanoides sephaniodes',reg:1,t:'El colibrí más común de Chile y polinizador clave del bosque. Búsquenlo en flores rojas: copihue, notro, fucsia.'},
+ {id:'colilarga',g:'aves',n:'Colilarga',s:'Sylviorthorhynchus desmursii',reg:1,t:'Una cola larguísima de plumas sueltas que usa para equilibrarse entre matorrales y quilas. Se oye más de lo que se ve.'},
+ {id:'viudita',g:'aves',n:'Viudita',s:'Colorhamphus parvirostris',reg:1,t:'Plumaje gris oscuro y vuelo ágil. Caza insectos al vuelo desde una rama baja.'},
+ {id:'carpinterito',g:'aves',n:'Carpinterito',s:'Dryobates lignarius',reg:1,t:'El carpintero chico de Chile, con la cabeza con rojo en el macho. Escuchen el tamborileo en los troncos secos.'},
+ {id:'hued-hued',g:'aves',n:'Hued-hued castaño',s:'Pteroptochos castaneus',reg:1,cons:'Endémica',t:'Rechoncho, de color castaño, camina por el suelo entre la hojarasca. Su canto “hued-hued” da nombre al ave. Endémico del centro-sur de Chile.'},
+ {id:'cometocino',g:'aves',n:'Cometocino patagónico',s:'Phrygilus patagonicus',reg:1,t:'Pecho amarillo y cabeza gris azulada. Visita el borde del bosque y los claros.'},
+ {id:'concon',g:'aves',n:'Concón',s:'Strix rufipes',reg:1,t:'El búho del bosque templado. De día duerme en los pinos densos; de noche se escucha su “co-con”.'},
+ {id:'turca',g:'aves',n:'Turca',s:'Pteroptochos megapodius',reg:1,cons:'Endémica',t:'Endémica de Chile, de la IV a la VIII región. Corre con la cola levantada por laderas con matorral y roca.'},
+ {id:'tiuque',g:'aves',n:'Tiuque',s:'Milvago chimango',reg:0,t:'Rapaz marrón muy común en Concepción, que grita desde los árboles del Parque Ecuador. Fácil de reconocer para los niños.'},
+ {id:'zorzal',g:'aves',n:'Zorzal',s:'Turdus falcklandii',reg:0,t:'Canta al amanecer y busca lombrices en el maicillo húmedo. Patas y pico amarillos.'},
  /* mamíferos */
- {g:'mam',n:'Monito del monte',s:'Dromiciops gliroides',reg:1,cons:'Casi amenazado',t:'Marsupial diminuto, fósil viviente emparentado con los marsupiales australianos. Nocturno; vive en el bosque con quilas. Un grupo fue afectado por talas ilegales en 2020.'},
- {g:'mam',n:'Güiña',s:'Leopardus guigna',reg:1,cons:'Vulnerable',t:'El felino más pequeño de América, del tamaño de un gato chico, moteado. Casi imposible de ver, pero usa el cerro como corredor hacia Nonguén.'},
- {g:'mam',n:'Zorro chilla',s:'Lycalopex griseus',reg:1,t:'Zorro gris de orejas grandes. Se deja ver al atardecer en los claros altos. No alimentar.'},
- {g:'mam',n:'Conejo europeo',s:'Oryctolagus cuniculus',reg:0,exo:1,t:'Introducido. Sus fecas redondas aparecen en el maicillo de los bordes. Pista fácil para los niños.'},
+ {id:'monito-del-monte',g:'mam',n:'Monito del monte',s:'Dromiciops gliroides',reg:1,cons:'Casi amenazado',t:'Marsupial diminuto, fósil viviente emparentado con los marsupiales australianos. Nocturno; vive en el bosque con quilas. Un grupo fue afectado por talas ilegales en 2020.'},
+ {id:'guina',g:'mam',n:'Güiña',s:'Leopardus guigna',reg:1,cons:'Vulnerable',t:'El felino más pequeño de América, del tamaño de un gato chico, moteado. Casi imposible de ver, pero usa el cerro como corredor hacia Nonguén.'},
+ {id:'zorro-chilla',g:'mam',n:'Zorro chilla',s:'Lycalopex griseus',reg:1,t:'Zorro gris de orejas grandes. Se deja ver al atardecer en los claros altos. No alimentar.'},
+ {id:'conejo',g:'mam',n:'Conejo europeo',s:'Oryctolagus cuniculus',reg:0,exo:1,t:'Introducido. Sus fecas redondas aparecen en el maicillo de los bordes. Pista fácil para los niños.'},
  /* anfibios y reptiles */
- {g:'herp',n:'Rana antifaz',s:'Batrachyla taeniata',reg:1,t:'Ranita café con una franja oscura sobre los ojos. Vecinos rescataron ejemplares de las canaletas del parque tras obras de drenaje.'},
- {g:'herp',n:'Rana de hojarasca',s:'Eupsophus sp.',reg:1,t:'Vive entre hojas húmedas junto a esteros como el de Agüita de la Perdiz. Canta en noches de lluvia.'},
- {g:'herp',n:'Lagartija esbelta',s:'Liolaemus tenuis',reg:0,t:'El macho es verde azulado con escamas amarillas. Toma sol en troncos caídos y muros de piedra al mediodía.'},
- {g:'herp',n:'Culebra de cola larga',s:'Philodryas chamissonis',reg:0,t:'Inofensiva para las personas. Cruza el camino en días cálidos. Mirar y dejar pasar.'},
+ {id:'rana-antifaz',g:'herp',n:'Rana antifaz',s:'Batrachyla taeniata',reg:1,t:'Ranita café con una franja oscura sobre los ojos. Vecinos rescataron ejemplares de las canaletas del parque tras obras de drenaje.'},
+ {id:'rana-hojarasca',g:'herp',n:'Rana de hojarasca',s:'Eupsophus sp.',reg:1,t:'Vive entre hojas húmedas junto a esteros como el de Agüita de la Perdiz. Canta en noches de lluvia.'},
+ {id:'lagartija-esbelta',g:'herp',n:'Lagartija esbelta',s:'Liolaemus tenuis',reg:0,t:'El macho es verde azulado con escamas amarillas. Toma sol en troncos caídos y muros de piedra al mediodía.'},
+ {id:'culebra-cola-larga',g:'herp',n:'Culebra de cola larga',s:'Philodryas chamissonis',reg:0,t:'Inofensiva para las personas. Cruza el camino en días cálidos. Mirar y dejar pasar.'},
  /* insectos y arañas */
- {g:'ins',n:'Madre de la culebra',s:'Acanthinodera cumingii',reg:0,t:'El escarabajo más grande de Chile, de hasta 8 cm, de troncos viejos. Las hembras son enormes y caminan lento por el suelo entre diciembre y enero.'},
- {g:'ins',n:'Ciervo volante',s:'Chiasognathus grantii',reg:0,cons:'Vulnerable',t:'Mandíbulas larguísimas en el macho, iridiscente. El Biobío es el límite norte de su distribución. Verlo es un premio.'},
- {g:'ins',n:'Pololo verde',s:'Hylamorpha elegans',reg:0,t:'Escarabajo verde metálico que vuela en enjambres al atardecer de verano y choca con todo. Lo adoran los niños.'},
- {g:'ins',n:'Peorro',s:'Ceroglossus chilensis',reg:0,t:'Carábido de colores metálicos que corre por la hojarasca. Si se lo molesta suelta un olor fuerte, de ahí el nombre.'},
- {g:'ins',n:'Coliguacho',s:'Scaptia lata',reg:0,t:'Tábano negro con pelos anaranjados, ruidoso, de diciembre a febrero. La hembra pica; con repelente y ropa clara se evita.'},
- {g:'ins',n:'Chicharra',s:'Tettigades chilensis',reg:0,t:'El zumbido del verano en los pinos y eucaliptos. Sus mudas vacías quedan pegadas en los troncos: fáciles de coleccionar.'},
- {g:'ins',n:'Abejorro chileno',s:'Bombus dahlbomii',reg:0,cons:'En peligro',t:'El abejorro naranjo gigante, el más grande del mundo, desplazado por abejorros europeos. Si ven uno en flores de quillay, anótenlo.'},
- {g:'ins',n:'Chinita',s:'Eriopis chilensis',reg:0,t:'La chinita nativa, negra con manchas rojas y amarillas. En primavera, sobre brotes con pulgones.'},
- {g:'ins',n:'Araña pollito',s:'Grammostola rosea',reg:0,t:'Tarántula rosada y mansa que sale de su cueva en tardes tibias. No pica si no se la aprieta; mirar sin tocar.'},
- {g:'ins',n:'Araña del boldo',s:'Molinaranea clymene',reg:0,t:'Teje telas orbiculares grandes entre arbustos del sotobosque. Al amanecer, con rocío, se ven espectaculares.'},
+ {id:'madre-de-la-culebra',g:'ins',n:'Madre de la culebra',s:'Acanthinodera cumingii',reg:0,t:'El escarabajo más grande de Chile, de hasta 8 cm, de troncos viejos. Las hembras son enormes y caminan lento por el suelo entre diciembre y enero.'},
+ {id:'ciervo-volante',g:'ins',n:'Ciervo volante',s:'Chiasognathus grantii',reg:0,cons:'Vulnerable',t:'Mandíbulas larguísimas en el macho, iridiscente. El Biobío es el límite norte de su distribución. Verlo es un premio.'},
+ {id:'pololo-verde',g:'ins',n:'Pololo verde',s:'Hylamorpha elegans',reg:0,t:'Escarabajo verde metálico que vuela en enjambres al atardecer de verano y choca con todo. Lo adoran los niños.'},
+ {id:'peorro',g:'ins',n:'Peorro',s:'Ceroglossus chilensis',reg:0,t:'Carábido de colores metálicos que corre por la hojarasca. Si se lo molesta suelta un olor fuerte, de ahí el nombre.'},
+ {id:'coliguacho',g:'ins',n:'Coliguacho',s:'Scaptia lata',reg:0,t:'Tábano negro con pelos anaranjados, ruidoso, de diciembre a febrero. La hembra pica; con repelente y ropa clara se evita.'},
+ {id:'chicharra',g:'ins',n:'Chicharra',s:'Tettigades chilensis',reg:0,t:'El zumbido del verano en los pinos y eucaliptos. Sus mudas vacías quedan pegadas en los troncos: fáciles de coleccionar.'},
+ {id:'abejorro-chileno',g:'ins',n:'Abejorro chileno',s:'Bombus dahlbomii',reg:0,cons:'En peligro',t:'El abejorro naranjo gigante, el más grande del mundo, desplazado por abejorros europeos. Si ven uno en flores de quillay, anótenlo.'},
+ {id:'chinita',g:'ins',n:'Chinita',s:'Eriopis connexa',reg:0,t:'La chinita nativa, negra con manchas rojas y amarillas. En primavera, sobre brotes con pulgones.'},
+ {id:'arana-pollito',g:'ins',n:'Araña pollito',s:'Grammostola rosea',reg:0,t:'Tarántula rosada y mansa que sale de su cueva en tardes tibias. No pica si no se la aprieta; mirar sin tocar.'},
+ {id:'arana-del-boldo',g:'ins',n:'Araña del boldo',s:'Molinaranea clymene',reg:0,t:'Teje telas orbiculares grandes entre arbustos del sotobosque. Al amanecer, con rocío, se ven espectaculares.'},
  /* flora nativa */
- {g:'nat',n:'Peumo',s:'Cryptocarya alba',reg:1,t:'Hojas verde oscuro que huelen a bosque al restregarlas. Frutos rosados en otoño que comen las aves.'},
- {g:'nat',n:'Boldo',s:'Peumus boldus',reg:1,t:'Hoja áspera con olor a infusión. En la restauración se planta junto a peumo y quillay.'},
- {g:'nat',n:'Quillay',s:'Quillaja saponaria',reg:1,t:'Corteza jabonosa (los mapuche la usaban para lavar). Flores blancas en diciembre llenas de abejas.'},
- {g:'nat',n:'Arrayán',s:'Luma apiculata',reg:1,t:'Tronco anaranjado liso y frío al tacto. Crece en las quebradas húmedas de la subida.'},
- {g:'nat',n:'Roble hualle',s:'Nothofagus obliqua',reg:1,t:'Bota las hojas en otoño: es el árbol del bosque caducifolio de Concepción. Se plantaron hualles jóvenes en 2020.'},
- {g:'nat',n:'Raulí y coihue',s:'Nothofagus alpina · N. dombeyi',reg:1,t:'Los Nothofagus de la plantación de 2025 con CONAF y FAO. Reconozcan los plantines con tutor en el sector de Agüita de la Perdiz.'},
- {g:'nat',n:'Lingue',s:'Persea lingue',reg:1,t:'Pariente del palto. Reforestado en 2018. Hojas grandes y brillantes.'},
- {g:'nat',n:'Olivillo',s:'Aextoxicon punctatum',reg:1,t:'Árbol de los bosques costeros con el envés de la hoja plateado. Da nombre al sendero Los Olivillos.'},
- {g:'nat',n:'Canelo',s:'Drimys winteri',reg:1,t:'Árbol sagrado mapuche, de hojas con sabor picante. Da nombre al sendero Los Canelos.'},
- {g:'nat',n:'Copihue',s:'Lapageria rosea',reg:1,t:'La flor nacional, enredadera de campanas rojas que florece de febrero a mayo. Da nombre al sendero Los Copihues. Prohibido cortarla.'},
- {g:'nat',n:'Mayu',s:'Sophora macrocarpa',reg:1,t:'Arbusto de flores amarillas colgantes, muy visitado por picaflores. Plantado en 2025.'},
- {g:'nat',n:'Pitao',s:'Pitavia punctata',reg:0,cons:'En peligro',t:'Árbol endémico y raro. Hallado a 2 km del parque, en el fundo El Guindo, en el bosque que el PACYT amenaza.'},
- {g:'nat',n:'Michay araucano',s:'Berberis negeriana',reg:0,cons:'En peligro',t:'Arbusto espinoso de flores amarillas que solo crece en este tipo de bosque, en ninguna otra parte del mundo.'},
+ {id:'peumo',g:'nat',n:'Peumo',s:'Cryptocarya alba',reg:1,t:'Hojas verde oscuro que huelen a bosque al restregarlas. Frutos rosados en otoño que comen las aves.'},
+ {id:'boldo',g:'nat',n:'Boldo',s:'Peumus boldus',reg:1,t:'Hoja áspera con olor a infusión. En la restauración se planta junto a peumo y quillay.'},
+ {id:'quillay',g:'nat',n:'Quillay',s:'Quillaja saponaria',reg:1,t:'Corteza jabonosa (los mapuche la usaban para lavar). Flores blancas en diciembre llenas de abejas.'},
+ {id:'arrayan',g:'nat',n:'Arrayán',s:'Luma apiculata',reg:1,t:'Tronco anaranjado liso y frío al tacto. Crece en las quebradas húmedas de la subida.'},
+ {id:'roble-hualle',g:'nat',n:'Roble hualle',s:'Nothofagus obliqua',reg:1,t:'Bota las hojas en otoño: es el árbol del bosque caducifolio de Concepción. Se plantaron hualles jóvenes en 2020.'},
+ {id:'rauli',g:'nat',n:'Raulí y coihue',s:'Nothofagus alpina · N. dombeyi',reg:1,t:'Los Nothofagus de la plantación de 2025 con CONAF y FAO. Reconozcan los plantines con tutor en el sector de Agüita de la Perdiz.'},
+ {id:'lingue',g:'nat',n:'Lingue',s:'Persea lingue',reg:1,t:'Pariente del palto. Reforestado en 2018. Hojas grandes y brillantes.'},
+ {id:'olivillo',g:'nat',n:'Olivillo',s:'Aextoxicon punctatum',reg:1,t:'Árbol de los bosques costeros con el envés de la hoja plateado. Da nombre al sendero Los Olivillos.'},
+ {id:'canelo',g:'nat',n:'Canelo',s:'Drimys winteri',reg:1,t:'Árbol sagrado mapuche, de hojas con sabor picante. Da nombre al sendero Los Canelos.'},
+ {id:'copihue',g:'nat',n:'Copihue',s:'Lapageria rosea',reg:1,t:'La flor nacional, enredadera de campanas rojas que florece de febrero a mayo. Da nombre al sendero Los Copihues. Prohibido cortarla.'},
+ {id:'mayu',g:'nat',n:'Mayu',s:'Sophora macrocarpa',reg:1,t:'Arbusto de flores amarillas colgantes, muy visitado por picaflores. Plantado en 2025.'},
+ {id:'pitao',g:'nat',n:'Pitao',s:'Pitavia punctata',reg:0,cons:'En peligro',t:'Árbol endémico y raro. Hallado a 2 km del parque, en el fundo El Guindo, en el bosque que el PACYT amenaza.'},
+ {id:'michay-araucano',g:'nat',n:'Michay araucano',s:'Berberis negeriana',reg:0,cons:'En peligro',t:'Arbusto espinoso de flores amarillas que solo crece en este tipo de bosque, en ninguna otra parte del mundo.'},
  /* flora exótica */
- {g:'exo',n:'Pino insigne',s:'Pinus radiata',reg:1,exo:1,t:'Domina el cerro desde las plantaciones del siglo XX. Muchos están sobremaduros y se caen en suelos delgados; la restauración los va reemplazando.'},
- {g:'exo',n:'Eucalipto',s:'Eucalyptus globulus',reg:1,exo:1,t:'Olor inconfundible al frotar la hoja. Su hojarasca acidifica el suelo e impide que crezca el bosque nativo.'},
- {g:'exo',n:'Aromo',s:'Acacia dealbata',reg:1,exo:1,t:'Flores amarillas en agosto. Invasor agresivo que rebrota tras los incendios.'},
- {g:'exo',n:'Zarzamora',s:'Rubus ulmifolius',reg:1,exo:1,t:'Mora silvestre en los bordes del camino. Frutos en febrero y marzo; espinas todo el año.'}
+ {id:'pino-insigne',g:'exo',n:'Pino insigne',s:'Pinus radiata',reg:1,exo:1,t:'Domina el cerro desde las plantaciones del siglo XX. Muchos están sobremaduros y se caen en suelos delgados; la restauración los va reemplazando.'},
+ {id:'eucalipto',g:'exo',n:'Eucalipto',s:'Eucalyptus globulus',reg:1,exo:1,t:'Olor inconfundible al frotar la hoja. Su hojarasca acidifica el suelo e impide que crezca el bosque nativo.'},
+ {id:'aromo',g:'exo',n:'Aromo',s:'Acacia dealbata',reg:1,exo:1,t:'Flores amarillas en agosto. Invasor agresivo que rebrota tras los incendios.'},
+ {id:'zarzamora',g:'exo',n:'Zarzamora',s:'Rubus ulmifolius',reg:1,exo:1,t:'Mora silvestre en los bordes del camino. Frutos en febrero y marzo; espinas todo el año.'}
 ];
 const GNAME={aves:'Ave',mam:'Mamífero',herp:'Anfibio o reptil',ins:'Insecto o araña',nat:'Flora nativa',exo:'Flora exótica'};
-function renderSpecies(g){const box=$('species');box.innerHTML='';SP.filter(s=>g==='all'||s.g===g).forEach(s=>{const d=document.createElement('article');d.className='sp g-'+s.g;
-  d.innerHTML='<div class="grp">'+GNAME[s.g]+'</div><h3>'+s.n+'</h3><div class="sci">'+s.s+'</div><p>'+s.t+'</p><div class="tags">'+(s.reg?'<span class="tag reg">Registrado en el cerro</span>':'<span class="tag prob">Probable</span>')+(s.cons?'<span class="tag cons">'+s.cons+'</span>':'')+(s.exo?'<span class="tag exo">Introducida</span>':'')+'</div>';box.appendChild(d);});}
+let CREDITS={};let curGroup='all';
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function renderSpecies(g){curGroup=g;const box=$('species');box.innerHTML='';SP.filter(s=>g==='all'||s.g===g).forEach(s=>{const d=document.createElement('article');d.className='sp g-'+s.g;const cr=CREDITS[s.id];const file='img/'+(cr?cr.file:s.id+'.jpg');
+  const credit=cr?'<div class="credit">Foto: '+esc(cr.author)+' · '+(cr.url?'<a href="'+esc(cr.url)+'" target="_blank" rel="noopener">'+esc(cr.license)+'</a>':esc(cr.license))+'</div>':'';
+  d.innerHTML='<img class="ph" src="'+file+'" alt="'+esc(s.n)+' ('+esc(s.s)+')" loading="lazy" decoding="async"><div class="sp-body"><div class="grp">'+GNAME[s.g]+'</div><h3>'+s.n+'</h3><div class="sci">'+s.s+'</div><p>'+s.t+'</p><div class="tags">'+(s.reg?'<span class="tag reg">Registrado en el cerro</span>':'<span class="tag prob">Probable</span>')+(s.cons?'<span class="tag cons">'+s.cons+'</span>':'')+(s.exo?'<span class="tag exo">Introducida</span>':'')+'</div>'+credit+'</div>';
+  d.querySelector('img').addEventListener('error',()=>d.classList.add('noimg'));box.appendChild(d);});}
 renderSpecies('all');
+fetch('img/credits.json').then(r=>r.ok?r.json():{}).then(c=>{CREDITS=c||{};renderSpecies(curGroup);}).catch(()=>{});
 $('chips').addEventListener('click',ev=>{const b=ev.target.closest('.chip');if(!b)return;document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');renderSpecies(b.dataset.g);});
 
 /* ------------------------------------------------------------- bingo */
