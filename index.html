@@ -1,0 +1,763 @@
+<title>Cerro Caracol en Familia</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: una app de bolsillo. Cabecera fija, cuatro pestañas abajo, tarjetas en una columna. */
+:root{
+  --bg:#eef2ea;          /* verde-blanco frío del sotobosque */
+  --surface:#ffffff;
+  --surface-2:#e2e8dc;
+  --fg:#15221a;
+  --fg-2:#4a5a4e;
+  --fg-3:#73826f;
+  --line:#cfd8c9;
+  --accent:#b8821f;      /* maicillo: la gravilla amarilla del camino */
+  --accent-ink:#1d1606;
+  --green:#2f6b3a;       /* peumo */
+  --green-soft:#d5e6d4;
+  --blue:#2f6f94;        /* bahía y río Biobío */
+  --stone:#7f8378;       /* piedra de la Torre Bismarck */
+  --ok:#2e7d45;
+  --warn:#b86e12;
+  --bad:#b23b2e;
+  --grade-1:#5e9a63;
+  --grade-2:#c99a2e;
+  --grade-3:#b8513f;
+  --shadow:0 1px 2px rgba(21,34,26,.08),0 6px 18px rgba(21,34,26,.08);
+  --font-display:"Bricolage Grotesque","Avenir Next Condensed","Arial Narrow",system-ui,sans-serif;
+  --font-body:"Atkinson Hyperlegible","Segoe UI",Roboto,system-ui,sans-serif;
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1712;--surface:#172119;--surface-2:#1f2c22;--fg:#e8efe4;--fg-2:#b5c3b4;--fg-3:#8a9a8a;--line:#2d3b30;
+    --accent:#e0a83f;--accent-ink:#1d1606;--green:#6fb27a;--green-soft:#22382a;--blue:#7fb8d9;--stone:#a3a79b;
+    --ok:#5fc27a;--warn:#e3a04a;--bad:#ea7a68;--grade-1:#6fb27a;--grade-2:#e0b24a;--grade-3:#e07a66;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1712;--surface:#172119;--surface-2:#1f2c22;--fg:#e8efe4;--fg-2:#b5c3b4;--fg-3:#8a9a8a;--line:#2d3b30;
+  --accent:#e0a83f;--accent-ink:#1d1606;--green:#6fb27a;--green-soft:#22382a;--blue:#7fb8d9;--stone:#a3a79b;
+  --ok:#5fc27a;--warn:#e3a04a;--bad:#ea7a68;--grade-1:#6fb27a;--grade-2:#e0b24a;--grade-3:#e07a66;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.5;margin:0;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.1;margin:0;text-wrap:balance;font-weight:700}
+p{margin:0}
+a{color:var(--blue)}
+button{font:inherit;color:inherit}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* Cabecera */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px}
+.top-in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.brand{display:flex;flex-direction:column;min-width:0;flex:1}
+.brand h1{font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
+.brand .eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3)}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.9rem;line-height:1;white-space:nowrap}
+.btn:hover{border-color:var(--fg-3)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.small{padding:6px 10px;font-size:.8rem}
+.btn[aria-pressed="true"]{background:var(--green);color:#fff;border-color:var(--green)}
+.btn svg{width:16px;height:16px;flex:none}
+
+/* Contenido */
+main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px calc(84px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:760px;margin:0 auto;display:grid;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;min-width:0}
+.card.flush{padding:0;overflow:hidden}
+.card h2{font-size:1.35rem;margin-bottom:6px}
+.card h3{font-size:1.05rem}
+.lede{color:var(--fg-2);max-width:62ch}
+.muted{color:var(--fg-3);font-size:.85rem}
+.section-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
+.section-title .muted{text-align:right}
+
+/* Tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 12px 10px;min-width:0}
+.tile .lab{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3)}
+.tile .val{font-family:var(--font-display);font-size:1.5rem;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-top:2px;font-variant-numeric:tabular-nums}
+.tile .sub{font-size:.78rem;color:var(--fg-2);margin-top:2px}
+@media (max-width:520px){.tiles{grid-template-columns:repeat(2,1fr)}}
+
+/* 3D */
+.scene{position:relative;background:var(--surface-2);aspect-ratio:4/3;max-width:100%;touch-action:none;user-select:none}
+.scene canvas{display:block;width:100%;height:100%}
+.scene .labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.pin{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none}
+.pin .n{width:22px;height:22px;border-radius:50%;background:var(--surface);border:2px solid var(--accent);color:var(--fg);font-family:var(--font-display);font-weight:800;font-size:.75rem;display:grid;place-items:center;box-shadow:var(--shadow);font-variant-numeric:tabular-nums}
+.pin.active .n{background:var(--accent);color:var(--accent-ink)}
+.pin .t{font-size:.72rem;font-weight:700;background:var(--surface);padding:2px 7px;border-radius:6px;white-space:nowrap;box-shadow:var(--shadow);display:none}
+.pin.active .t{display:block}
+.compass{position:absolute;left:10px;bottom:10px;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-2);background:color-mix(in srgb,var(--surface) 80%,transparent);padding:4px 8px;border-radius:8px}
+.scene-tools{display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;border-top:1px solid var(--line);align-items:center}
+.scene-tools .spacer{flex:1}
+.hint{position:absolute;top:10px;right:10px;font-size:.72rem;color:var(--fg-2);background:color-mix(in srgb,var(--surface) 85%,transparent);padding:4px 8px;border-radius:8px}
+.fallback{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;color:var(--fg-2)}
+
+/* Lectura de posición */
+.readout{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.readout .big{font-family:var(--font-display);font-size:2.2rem;font-weight:800;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.readout .big small{font-size:1rem;font-weight:700;color:var(--fg-3);letter-spacing:0}
+.readout .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.9rem;color:var(--fg-2);font-variant-numeric:tabular-nums}
+.readout .meta b{color:var(--fg)}
+.readout h3{font-size:1.15rem}
+.grade-pill{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--surface-2)}
+.grade-pill i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+/* Perfil */
+.profile{width:100%;height:auto;display:block;touch-action:none;cursor:crosshair}
+.profile text{font-family:var(--font-body);fill:var(--fg-2);font-size:11px}
+.profile .axis{stroke:var(--line);stroke-width:1}
+.profile .area{fill:var(--green);opacity:.12}
+.profile .seg{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.profile .cur{stroke:var(--fg);stroke-width:1.5}
+.profile .hito-dot{fill:var(--accent);stroke:var(--surface);stroke-width:2}
+.profile .hito-lab{font-weight:700;fill:var(--fg)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--fg-2);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:4px;border-radius:2px;display:inline-block}
+
+/* Lista de hitos */
+.hitos{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.hitos li{border-top:1px solid var(--line)}
+.hitos li:first-child{border-top:0}
+.hito-btn{width:100%;text-align:left;background:none;border:0;padding:12px 4px;display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:start;cursor:pointer;border-radius:8px}
+.hito-btn:hover{background:var(--surface-2)}
+.hito-btn[aria-current="true"]{background:var(--green-soft)}
+.hito-btn .n{width:26px;height:26px;border-radius:50%;border:2px solid var(--accent);display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:.8rem;font-variant-numeric:tabular-nums}
+.hito-btn[aria-current="true"] .n{background:var(--accent);color:var(--accent-ink)}
+.hito-btn .name{font-weight:700}
+.hito-btn .desc{color:var(--fg-2);font-size:.9rem;margin-top:2px}
+.hito-btn .stat{text-align:right;font-variant-numeric:tabular-nums;font-size:.85rem;color:var(--fg-2);white-space:nowrap}
+.hito-btn .stat b{display:block;color:var(--fg);font-size:1rem}
+
+/* Chips y tarjetas naturaleza */
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-size:.85rem;font-weight:700;white-space:nowrap;cursor:pointer;flex:none}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.species{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.sp{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:6px;border-left:5px solid var(--g);min-width:0}
+.sp .grp{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--fg-3)}
+.sp h3{font-size:1.05rem}
+.sp .sci{font-style:italic;color:var(--fg-2);font-size:.85rem}
+.sp p{font-size:.9rem;color:var(--fg-2)}
+.sp .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.tag{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--fg-2)}
+.tag.reg{background:var(--green-soft);color:var(--green)}
+.tag.prob{background:var(--surface-2)}
+.tag.cons{background:color-mix(in srgb,var(--warn) 18%,var(--surface));color:var(--warn)}
+.tag.exo{background:color-mix(in srgb,var(--stone) 20%,var(--surface));color:var(--fg-2)}
+.g-aves{--g:var(--blue)} .g-mam{--g:var(--accent)} .g-herp{--g:var(--green)} .g-ins{--g:#8a5fcf} .g-nat{--g:var(--green)} .g-exo{--g:var(--stone)}
+:root[data-theme="dark"] .g-ins,:root:not([data-theme="light"]) .g-ins{--g:#a98be6}
+
+/* Bingo */
+.bingo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bingo label{display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer;font-size:.85rem;min-height:74px;line-height:1.25}
+.bingo input{width:20px;height:20px;margin:0;accent-color:var(--green)}
+.bingo label:has(input:checked){background:var(--green-soft);border-color:var(--green)}
+@media (max-width:420px){.bingo{grid-template-columns:repeat(2,1fr)}}
+.progress{height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden;margin-top:10px}
+.progress i{display:block;height:100%;background:var(--green);width:0;transition:width .3s}
+
+/* Historia */
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.timeline li{display:grid;grid-template-columns:78px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.timeline li:first-child{border-top:0}
+.timeline .yr{font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.2}
+.timeline .yr small{display:block;font-size:.7rem;color:var(--fg-3);font-family:var(--font-body);font-weight:400;letter-spacing:.04em}
+.timeline h3{font-size:1rem}
+.timeline p{color:var(--fg-2);font-size:.92rem;margin-top:2px}
+.prose{display:grid;gap:10px;max-width:65ch}
+.prose p{color:var(--fg-2)}
+.prose strong{color:var(--fg)}
+.fact{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fact div{background:var(--surface-2);border-radius:10px;padding:10px}
+.fact .k{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-3)}
+.fact .v{font-weight:700;margin-top:2px}
+
+/* Guía */
+.kv{display:grid;gap:0}
+.kv div{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.kv div:first-child{border-top:0}
+.kv .k{font-weight:700}
+.kv .v{color:var(--fg-2)}
+.kv .v b{color:var(--fg)}
+.list{margin:0;padding-left:20px;color:var(--fg-2);display:grid;gap:6px}
+.list li::marker{color:var(--accent)}
+.notice{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,var(--surface));padding:10px 12px;border-radius:0 10px 10px 0;color:var(--fg-2);font-size:.92rem}
+.notice b{color:var(--fg)}
+.sources{columns:1;font-size:.85rem;color:var(--fg-2);padding-left:20px;margin:0;display:grid;gap:4px}
+.plan{list-style:none;margin:0;padding:0;display:grid}
+.plan li{display:grid;grid-template-columns:64px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--line);font-size:.95rem}
+.plan li:first-child{border-top:0}
+.plan .t{font-weight:700;font-variant-numeric:tabular-nums}
+.plan .d{color:var(--fg-2)}
+
+/* Tabs abajo */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--surface);border-top:1px solid var(--line);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs-in{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.tab{background:none;border:0;padding:8px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.72rem;font-weight:700;color:var(--fg-3);cursor:pointer;letter-spacing:.02em}
+.tab svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tab[aria-selected="true"]{color:var(--green)}
+.tab[aria-selected="true"] svg{stroke:var(--green)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <span class="eyebrow">Parque Metropolitano · Concepción</span>
+      <h1>Cerro Caracol en Familia</h1>
+    </div>
+    <button class="btn small" id="wake" aria-pressed="false" title="Mantener la pantalla encendida durante la subida">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <span id="wake-label">Pantalla</span>
+    </button>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+<!-- ===================== RUTA ===================== -->
+<section id="panel-ruta" role="tabpanel" aria-labelledby="tab-ruta">
+  <div class="wrap">
+    <div>
+      <h2 style="font-size:1.6rem;margin-bottom:4px">Subida al Mirador Alemán</h2>
+      <p class="lede">La ruta clásica para ir con niños: desde el portón del Parque Ecuador, por el camino de maicillo que sube en caracol hasta la Torre Bismarck. Toca el modelo 3D o arrastra el perfil para ver dónde vas.</p>
+    </div>
+
+    <div class="tiles" aria-label="Resumen de la ruta">
+      <div class="tile"><div class="lab">Distancia</div><div class="val">2,7 km</div><div class="sub">solo ida · 5,4 km ida y vuelta</div></div>
+      <div class="tile"><div class="lab">Desnivel</div><div class="val">+210 m</div><div class="sub">de 25 m a unos 232 m</div></div>
+      <div class="tile"><div class="lab">Tiempo familiar</div><div class="val">1 h 15</div><div class="sub">a 1 h 45 subiendo · 2,5–3 h total</div></div>
+      <div class="tile"><div class="lab">Dificultad</div><div class="val">Moderada</div><div class="sub">pendiente media 8 %, tramos de 12 %</div></div>
+    </div>
+
+    <div class="card flush">
+      <div class="scene" id="scene">
+        <canvas id="gl" aria-label="Modelo 3D del Cerro Caracol con el sendero al Mirador Alemán"></canvas>
+        <div class="labels" id="labels"></div>
+        <div class="hint" id="hint">Arrastra para girar · pellizca para acercar</div>
+        <div class="compass">Ciudad y bahía ↖ · Nonguén ↘</div>
+      </div>
+      <div class="scene-tools">
+        <button class="btn primary small" id="play" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5v14l12-7z"/></svg><span id="play-label">Recorrer</span>
+        </button>
+        <button class="btn small" id="view-top">Vista aérea</button>
+        <button class="btn small" id="view-reset">Vista 3D</button>
+        <span class="spacer"></span>
+        <span class="muted">Relieve esquemático, altura ×1,6</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="readout">
+        <div>
+          <div class="big" id="ro-alt">25<small> m</small></div>
+          <div class="muted" id="ro-km">km 0,0</div>
+        </div>
+        <div>
+          <h3 id="ro-name">Portón principal</h3>
+          <div class="meta" style="margin:4px 0 6px">
+            <span>Pendiente aquí <b id="ro-grade">—</b></span>
+            <span>Falta al mirador <b id="ro-left">2,7 km · +207 m</b></span>
+            <span>Tiempo estimado <b id="ro-eta">1 h 15</b></span>
+          </div>
+          <p class="muted" id="ro-desc">Detrás de las canchas de tenis del Parque Ecuador, por Veteranos del 79 (calle Dr. Wilhelm).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><h2>Perfil de altura</h2><span class="muted">Toca o arrastra</span></div>
+      <svg class="profile" id="profile" viewBox="0 0 640 260" role="img" aria-label="Perfil de altura de la ruta, desde 25 metros en el portón hasta 232 metros en el Mirador Alemán"></svg>
+      <div class="legend">
+        <span><i style="background:var(--grade-1)"></i>Suave, menos de 6 %</span>
+        <span><i style="background:var(--grade-2)"></i>Moderada, 6 a 10 %</span>
+        <span><i style="background:var(--grade-3)"></i>Exigente, más de 10 %</span>
+      </div>
+      <p class="muted" style="margin-top:8px">Las cotas vienen de tracks de Wikiloc, AllTrails y Wikiexplora (mirador a 220–250 m según la fuente). La forma exacta entre hitos es una aproximación.</p>
+    </div>
+
+    <div class="card">
+      <div class="section-title"><h2>Hitos del camino</h2><span class="muted">Toca uno para ubicarlo</span></div>
+      <ol class="hitos" id="hitos"></ol>
+    </div>
+
+    <div class="card">
+      <h2>Plan sugerido para una mañana</h2>
+      <ol class="plan">
+        <li><span class="t">09:30</span><span class="d">Llegada al Parque Ecuador. Baño, agua y bloqueador. Entrar por el portón de Veteranos del 79.</span></li>
+        <li><span class="t">09:45</span><span class="d">Garita y primer tramo en caracol. Buscar rayaditos y escuchar al carpinterito en los troncos.</span></li>
+        <li><span class="t">10:15</span><span class="d">Mirador Dos: primera vista a la ciudad y colación corta. Las ruinas eran un restaurante en los años 60.</span></li>
+        <li><span class="t">10:45</span><span class="d">Anfiteatro natural y entrada al bosque. Oler una hoja de peumo y una de eucalipto y compararlas.</span></li>
+        <li><span class="t">11:15</span><span class="d">Mirador Alemán. Picnic con vista a la bahía, Talcahuano, San Pedro y el río Biobío.</span></li>
+        <li><span class="t">12:00</span><span class="d">Bajada por el mismo camino, 45 a 60 minutos. Cerrar el bingo de naturaleza abajo.</span></li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h2>Otras rutas del parque</h2>
+      <div class="kv">
+        <div><span class="k">Senderos oficiales</span><span class="v">Los Canelos, Los Olivillos, Confluencia y Los Copihues: entre <b>2 y 11 km</b>, de dificultad media-baja a alta (Revista Nos).</span></div>
+        <div><span class="k">Circuito Agüita de la Perdiz</span><span class="v">Vuelta de <b>6 km</b> y +250 m por el valle del estero, saliendo por Los Aguilera. Más sombra, más barro en invierno.</span></div>
+        <div><span class="k">Travesía a la UdeC</span><span class="v"><b>8,1 km</b> y +328 m: portón, Mirador Alemán y bajada por el fundo forestal hasta el estadio de la Universidad (Wikiexplora). Apta en bicicleta.</span></div>
+        <div><span class="k">Manquimávida</span><span class="v">Cresta larga hacia Chiguayante, <b>15 a 17 km</b> y más de 500 m de subida acumulada. Solo para adultos entrenados.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NATURALEZA ===================== -->
+<section id="panel-naturaleza" role="tabpanel" aria-labelledby="tab-naturaleza" hidden>
+  <div class="wrap">
+    <div>
+      <h2 style="font-size:1.6rem;margin-bottom:4px">Qué vive en el cerro</h2>
+      <p class="lede">Un cerro de bosque caducifolio costero rodeado de ciudad: el 90 % del arbolado son pinos, eucaliptos y aromos, pero entre ellos sobreviven peumos, robles y una fauna que sorprende, desde el monito del monte hasta la güiña.</p>
+    </div>
+
+    <div class="fact">
+      <div><div class="k">Flora registrada</div><div class="v">70 especies, 44 % nativas</div></div>
+      <div><div class="k">En categoría de conservación</div><div class="v">10 especies</div></div>
+      <div><div class="k">Bosque nativo</div><div class="v">≈10 % de la cubierta</div></div>
+      <div><div class="k">Árboles nativos plantados desde 2019</div><div class="v">más de 7.500</div></div>
+    </div>
+
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por grupo">
+      <button class="chip" data-g="all" aria-pressed="true">Todo</button>
+      <button class="chip" data-g="aves" aria-pressed="false">Aves</button>
+      <button class="chip" data-g="mam" aria-pressed="false">Mamíferos</button>
+      <button class="chip" data-g="herp" aria-pressed="false">Anfibios y reptiles</button>
+      <button class="chip" data-g="ins" aria-pressed="false">Insectos y arañas</button>
+      <button class="chip" data-g="nat" aria-pressed="false">Flora nativa</button>
+      <button class="chip" data-g="exo" aria-pressed="false">Flora exótica</button>
+    </div>
+    <div class="legend" style="margin-top:-6px">
+      <span><span class="tag reg">Registrado en el cerro</span></span>
+      <span><span class="tag prob">Probable</span> especie del mismo bosque (Nonguén y alrededores), sin registro publicado en el parque</span>
+    </div>
+
+    <div class="species" id="species"></div>
+
+    <div class="card">
+      <div class="section-title"><h2>Bingo de naturaleza</h2><span class="muted" id="bingo-count">0 de 12</span></div>
+      <p class="muted" style="margin-bottom:10px">Para los niños: marcar lo que encuentren en el camino. Se guarda en este teléfono.</p>
+      <div class="bingo" id="bingo"></div>
+      <div class="progress"><i id="bingo-bar"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== HISTORIA ===================== -->
+<section id="panel-historia" role="tabpanel" aria-labelledby="tab-historia" hidden>
+  <div class="wrap">
+    <div>
+      <h2 style="font-size:1.6rem;margin-bottom:4px">De Alticura a parque metropolitano</h2>
+      <p class="lede">El cerro apareció en un plano de 1774 como “Alticura”, piedra alta en mapudungun, por la gran roca granítica donde hoy está el mirador. “Caracol” vino después, por el camino de La Laxa que subía en espiral hasta la cumbre.</p>
+    </div>
+
+    <div class="card">
+      <ol class="timeline">
+        <li><div class="yr">31 Ma<small>millones de años</small></div><div><h3>Fondo marino</h3><p>El vecino Cerro Amarillo conserva fósiles marinos de unos 31 millones de años: toda esta zona fue costa y fondo de mar antes de levantarse con la Cordillera de la Costa.</p></div></li>
+        <li><div class="yr">1764</div><div><h3>Concepción se muda al pie del cerro</h3><p>Tras terremotos y maremotos en Penco, la ciudad se refunda en el valle de la Mocha. El cerro la protege del viento y le da piedra, greda y leña.</p></div></li>
+        <li><div class="yr">1774</div><div><h3>“Alticura” en el plano</h3><p>Carlos Oliver Schneider encontró el nombre en un plano colonial. Lo explicó como “piedra alta”, por la roca granítico-diorítica de la cima.</p></div></li>
+        <li><div class="yr">1817<small>5 de mayo</small></div><div><h3>Batalla de Gavilán</h3><p>En el Cerro Amarillo, Juan Gregorio de Las Heras derrota a las fuerzas realistas de Ordóñez. Por eso el cerro también se llama Gavilán.</p></div></li>
+        <li><div class="yr">1800s</div><div><h3>Polvorín, canteras y cadalso</h3><p>Hubo un polvorín en las laderas y concesiones para extraer piedra y greda. A la altura de Las Heras con Caupolicán funcionó el patíbulo de la ciudad; allí fusilaron a Carmen Pino y Anacleto Matamala en 1854.</p></div></li>
+        <li><div class="yr">1921</div><div><h3>Torre Bismarck</h3><p>La colonia alemana levanta en primavera el Mirador Alemán, diseñado por Roderich von Stillfried en terreno donado por Arturo Junge. Es la única Torre Bismarck de América.</p></div></li>
+        <li><div class="yr">1931</div><div><h3>Parque del Cerro Amarillo</h3><p>Se inaugura por iniciativa del alcalde José Ramón Soto y su director de obras Ramón del Castillo. El Parque Ecuador consolida el borde urbano del cerro.</p></div></li>
+        <li><div class="yr">1939<small>1960 · 2010</small></div><div><h3>Terremotos</h3><p>La torre, de piedra sin refuerzo metálico, pierde el segundo nivel en 1939 y queda cerrada por riesgo de derrumbe durante décadas.</p></div></li>
+        <li><div class="yr">1966<small>a 1970</small></div><div><h3>Torre Entel</h3><p>En la cumbre se levanta la torre de microondas de 70 m que enlazó el sur con Santiago tras el terremoto de 1960. Hoy es el perfil más reconocible del cerro.</p></div></li>
+        <li><div class="yr">2015<small>aprox.</small></div><div><h3>Parque Metropolitano</h3><p>El municipio entrega 105 ha en comodato al Serviu por 20 años. Es el primer parque fuera de Santiago en la red de parques urbanos del Minvu. Se despejan miradores y se construye un anfiteatro natural junto al Mirador Alemán.</p></div></li>
+        <li><div class="yr">2018<small>a 2021</small></div><div><h3>La torre vuelve</h3><p>El Club Deportivo Alemán restaura escaleras, cúpula y nave central; se reinaugura en 2019 y celebra su centenario en 2021. El acceso al interior ha variado desde entonces: pregunten en la garita.</p></div></li>
+        <li><div class="yr">2019<small>en adelante</small></div><div><h3>Restauración del bosque</h3><p>Más de 7.500 árboles nativos plantados. En 2025, CONAF y FAO sumaron 1.400 raulíes, coihues, quillayes, peumos y mayus en 1,4 ha para reemplazar pinos sobremaduros.</p></div></li>
+        <li><div class="yr">2024<small>a 2026</small></div><div><h3>Teleférico en estudio y cierres puntuales</h3><p>Un estudio de prefactibilidad del Minvu dio luz verde a un teleférico (unos $14 mil millones). El parque cerró por riesgo de incendio en diciembre de 2025 y tuvo un paro de guardias en julio de 2026: conviene revisar si está abierto antes de ir.</p></div></li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h2>La torre de la cima</h2>
+      <div class="prose">
+        <p>El <strong>Mirador Alemán</strong> es una torre de piedra de unos 10 m, de las más de 200 “torres Bismarck” que la diáspora alemana construyó en el mundo en homenaje al canciller Otto von Bismarck. La de Concepción es la única en todo el continente.</p>
+        <p>Se construyó sobre la roca granítica que dio nombre al cerro. Desde arriba se ven la bahía de Concepción, Talcahuano, Hualpén, San Pedro de la Paz y el río Biobío. Con los niños, la cuenta de “cuántas comunas vemos” funciona muy bien.</p>
+        <p>Las fuentes discrepan sobre si se puede entrar y subir al tercer nivel: la restauración de 2018 recuperó la escalera interior, pero reseñas posteriores hablan de reja cerrada. La vista desde la base es igual de buena.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Por qué importa este cerro</h2>
+      <div class="prose">
+        <p>Es el <strong>pulmón verde</strong> de Concepción y un corredor biológico hacia el Parque Nacional Nonguén, el último remanente grande de bosque caducifolio de la zona. Por ese corredor circulan güiñas, zorros y monitos del monte.</p>
+        <p>A dos kilómetros del parque, en el fundo El Guindo, investigadores hallaron poblaciones de <strong>pitao</strong> y <strong>michay araucano</strong>, dos plantas en peligro que solo crecen en este tipo de bosque. La zona está en disputa por el proyecto de Parque Científico y Tecnológico (PACYT), y vecinos organizados han defendido el cerro desde hace años.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GUÍA ===================== -->
+<section id="panel-guia" role="tabpanel" aria-labelledby="tab-guia" hidden>
+  <div class="wrap">
+    <div>
+      <h2 style="font-size:1.6rem;margin-bottom:4px">Antes de salir</h2>
+      <p class="lede">Lo práctico: horarios, por dónde entrar, qué llevar y qué cuidar con niños.</p>
+    </div>
+
+    <div class="notice"><b>Revisen si está abierto.</b> El parque cierra los lunes por mantención y, con alerta de calor o viento, puede cerrar sin aviso por riesgo de incendio. Las redes sociales del parque y de la Municipalidad de Concepción avisan el mismo día.</div>
+
+    <div class="card">
+      <h2>Horario y acceso</h2>
+      <div class="kv">
+        <div><span class="k">Horario</span><span class="v"><b>Martes a domingo</b>. Verano 08:00 a 20:00 (el portón cierra en punto). Invierno 08:00 a 19:00 aprox. <b>Lunes cerrado.</b></span></div>
+        <div><span class="k">Entrada</span><span class="v"><b>Gratuita</b>. Hay guardias en los senderos durante el día.</span></div>
+        <div><span class="k">Portón principal</span><span class="v">Veteranos del 79 (calle Dr. Wilhelm), detrás de las canchas de tenis del Parque Ecuador. A 200 m de Tucapel con Víctor Lamas.</span></div>
+        <div><span class="k">Otros accesos</span><span class="v">Escalera de calle Angol (camino de maicillo). Agüita de la Perdiz, al final de Los Aguilera. Pino Huacho, cerca de calle Serrano. Algunos se cierran tras temporales.</span></div>
+        <div><span class="k">Cómo llegar</span><span class="v">Estacionamiento en el sector bajo del Parque Ecuador. Micros con letrero “Cerro Caracol” o “Villa Universitaria”.</span></div>
+        <div><span class="k">Administra</span><span class="v">Serviu Biobío (Minvu), con el municipio y CONAF en la gestión del cerro.</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Qué llevar</h2>
+      <ul class="list">
+        <li><b>Agua para todos</b>: en la parte alta no hay quioscos ni grifos para beber. Un litro por adulto, medio por niño.</li>
+        <li><b>Gorro y bloqueador</b>: el camino de maicillo va al sol en varios tramos; el bosque da sombra recién después del km 2.</li>
+        <li><b>Zapatillas con suela</b>: la gravilla suelta resbala en bajada. Evitar sandalias.</li>
+        <li><b>Colación y bolsa para la basura</b>: no hay basureros arriba.</li>
+        <li><b>Repelente en verano</b>: el coliguacho (tábano negro y naranjo) aparece de diciembre a febrero. Es ruidoso pero inofensivo si no se le deja posarse.</li>
+        <li><b>Abrigo liviano</b>: en el mirador corre viento aunque abajo haga calor.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Con niños</h2>
+      <ul class="list">
+        <li>Un niño de 5 a 6 años sube bien hasta el Mirador Dos (0,8 km, 25 min). Hasta el Mirador Alemán, mejor desde los 7 u 8 años o en mochila portabebé.</li>
+        <li>Partan temprano: antes de las 10 hay más aves activas y menos calor.</li>
+        <li>Los pinos viejos botan ramas con viento. Con viento fuerte, no entrar al bosque alto.</li>
+        <li>Mantenerse en el camino principal y en grupo. Las reseñas con incidentes son de personas solas en senderos secundarios.</li>
+        <li>Mascotas: se ven perros con correa en el camino, pero no hay norma publicada; consulten en la garita.</li>
+        <li>Si alguien se cansa, el Mirador Dos ya tiene vista a toda la ciudad y es un buen punto para devolverse.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Fuentes consultadas</h2>
+      <ol class="sources">
+        <li><a href="https://es.wikipedia.org/wiki/Cerro_Caracol" target="_blank" rel="noopener">Cerro Caracol, Wikipedia</a> (altura, Alticura, administración)</li>
+        <li><a href="https://revistanos.cl/la-desconocida-historia-del-mirador-aleman-del-cerro-caracol/" target="_blank" rel="noopener">Revista Nos: historia del Mirador Alemán</a></li>
+        <li><a href="https://www.radioudec.cl/torre-bismarck-celebra-cien-anos-en-el-parque-cerro-caracol/" target="_blank" rel="noopener">Radio UdeC: Torre Bismarck cumple cien años</a></li>
+        <li><a href="https://revistanos.cl/camina-o-corre-en-el-parque/" target="_blank" rel="noopener">Revista Nos: senderos, horarios y accesos</a></li>
+        <li><a href="https://www.wikiexplora.com/Cerro_Caracol" target="_blank" rel="noopener">Wikiexplora: ruta Cerro Caracol</a> (8,1 km, +328 m)</li>
+        <li><a href="https://www.alltrails.com/trail/chile/bio-bio/cerro-caracol-mirador-aleman" target="_blank" rel="noopener">AllTrails: Cerro Caracol – Mirador Alemán</a> (5,1 km ida y vuelta)</li>
+        <li><a href="https://es.wikiloc.com/rutas-senderismo/cerro-caracol-mirador-aleman-154679941" target="_blank" rel="noopener">Wikiloc: tracks al Mirador Alemán</a></li>
+        <li><a href="https://sabes.cl/2025/07/01/las-curiosas-aves-que-habitan-el-cerro-caracol-de-concepcion/" target="_blank" rel="noopener">Sabes.cl: aves del Cerro Caracol</a> (2025)</li>
+        <li><a href="https://anpr.org.mx/articulos/pulmon-verde-de-concepcion-parque-metropolitano-cerro-caracol/" target="_blank" rel="noopener">Catastro del parque: 70 especies de flora, 44 % nativas</a></li>
+        <li><a href="https://www.tvu.cl/prensa/2020/09/17/tala-ilegal-de-arboles-nativos-afecto-a-monitos-del-monte-en-el-parque-metropolitano-cerro-caracol-concepcion.html" target="_blank" rel="noopener">TVU: monitos del monte, güiñas y zorros en el parque</a></li>
+        <li><a href="https://resumen.cl/articulos/encuentran-nuevas-especies-raras-en-el-cerro-caracol-donde-estaria-el-parque-cientifico-del-biobio" target="_blank" rel="noopener">Resumen.cl: pitao y michay araucano</a></li>
+        <li><a href="https://www.conaf.cl/plantan-1-400-arboles-nativos-en-el-parque-metropolitano-cerro-caracol/" target="_blank" rel="noopener">CONAF: 1.400 árboles nativos (2025)</a></li>
+        <li><a href="https://sabes.cl/2025/08/06/restauracion-cerro-caracol-concepcion/" target="_blank" rel="noopener">Sabes.cl: solo un 10 % es bosque nativo</a></li>
+        <li><a href="https://www.diarioconcepcion.cl/ciudad/2025/10/12/cerro-caracol-la-historia-y-los-desafios-ecologicos-del-pulmon-verde-de-concepcion.html" target="_blank" rel="noopener">Diario Concepción: historia y desafíos ecológicos</a> (2025)</li>
+        <li><a href="https://revistanos.cl/las-historias-detras-del-cerro-amarillo-de-concepcion-una-batalla-un-cadalso-y-cientos-de-piedras-prehistoricas/" target="_blank" rel="noopener">Revista Nos: Cerro Amarillo, batalla, cadalso y fósiles</a></li>
+        <li><a href="https://sabes.cl/2025/05/14/historia-conocen-restaurante-cerro-caracol-concepcion" target="_blank" rel="noopener">Sabes.cl: el restaurante del Mirador Dos</a></li>
+        <li><a href="https://www.elconcecuente.cl/noticia/sociedad/hasta-que-hora-se-puede-subir-conoce-el-horario-de-verano-del-cerro-caracol-en-conc" target="_blank" rel="noopener">El ConceCuente: horario de verano</a> (2026)</li>
+        <li><a href="https://www.biobiochile.cl/noticias/nacional/region-del-bio-bio/2025/12/31/parque-metropolitano-cerro-caracol-permanece-cerrado-hasta-nuevo-aviso-por-riesgo-de-incendios.shtml" target="_blank" rel="noopener">BioBioChile: cierre por riesgo de incendios</a> (dic. 2025)</li>
+        <li><a href="https://www.infraestructurapublica.cl/teleferico-en-cerro-caracol-minvu-termina-estudio-clave-y-busca-avanzar-hacia-su-concrecion/" target="_blank" rel="noopener">CPI: estudio del teleférico</a></li>
+        <li><a href="https://es.wikipedia.org/wiki/Reserva_nacional_Nongu%C3%A9n" target="_blank" rel="noopener">Parque Nacional Nonguén, Wikipedia</a> (insectos del bosque vecino)</li>
+        <li><a href="https://www.eldinamo.cl/d-economia/mejor-mercado/2024/08/23/asi-es-la-infraestructura-que-entel-ha-habilitado-en-el-pais-en-estos-60-anos/" target="_blank" rel="noopener">El Dínamo: Torre Entel de Concepción</a></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<nav class="tabs" aria-label="Secciones">
+  <div class="tabs-in" role="tablist">
+    <button class="tab" role="tab" id="tab-ruta" aria-selected="true" aria-controls="panel-ruta" data-tab="ruta">
+      <svg viewBox="0 0 24 24"><path d="M3 20l6-12 4 7 3-4 5 9z"/></svg>Ruta</button>
+    <button class="tab" role="tab" id="tab-naturaleza" aria-selected="false" aria-controls="panel-naturaleza" data-tab="naturaleza">
+      <svg viewBox="0 0 24 24"><path d="M12 21V11M12 11c-5 0-8-3-8-8 5 0 8 3 8 8zM12 14c0-4 3-7 8-7 0 5-3 7-8 7z"/></svg>Naturaleza</button>
+    <button class="tab" role="tab" id="tab-historia" aria-selected="false" aria-controls="panel-historia" data-tab="historia">
+      <svg viewBox="0 0 24 24"><path d="M8 21V9l4-5 4 5v12M4 21h16M10 21v-4h4v4"/></svg>Historia</button>
+    <button class="tab" role="tab" id="tab-guia" aria-selected="false" aria-controls="panel-guia" data-tab="guia">
+      <svg viewBox="0 0 24 24"><path d="M4 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-7a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7z"/></svg>Guía</button>
+  </div>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+/* ---------------------------------------------------------------- datos */
+const HITOS=[
+  {n:1,d:0,name:'Portón principal',desc:'Detrás de las canchas de tenis del Parque Ecuador, por Veteranos del 79 (calle Dr. Wilhelm). Baños y agua: aquí, no arriba.'},
+  {n:2,d:200,name:'Garita del parque',desc:'Registro de visitantes y comienzo del camino de maicillo. Aquí pueden preguntar si la torre está abierta.'},
+  {n:3,d:800,name:'Mirador Dos (ex Mirador Chileno)',desc:'Primera vista a la ciudad, a unos 25 minutos. Las ruinas fueron un restaurante en los años 60. Buen punto de regreso con niños chicos.'},
+  {n:4,d:1300,name:'Desvío a Agüita de la Perdiz',desc:'Bifurcación: a la izquierda baja el circuito del estero; para el mirador seguir por el camino principal, a la derecha.'},
+  {n:5,d:1800,name:'Anfiteatro natural',desc:'Graderías de tierra y troncos construidas por el Minvu. Zona de pinos sobremaduros: con viento fuerte no detenerse bajo ellos.'},
+  {n:6,d:2300,name:'Entrada al bosque',desc:'El maicillo da paso a un sendero de tierra señalizado que sube entre peumos, arrayanes y eucaliptos. Es el tramo más empinado.'},
+  {n:7,d:2700,name:'Mirador Alemán (Torre Bismarck)',desc:'Torre de piedra de 1921, la única Torre Bismarck de América. Vista a la bahía, Talcahuano, San Pedro y el Biobío. Picnic aquí.'},
+  {n:8,d:3400,name:'Torre Entel (cumbre, opcional)',desc:'Cumbre del cerro, 256 m, con la torre de microondas de 70 m construida entre 1966 y 1970. Sendero más abierto y sin sombra; recinto cerrado.'}
+];
+const MIRADOR_D=2700;
+
+/* Relieve esquemático. Origen = portón. x al este, z al sur, metros. */
+function gauss(x,z,cx,cz,s,h){const dx=(x-cx)/s,dz=(z-cz)/s;return h*Math.exp(-(dx*dx+dz*dz));}
+const T0=[[0,0],[60,110],[20,230],[-90,330],[-40,460],[90,520],[230,470],[330,560],[330,700],[230,820],[280,960],[430,1030],[590,960],[660,820],[570,700],[480,640],[560,560],[700,540],[840,620],[920,760],[880,900],[800,1030],[700,1130],[620,1250]];
+const TV=[];for(let i=0;i<T0.length;i++){if(i){const a=T0[i-1],c=T0[i];const L=Math.hypot(c[0]-a[0],c[1]-a[1]);const n=Math.max(1,Math.round(L/60));for(let k=1;k<=n;k++){const t=k/n;TV.push([a[0]+(c[0]-a[0])*t,a[1]+(c[1]-a[1])*t]);}}else TV.push(T0[0]);}
+const TD=[0];for(let i=1;i<TV.length;i++)TD.push(TD[i-1]+Math.hypot(TV[i][0]-TV[i-1][0],TV[i][1]-TV[i-1][1]));
+const TOTAL=TD[TD.length-1];
+const COTAS=[[0,25],[200,38],[800,110],[1300,140],[1800,172],[2300,205],[2700,232],[3100,236],[3400,256]];
+function target(d){for(let i=1;i<COTAS.length;i++){if(d<=COTAS[i][0]){const a=COTAS[i-1],b=COTAS[i];return a[1]+(b[1]-a[1])*(d-a[0])/(b[0]-a[0]);}}return COTAS[COTAS.length-1][1];}
+function base(x,z){let e=20;e+=gauss(x,z,850,900,700,200);e+=gauss(x,z,-500,900,450,120);e+=gauss(x,z,1500,300,500,140);e-=gauss(x,z,80,1000,220,40);e+=3*Math.sin(x*0.017)*Math.cos(z*0.013)+2*Math.sin(x*0.041+z*0.029);return e;}
+const AMP=TV.map(()=>0),SIG=110;
+function elev(x,z){let e=base(x,z);for(let i=0;i<TV.length;i++)e+=gauss(x,z,TV[i][0],TV[i][1],SIG,AMP[i]);return Math.max(12,e);}
+for(let it=0;it<60;it++)for(let i=0;i<TV.length;i++)AMP[i]+=0.7*(target(TD[i])-elev(TV[i][0],TV[i][1]));
+
+/* Muestras del sendero cada 10 m */
+const STEP=10;const S=[];
+(function(){let acc=0;for(let i=1;i<TV.length;i++){const a=TV[i-1],b=TV[i];const L=Math.hypot(b[0]-a[0],b[1]-a[1]);const n=Math.max(1,Math.round(L/STEP));for(let k=(i===1?0:1);k<=n;k++){const t=k/n;const x=a[0]+(b[0]-a[0])*t,z=a[1]+(b[1]-a[1])*t;const d=TD[i-1]+L*t;S.push({d,x,z,e:elev(x,z)});}}})();
+function at(d){d=Math.max(0,Math.min(TOTAL,d));let i=Math.min(S.length-2,Math.floor(d/STEP));while(i<S.length-2&&S[i+1].d<d)i++;while(i>0&&S[i].d>d)i--;const a=S[i],b=S[i+1];const t=(d-a.d)/Math.max(1e-6,b.d-a.d);return {d,x:a.x+(b.x-a.x)*t,z:a.z+(b.z-a.z)*t,e:a.e+(b.e-a.e)*t};}
+function grade(d){const w=60;const a=at(d-w),b=at(d+w);return (b.e-a.e)/Math.max(1,b.d-a.d);}
+function gradeClass(g){g=Math.abs(g);return g<0.06?1:g<0.10?2:3;}
+function gain(d0,d1){let g=0;for(let d=d0+STEP;d<=d1;d+=STEP){const de=at(d).e-at(d-STEP).e;if(de>0)g+=de;}return g;}
+function fmtKm(m){return (m/1000).toFixed(1).replace('.',',');}
+function fmtTime(min){min=Math.round(min);if(min<60)return min+' min';const h=Math.floor(min/60),m=min%60;return h+' h '+(m<10?'0':'')+m;}
+function etaMin(d0,d1){const dist=Math.max(0,d1-d0),g=gain(d0,d1);return dist/3000*60+g/500*60;} /* 3 km/h + 500 m/h de subida, ritmo familiar */
+
+/* ------------------------------------------------------------- estado */
+let cur=0;let playing=false;let hitoIdx=0;
+const $=id=>document.getElementById(id);
+function nearestHito(d){let best=0;for(let i=0;i<HITOS.length;i++){if(HITOS[i].d<=d+1)best=i;}return best;}
+function setPos(d,fromUser){cur=Math.max(0,Math.min(TOTAL,d));const p=at(cur);const g=grade(cur);hitoIdx=nearestHito(cur);
+  $('ro-alt').innerHTML=Math.round(p.e)+'<small> m</small>';$('ro-km').textContent='km '+fmtKm(cur);
+  const h=HITOS[hitoIdx];const nextH=HITOS[hitoIdx+1];
+  $('ro-name').textContent=(Math.abs(cur-h.d)<40)?h.name:'Entre '+h.name.replace(/ \(.*\)/,'')+' y '+(nextH?nextH.name.replace(/ \(.*\)/,''):'la cumbre');
+  $('ro-desc').textContent=h.desc;
+  const gp=Math.round(g*100);const gc=gradeClass(g);
+  $('ro-grade').innerHTML=(gp>0?'+':'')+gp+' % <span class="grade-pill"><i style="background:var(--grade-'+gc+')"></i>'+(gc===1?'suave':gc===2?'moderada':'exigente')+'</span>';
+  if(cur<MIRADOR_D){$('ro-left').textContent=fmtKm(MIRADOR_D-cur)+' km · +'+Math.round(gain(cur,MIRADOR_D))+' m';$('ro-eta').textContent=fmtTime(etaMin(cur,MIRADOR_D));}
+  else if(cur<TOTAL-20){$('ro-left').textContent='a la cumbre '+fmtKm(TOTAL-cur)+' km';$('ro-eta').textContent=fmtTime(etaMin(cur,TOTAL));}
+  else{$('ro-left').textContent='cumbre';$('ro-eta').textContent='bajada 60 a 75 min';}
+  document.querySelectorAll('.hito-btn').forEach((b,i)=>b.setAttribute('aria-current',i===hitoIdx?'true':'false'));
+  updateProfileCursor();updateHiker();
+}
+
+/* ------------------------------------------------------------- hitos */
+(function(){const ol=$('hitos');HITOS.forEach((h,i)=>{const li=document.createElement('li');const e=at(h.d);
+  li.innerHTML='<button class="hito-btn" type="button" aria-current="false"><span class="n">'+h.n+'</span><span><span class="name">'+h.name+'</span><div class="desc">'+h.desc+'</div></span><span class="stat"><b>'+Math.round(e.e)+' m</b>km '+fmtKm(h.d)+'<br>'+(h.d?fmtTime(etaMin(0,h.d)):'inicio')+'</span></button>';
+  li.querySelector('button').addEventListener('click',()=>{stopPlay();setPos(h.d,true);$('scene').scrollIntoView({behavior:'smooth',block:'nearest'});});ol.appendChild(li);});})();
+
+/* ------------------------------------------------------------- perfil */
+const PW=640,PH=260,PL=44,PR=16,PT=30,PB=36;
+const EMIN=0,EMAX=280;
+const px=d=>PL+(d/TOTAL)*(PW-PL-PR), py=e=>PT+(1-(e-EMIN)/(EMAX-EMIN))*(PH-PT-PB);
+let profCursor,profCursorDot,profCursorLab;
+(function(){const svg=$('profile');const ns='http://www.w3.org/2000/svg';const el=(t,a)=>{const n=document.createElementNS(ns,t);for(const k in a)n.setAttribute(k,a[k]);return n;};
+  for(let e=0;e<=250;e+=50){svg.appendChild(el('line',{x1:PL,x2:PW-PR,y1:py(e),y2:py(e),class:'axis'}));const t=el('text',{x:PL-6,y:py(e)+4,'text-anchor':'end'});t.textContent=e+' m';svg.appendChild(t);}
+  for(let d=0;d<=TOTAL;d+=500){const t=el('text',{x:px(d),y:PH-14,'text-anchor':'middle'});t.textContent=(d/1000).toFixed(1).replace('.',',')+(d===0?' km':'');svg.appendChild(t);}
+  let area='M'+px(0)+' '+py(EMIN);S.forEach(p=>{area+=' L'+px(p.d).toFixed(1)+' '+py(p.e).toFixed(1);});area+=' L'+px(TOTAL)+' '+py(EMIN)+' Z';svg.appendChild(el('path',{d:area,class:'area'}));
+  /* segmentos por pendiente */
+  let i=0;while(i<S.length-1){const c=gradeClass(grade(S[i].d));let j=i;let dstr='M'+px(S[i].d).toFixed(1)+' '+py(S[i].e).toFixed(1);while(j<S.length-1&&gradeClass(grade(S[j+1].d))===c){j++;dstr+=' L'+px(S[j].d).toFixed(1)+' '+py(S[j].e).toFixed(1);}if(j===i){j++;dstr+=' L'+px(S[j].d).toFixed(1)+' '+py(S[j].e).toFixed(1);}
+    svg.appendChild(el('path',{d:dstr,class:'seg',stroke:'var(--grade-'+c+')'}));i=j;}
+  /* tramo opcional a la cumbre, punteado encima */
+  const opt=S.filter(p=>p.d>=MIRADOR_D);let od='';opt.forEach((p,k)=>{od+=(k?' L':'M')+px(p.d).toFixed(1)+' '+py(p.e).toFixed(1);});svg.appendChild(el('path',{d:od,fill:'none',stroke:'var(--surface)',"stroke-width":3,"stroke-dasharray":'3 7',"stroke-linecap":'round'}));
+  HITOS.forEach(h=>{const p=at(h.d);svg.appendChild(el('circle',{cx:px(h.d),cy:py(p.e),r:5,class:'hito-dot'}));const t=el('text',{x:px(h.d),y:py(p.e)-10,'text-anchor':h.n===1?'start':h.n===8?'end':'middle',class:'hito-lab'});t.textContent=h.n;svg.appendChild(t);});
+  profCursor=el('line',{x1:px(0),x2:px(0),y1:PT-6,y2:PH-PB,class:'cur'});svg.appendChild(profCursor);
+  profCursorDot=el('circle',{cx:px(0),cy:py(25),r:6,fill:'var(--fg)',stroke:'var(--surface)','stroke-width':2});svg.appendChild(profCursorDot);
+  profCursorLab=el('text',{x:px(0)+8,y:PT+2,class:'hito-lab'});svg.appendChild(profCursorLab);
+  const toD=ev=>{const r=svg.getBoundingClientRect();const x=(ev.clientX-r.left)/r.width*PW;return (x-PL)/(PW-PL-PR)*TOTAL;};
+  let drag=false;svg.addEventListener('pointerdown',ev=>{drag=true;svg.setPointerCapture(ev.pointerId);stopPlay();setPos(toD(ev),true);});
+  svg.addEventListener('pointermove',ev=>{if(drag)setPos(toD(ev),true);});
+  svg.addEventListener('pointerup',()=>{drag=false;});svg.addEventListener('pointercancel',()=>{drag=false;});
+})();
+function updateProfileCursor(){const p=at(cur);const x=px(cur);profCursor.setAttribute('x1',x);profCursor.setAttribute('x2',x);profCursorDot.setAttribute('cx',x);profCursorDot.setAttribute('cy',py(p.e));
+  profCursorLab.textContent=Math.round(p.e)+' m · km '+fmtKm(cur);const flip=x>PW-150;profCursorLab.setAttribute('x',flip?x-8:x+8);profCursorLab.setAttribute('text-anchor',flip?'end':'start');}
+
+/* ------------------------------------------------------------- 3D */
+const VX=1.6;const GX0=-700,GZ0=-400,GW=2200,GN=88;
+const tokens=()=>{const cs=getComputedStyle(document.documentElement);return k=>cs.getPropertyValue(k).trim();};
+let three=null;let hikerPos=null;const labelsEl=$('labels');const pins=[];
+function themeIsDark(){const t=document.documentElement.getAttribute('data-theme');if(t)return t==='dark';return matchMedia('(prefers-color-scheme: dark)').matches;}
+function terrainColor(e,dark){ /* bajo: ciudad verde-gris; medio: bosque; alto: bosque claro con roca */
+  const t=Math.max(0,Math.min(1,(e-15)/245));
+  const lo=dark?[0.16,0.25,0.18]:[0.62,0.74,0.56],mid=dark?[0.22,0.40,0.26]:[0.34,0.56,0.36],hi=dark?[0.46,0.50,0.36]:[0.66,0.70,0.50];
+  const mix=(a,b,k)=>a.map((v,i)=>v+(b[i]-v)*k);return t<0.5?mix(lo,mid,t/0.5):mix(mid,hi,(t-0.5)/0.5);}
+function initThree(){
+  if(!window.THREE){$('hint').hidden=true;initFallback();return;}
+  const canvas=$('gl');const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(42,4/3,10,12000);
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
+  const geo=new THREE.BufferGeometry();const pos=[],col=[],idx=[];const dark=themeIsDark();
+  for(let j=0;j<=GN;j++)for(let i=0;i<=GN;i++){const x=GX0+i/GN*GW,z=GZ0+j/GN*GW;const e=elev(x,z);pos.push(x,e*VX,z);const c=terrainColor(e,dark);col.push(c[0],c[1],c[2]);}
+  for(let j=0;j<GN;j++)for(let i=0;i<GN;i++){const a=j*(GN+1)+i,b=a+1,c=a+GN+1,d=c+1;idx.push(a,c,b,b,c,d);}
+  geo.setIndex(idx);geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));geo.setAttribute('color',new THREE.Float32BufferAttribute(col,3));geo.computeVertexNormals();
+  const terrain=new THREE.Mesh(geo,new THREE.MeshStandardMaterial({vertexColors:true,flatShading:true,roughness:0.95,metalness:0}));scene.add(terrain);
+  /* falda: borde del bloque */
+  const skirt=new THREE.Mesh(new THREE.BoxGeometry(GW,30,GW),new THREE.MeshStandardMaterial({color:0x5a5f55,roughness:1}));skirt.position.set(GX0+GW/2,0,GZ0+GW/2);scene.add(skirt);
+  /* sendero principal y tramo opcional */
+  const mk=(from,to,color,r)=>{const pts=S.filter(p=>p.d>=from&&p.d<=to).map(p=>new THREE.Vector3(p.x,p.e*VX+3,p.z));const curve=new THREE.CatmullRomCurve3(pts);const tube=new THREE.TubeGeometry(curve,pts.length*2,r,6,false);const m=new THREE.Mesh(tube,new THREE.MeshStandardMaterial({color,roughness:.8}));scene.add(m);return m;};
+  const trailMain=mk(0,MIRADOR_D,0xffffff,7),trailOpt=mk(MIRADOR_D,TOTAL,0xffffff,4);
+  /* hitos */
+  HITOS.forEach(h=>{const p=at(h.d);const post=new THREE.Mesh(new THREE.CylinderGeometry(2.5,2.5,40,6),new THREE.MeshStandardMaterial({color:0xffffff}));post.position.set(p.x,p.e*VX+20,p.z);scene.add(post);const pin=document.createElement('div');pin.className='pin';pin.innerHTML='<span class="n">'+h.n+'</span><span class="t">'+h.name.replace(/ \(.*\)/,'')+'</span>';labelsEl.appendChild(pin);pins.push({el:pin,v:new THREE.Vector3(p.x,p.e*VX+42,p.z),post});});
+  /* torre Entel y torre Bismarck como volúmenes */
+  const pe=at(TOTAL);const entel=new THREE.Mesh(new THREE.CylinderGeometry(4,9,70*VX,8),new THREE.MeshStandardMaterial({color:0xd8dcd4}));entel.position.set(pe.x+40,pe.e*VX+35*VX,pe.z+30);scene.add(entel);
+  const pm=at(MIRADOR_D);const torre=new THREE.Mesh(new THREE.CylinderGeometry(6,8,10*VX,8),new THREE.MeshStandardMaterial({color:0x9a9d92}));torre.position.set(pm.x+18,pm.e*VX+5*VX,pm.z-14);scene.add(torre);
+  /* caminante */
+  const hiker=new THREE.Group();const body=new THREE.Mesh(new THREE.SphereGeometry(14,12,10),new THREE.MeshStandardMaterial({color:0xffffff}));body.position.y=22;hiker.add(body);const halo=new THREE.Mesh(new THREE.RingGeometry(18,26,24),new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide,transparent:true,opacity:.6}));halo.rotation.x=-Math.PI/2;halo.position.y=2;hiker.add(halo);scene.add(hiker);
+  /* luces */
+  const hemi=new THREE.HemisphereLight(0xffffff,0x334433,0.9);scene.add(hemi);const sun=new THREE.DirectionalLight(0xffffff,0.9);sun.position.set(-900,1200,-500);scene.add(sun);
+  const center=new THREE.Vector3(GX0+GW*0.5,120*VX,GZ0+GW*0.5);
+  const orbit={az:-2.35,el:0.62,dist:2400,target:center};
+  const defaults={...orbit};
+  function applyTheme(){const t=tokens();const dark=themeIsDark();const bg=new THREE.Color(t('--surface-2')||(dark?'#1f2c22':'#e2e8dc'));scene.background=bg;scene.fog=new THREE.Fog(bg,2800,6000);
+    const acc=new THREE.Color(t('--accent')||'#b8821f');trailMain.material.color.copy(acc);trailOpt.material.color.copy(acc);const fg=new THREE.Color(t('--fg')||'#15221a');body.material.color.copy(fg);halo.material.color.copy(acc);pins.forEach(p=>p.post.material.color.copy(fg));
+    const colAttr=geo.getAttribute('color');for(let k=0;k<colAttr.count;k++){const e=geo.getAttribute('position').getY(k)/VX;const c=terrainColor(e,dark);colAttr.setXYZ(k,c[0],c[1],c[2]);}colAttr.needsUpdate=true;
+    hemi.intensity=dark?0.55:0.9;sun.intensity=dark?0.7:0.9;skirt.material.color.set(dark?0x2a3028:0x5a5f55);}
+  applyTheme();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);new MutationObserver(applyTheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  function resize(){const r=canvas.parentElement.getBoundingClientRect();const w=Math.max(1,Math.round(r.width)),h=Math.max(1,Math.round(r.height));renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+  resize();addEventListener('resize',resize);
+  /* control de cámara: un dedo gira, dos acercan, rueda acerca */
+  const ptrs=new Map();let lastPinch=0;let idleAuto=true;const el3=$('scene');
+  el3.addEventListener('pointerdown',ev=>{ptrs.set(ev.pointerId,{x:ev.clientX,y:ev.clientY});el3.setPointerCapture(ev.pointerId);idleAuto=false;$('hint').hidden=true;});
+  el3.addEventListener('pointermove',ev=>{if(!ptrs.has(ev.pointerId))return;const p=ptrs.get(ev.pointerId);if(ptrs.size===1){orbit.az-=(ev.clientX-p.x)*0.006;orbit.el=Math.max(0.12,Math.min(1.45,orbit.el+(ev.clientY-p.y)*0.005));}
+    p.x=ev.clientX;p.y=ev.clientY;if(ptrs.size===2){const a=[...ptrs.values()];const dpx=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);if(lastPinch)orbit.dist=Math.max(700,Math.min(5000,orbit.dist*lastPinch/dpx));lastPinch=dpx;}});
+  const up=ev=>{ptrs.delete(ev.pointerId);if(ptrs.size<2)lastPinch=0;};el3.addEventListener('pointerup',up);el3.addEventListener('pointercancel',up);
+  el3.addEventListener('wheel',ev=>{ev.preventDefault();orbit.dist=Math.max(700,Math.min(5000,orbit.dist*(1+Math.sign(ev.deltaY)*0.08)));idleAuto=false;},{passive:false});
+  $('view-top').addEventListener('click',()=>{orbit.el=1.45;orbit.dist=2600;orbit.az=-Math.PI/2;idleAuto=false;});
+  $('view-reset').addEventListener('click',()=>{Object.assign(orbit,defaults);idleAuto=true;});
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let last=performance.now();
+  function frame(now){const dt=Math.min(0.1,(now-last)/1000);last=now;
+    if(idleAuto&&!reduce)orbit.az+=dt*0.06;
+    if(playing){setPos(cur+dt*(reduce?400:220));if(cur>=TOTAL)stopPlay();}
+    camera.position.set(orbit.target.x+orbit.dist*Math.cos(orbit.el)*Math.cos(orbit.az),orbit.target.y+orbit.dist*Math.sin(orbit.el),orbit.target.z+orbit.dist*Math.cos(orbit.el)*Math.sin(orbit.az));camera.lookAt(orbit.target);
+    if(hikerPos){hiker.position.set(hikerPos.x,hikerPos.e*VX+3,hikerPos.z);}
+    renderer.render(scene,camera);
+    const w=canvas.clientWidth,h=canvas.clientHeight;const v=new THREE.Vector3();pins.forEach((p,i)=>{v.copy(p.v).project(camera);const vis=v.z<1;p.el.style.display=vis?'':'none';if(vis){p.el.style.left=((v.x+1)/2*w)+'px';p.el.style.top=((1-v.y)/2*h)+'px';p.el.classList.toggle('active',i===hitoIdx);}});
+    requestAnimationFrame(frame);}
+  requestAnimationFrame(frame);three={ok:true};
+}
+function updateHiker(){hikerPos=at(cur);if(fallback)fallback.draw();}
+
+/* Respaldo sin WebGL ni librería: relieve en canvas 2D */
+let fallback=null;
+function initFallback(){const canvas=$('gl');const ctx=canvas.getContext('2d');if(!ctx)return;const N=44;let az=-2.35;
+  function draw(){const r=canvas.parentElement.getBoundingClientRect();const W=canvas.width=Math.round(r.width*(devicePixelRatio||1)),H=canvas.height=Math.round(r.height*(devicePixelRatio||1));const t=tokens();const dark=themeIsDark();
+    ctx.fillStyle=t('--surface-2');ctx.fillRect(0,0,W,H);const ca=Math.cos(az),sa=Math.sin(az);const cx=GX0+GW/2,cz=GZ0+GW/2;const sc=W/(GW*1.5);
+    const proj=(x,y,z)=>{const dx=x-cx,dz=z-cz;const rx=dx*ca-dz*sa,rz=dx*sa+dz*ca;return [W/2+rx*sc,H*0.62-y*VX*sc*0.9+rz*sc*0.5,rz];};
+    const quads=[];for(let j=0;j<N;j++)for(let i=0;i<N;i++){const pts=[[i,j],[i+1,j],[i+1,j+1],[i,j+1]].map(([a,b])=>{const x=GX0+a/N*GW,z=GZ0+b/N*GW;const e=elev(x,z);return {p:proj(x,e,z),e};});const em=pts.reduce((s,p)=>s+p.e,0)/4;const depth=pts.reduce((s,p)=>s+p.p[2],0)/4;const shade=0.75+0.25*Math.max(0,(pts[1].e-pts[3].e)/25);quads.push({pts,em,depth,shade});}
+    quads.sort((a,b)=>a.depth-b.depth);quads.forEach(q=>{const c=terrainColor(q.em,dark).map(v=>Math.round(Math.min(1,v*q.shade)*255));ctx.fillStyle='rgb('+c.join(',')+')';ctx.strokeStyle=ctx.fillStyle;ctx.lineWidth=1;ctx.beginPath();q.pts.forEach((p,k)=>k?ctx.lineTo(p.p[0],p.p[1]):ctx.moveTo(p.p[0],p.p[1]));ctx.closePath();ctx.fill();ctx.stroke();});
+    ctx.strokeStyle=t('--accent');ctx.lineWidth=3*(devicePixelRatio||1);ctx.lineJoin='round';ctx.beginPath();S.forEach((p,k)=>{const q=proj(p.x,p.e+4,p.z);k?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]);});ctx.stroke();
+    ctx.fillStyle=t('--fg');HITOS.forEach(h=>{const p=at(h.d);const q=proj(p.x,p.e+6,p.z);ctx.beginPath();ctx.arc(q[0],q[1],4*(devicePixelRatio||1),0,7);ctx.fill();});
+    if(hikerPos){const q=proj(hikerPos.x,hikerPos.e+8,hikerPos.z);ctx.fillStyle=t('--accent');ctx.beginPath();ctx.arc(q[0],q[1],7*(devicePixelRatio||1),0,7);ctx.fill();}}
+  fallback={draw};draw();addEventListener('resize',draw);
+  let sx=null;const el3=$('scene');el3.addEventListener('pointerdown',e=>{sx=e.clientX;});el3.addEventListener('pointermove',e=>{if(sx!==null){az-=(e.clientX-sx)*0.006;sx=e.clientX;draw();}});el3.addEventListener('pointerup',()=>{sx=null;});
+  let last=performance.now();function tick(now){const dt=Math.min(0.1,(now-last)/1000);last=now;if(playing){setPos(cur+dt*220);if(cur>=TOTAL)stopPlay();}requestAnimationFrame(tick);}requestAnimationFrame(tick);
+  $('view-top').addEventListener('click',()=>{});$('view-reset').addEventListener('click',()=>{az=-2.35;draw();});
+}
+
+/* ------------------------------------------------------------- play */
+function stopPlay(){playing=false;$('play').setAttribute('aria-pressed','false');$('play-label').textContent='Recorrer';}
+$('play').addEventListener('click',()=>{if(playing){stopPlay();return;}if(cur>=TOTAL-5)cur=0;playing=true;$('play').setAttribute('aria-pressed','true');$('play-label').textContent='Pausa';});
+
+/* ------------------------------------------------------------- especies */
+const SP=[
+ /* aves */
+ {g:'aves',n:'Rayadito',s:'Aphrastura spinicauda',reg:1,t:'Pequeño, rayado, con la cola en punta. Anda en grupos bulliciosos por los troncos buscando insectos. Es el ave que más se oye en el bosque.'},
+ {g:'aves',n:'Comesebo grande',s:'Pygarrhichas albogularis',reg:1,t:'Trepa los troncos como un trepador, con el pecho blanco. Revisa la corteza de pinos y robles.'},
+ {g:'aves',n:'Picaflor chico',s:'Sephanoides sephaniodes',reg:1,t:'El colibrí más común de Chile y polinizador clave del bosque. Búsquenlo en flores rojas: copihue, notro, fucsia.'},
+ {g:'aves',n:'Colilarga',s:'Sylviorthorhynchus desmursii',reg:1,t:'Una cola larguísima de plumas sueltas que usa para equilibrarse entre matorrales y quilas. Se oye más de lo que se ve.'},
+ {g:'aves',n:'Viudita',s:'Colorhamphus parvirostris',reg:1,t:'Plumaje gris oscuro y vuelo ágil. Caza insectos al vuelo desde una rama baja.'},
+ {g:'aves',n:'Carpinterito',s:'Dryobates lignarius',reg:1,t:'El carpintero chico de Chile, con la cabeza con rojo en el macho. Escuchen el tamborileo en los troncos secos.'},
+ {g:'aves',n:'Hued-hued castaño',s:'Pteroptochos castaneus',reg:1,cons:'Endémica',t:'Rechoncho, de color castaño, camina por el suelo entre la hojarasca. Su canto “hued-hued” da nombre al ave. Endémico del centro-sur de Chile.'},
+ {g:'aves',n:'Cometocino patagónico',s:'Phrygilus patagonicus',reg:1,t:'Pecho amarillo y cabeza gris azulada. Visita el borde del bosque y los claros.'},
+ {g:'aves',n:'Concón',s:'Strix rufipes',reg:1,t:'El búho del bosque templado. De día duerme en los pinos densos; de noche se escucha su “co-con”.'},
+ {g:'aves',n:'Turca',s:'Pteroptochos megapodius',reg:1,cons:'Endémica',t:'Endémica de Chile, de la IV a la VIII región. Corre con la cola levantada por laderas con matorral y roca.'},
+ {g:'aves',n:'Tiuque',s:'Milvago chimango',reg:0,t:'Rapaz marrón muy común en Concepción, que grita desde los árboles del Parque Ecuador. Fácil de reconocer para los niños.'},
+ {g:'aves',n:'Zorzal',s:'Turdus falcklandii',reg:0,t:'Canta al amanecer y busca lombrices en el maicillo húmedo. Patas y pico amarillos.'},
+ /* mamíferos */
+ {g:'mam',n:'Monito del monte',s:'Dromiciops gliroides',reg:1,cons:'Casi amenazado',t:'Marsupial diminuto, fósil viviente emparentado con los marsupiales australianos. Nocturno; vive en el bosque con quilas. Un grupo fue afectado por talas ilegales en 2020.'},
+ {g:'mam',n:'Güiña',s:'Leopardus guigna',reg:1,cons:'Vulnerable',t:'El felino más pequeño de América, del tamaño de un gato chico, moteado. Casi imposible de ver, pero usa el cerro como corredor hacia Nonguén.'},
+ {g:'mam',n:'Zorro chilla',s:'Lycalopex griseus',reg:1,t:'Zorro gris de orejas grandes. Se deja ver al atardecer en los claros altos. No alimentar.'},
+ {g:'mam',n:'Conejo europeo',s:'Oryctolagus cuniculus',reg:0,exo:1,t:'Introducido. Sus fecas redondas aparecen en el maicillo de los bordes. Pista fácil para los niños.'},
+ /* anfibios y reptiles */
+ {g:'herp',n:'Rana antifaz',s:'Batrachyla taeniata',reg:1,t:'Ranita café con una franja oscura sobre los ojos. Vecinos rescataron ejemplares de las canaletas del parque tras obras de drenaje.'},
+ {g:'herp',n:'Rana de hojarasca',s:'Eupsophus sp.',reg:1,t:'Vive entre hojas húmedas junto a esteros como el de Agüita de la Perdiz. Canta en noches de lluvia.'},
+ {g:'herp',n:'Lagartija esbelta',s:'Liolaemus tenuis',reg:0,t:'El macho es verde azulado con escamas amarillas. Toma sol en troncos caídos y muros de piedra al mediodía.'},
+ {g:'herp',n:'Culebra de cola larga',s:'Philodryas chamissonis',reg:0,t:'Inofensiva para las personas. Cruza el camino en días cálidos. Mirar y dejar pasar.'},
+ /* insectos y arañas */
+ {g:'ins',n:'Madre de la culebra',s:'Acanthinodera cumingii',reg:0,t:'El escarabajo más grande de Chile, de hasta 8 cm, de troncos viejos. Las hembras son enormes y caminan lento por el suelo entre diciembre y enero.'},
+ {g:'ins',n:'Ciervo volante',s:'Chiasognathus grantii',reg:0,cons:'Vulnerable',t:'Mandíbulas larguísimas en el macho, iridiscente. El Biobío es el límite norte de su distribución. Verlo es un premio.'},
+ {g:'ins',n:'Pololo verde',s:'Hylamorpha elegans',reg:0,t:'Escarabajo verde metálico que vuela en enjambres al atardecer de verano y choca con todo. Lo adoran los niños.'},
+ {g:'ins',n:'Peorro',s:'Ceroglossus chilensis',reg:0,t:'Carábido de colores metálicos que corre por la hojarasca. Si se lo molesta suelta un olor fuerte, de ahí el nombre.'},
+ {g:'ins',n:'Coliguacho',s:'Scaptia lata',reg:0,t:'Tábano negro con pelos anaranjados, ruidoso, de diciembre a febrero. La hembra pica; con repelente y ropa clara se evita.'},
+ {g:'ins',n:'Chicharra',s:'Tettigades chilensis',reg:0,t:'El zumbido del verano en los pinos y eucaliptos. Sus mudas vacías quedan pegadas en los troncos: fáciles de coleccionar.'},
+ {g:'ins',n:'Abejorro chileno',s:'Bombus dahlbomii',reg:0,cons:'En peligro',t:'El abejorro naranjo gigante, el más grande del mundo, desplazado por abejorros europeos. Si ven uno en flores de quillay, anótenlo.'},
+ {g:'ins',n:'Chinita',s:'Eriopis chilensis',reg:0,t:'La chinita nativa, negra con manchas rojas y amarillas. En primavera, sobre brotes con pulgones.'},
+ {g:'ins',n:'Araña pollito',s:'Grammostola rosea',reg:0,t:'Tarántula rosada y mansa que sale de su cueva en tardes tibias. No pica si no se la aprieta; mirar sin tocar.'},
+ {g:'ins',n:'Araña del boldo',s:'Molinaranea clymene',reg:0,t:'Teje telas orbiculares grandes entre arbustos del sotobosque. Al amanecer, con rocío, se ven espectaculares.'},
+ /* flora nativa */
+ {g:'nat',n:'Peumo',s:'Cryptocarya alba',reg:1,t:'Hojas verde oscuro que huelen a bosque al restregarlas. Frutos rosados en otoño que comen las aves.'},
+ {g:'nat',n:'Boldo',s:'Peumus boldus',reg:1,t:'Hoja áspera con olor a infusión. En la restauración se planta junto a peumo y quillay.'},
+ {g:'nat',n:'Quillay',s:'Quillaja saponaria',reg:1,t:'Corteza jabonosa (los mapuche la usaban para lavar). Flores blancas en diciembre llenas de abejas.'},
+ {g:'nat',n:'Arrayán',s:'Luma apiculata',reg:1,t:'Tronco anaranjado liso y frío al tacto. Crece en las quebradas húmedas de la subida.'},
+ {g:'nat',n:'Roble hualle',s:'Nothofagus obliqua',reg:1,t:'Bota las hojas en otoño: es el árbol del bosque caducifolio de Concepción. Se plantaron hualles jóvenes en 2020.'},
+ {g:'nat',n:'Raulí y coihue',s:'Nothofagus alpina · N. dombeyi',reg:1,t:'Los Nothofagus de la plantación de 2025 con CONAF y FAO. Reconozcan los plantines con tutor en el sector de Agüita de la Perdiz.'},
+ {g:'nat',n:'Lingue',s:'Persea lingue',reg:1,t:'Pariente del palto. Reforestado en 2018. Hojas grandes y brillantes.'},
+ {g:'nat',n:'Olivillo',s:'Aextoxicon punctatum',reg:1,t:'Árbol de los bosques costeros con el envés de la hoja plateado. Da nombre al sendero Los Olivillos.'},
+ {g:'nat',n:'Canelo',s:'Drimys winteri',reg:1,t:'Árbol sagrado mapuche, de hojas con sabor picante. Da nombre al sendero Los Canelos.'},
+ {g:'nat',n:'Copihue',s:'Lapageria rosea',reg:1,t:'La flor nacional, enredadera de campanas rojas que florece de febrero a mayo. Da nombre al sendero Los Copihues. Prohibido cortarla.'},
+ {g:'nat',n:'Mayu',s:'Sophora macrocarpa',reg:1,t:'Arbusto de flores amarillas colgantes, muy visitado por picaflores. Plantado en 2025.'},
+ {g:'nat',n:'Pitao',s:'Pitavia punctata',reg:0,cons:'En peligro',t:'Árbol endémico y raro. Hallado a 2 km del parque, en el fundo El Guindo, en el bosque que el PACYT amenaza.'},
+ {g:'nat',n:'Michay araucano',s:'Berberis negeriana',reg:0,cons:'En peligro',t:'Arbusto espinoso de flores amarillas que solo crece en este tipo de bosque, en ninguna otra parte del mundo.'},
+ /* flora exótica */
+ {g:'exo',n:'Pino insigne',s:'Pinus radiata',reg:1,exo:1,t:'Domina el cerro desde las plantaciones del siglo XX. Muchos están sobremaduros y se caen en suelos delgados; la restauración los va reemplazando.'},
+ {g:'exo',n:'Eucalipto',s:'Eucalyptus globulus',reg:1,exo:1,t:'Olor inconfundible al frotar la hoja. Su hojarasca acidifica el suelo e impide que crezca el bosque nativo.'},
+ {g:'exo',n:'Aromo',s:'Acacia dealbata',reg:1,exo:1,t:'Flores amarillas en agosto. Invasor agresivo que rebrota tras los incendios.'},
+ {g:'exo',n:'Zarzamora',s:'Rubus ulmifolius',reg:1,exo:1,t:'Mora silvestre en los bordes del camino. Frutos en febrero y marzo; espinas todo el año.'}
+];
+const GNAME={aves:'Ave',mam:'Mamífero',herp:'Anfibio o reptil',ins:'Insecto o araña',nat:'Flora nativa',exo:'Flora exótica'};
+function renderSpecies(g){const box=$('species');box.innerHTML='';SP.filter(s=>g==='all'||s.g===g).forEach(s=>{const d=document.createElement('article');d.className='sp g-'+s.g;
+  d.innerHTML='<div class="grp">'+GNAME[s.g]+'</div><h3>'+s.n+'</h3><div class="sci">'+s.s+'</div><p>'+s.t+'</p><div class="tags">'+(s.reg?'<span class="tag reg">Registrado en el cerro</span>':'<span class="tag prob">Probable</span>')+(s.cons?'<span class="tag cons">'+s.cons+'</span>':'')+(s.exo?'<span class="tag exo">Introducida</span>':'')+'</div>';box.appendChild(d);});}
+renderSpecies('all');
+$('chips').addEventListener('click',ev=>{const b=ev.target.closest('.chip');if(!b)return;document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');renderSpecies(b.dataset.g);});
+
+/* ------------------------------------------------------------- bingo */
+const BINGO=['Un rayadito (chillido agudo en grupo)','Un picaflor en una flor roja','Tamborileo de carpintero','Una hoja de peumo que huele a bosque','Una piña de pino con semillas','Telaraña con rocío','Una lagartija tomando sol','Fecas de conejo en el maicillo','La bahía desde el Mirador Dos','La Torre Bismarck','La Torre Entel desde abajo','Un plantín nativo con tutor'];
+(function(){const box=$('bingo');let saved={};try{saved=JSON.parse(localStorage.getItem('cc-bingo')||'{}')||{};}catch(e){saved={};}
+  BINGO.forEach((t,i)=>{const l=document.createElement('label');const id='bingo-'+i;l.innerHTML='<input type="checkbox" id="'+id+'"'+(saved[i]?' checked':'')+'><span>'+t+'</span>';box.appendChild(l);});
+  function upd(){const n=box.querySelectorAll('input:checked').length;$('bingo-count').textContent=n+' de '+BINGO.length+(n===BINGO.length?' · ¡Bingo!':'');$('bingo-bar').style.width=(n/BINGO.length*100)+'%';const st={};box.querySelectorAll('input').forEach((c,i)=>{if(c.checked)st[i]=1;});try{localStorage.setItem('cc-bingo',JSON.stringify(st));}catch(e){}}
+  box.addEventListener('change',upd);upd();})();
+
+/* ------------------------------------------------------------- tabs */
+const TABS=['ruta','naturaleza','historia','guia'];
+function showTab(name,push){if(!TABS.includes(name))name='ruta';TABS.forEach(t=>{const sel=t===name;$('tab-'+t).setAttribute('aria-selected',sel?'true':'false');$('panel-'+t).hidden=!sel;});if(push){try{history.replaceState(null,'','#'+name);}catch(e){}}window.scrollTo({top:0});}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab,true)));
+addEventListener('hashchange',()=>showTab(location.hash.replace('#',''),false));
+showTab(location.hash.replace('#','')||'ruta',false);
+
+/* ------------------------------------------------------------- pantalla encendida */
+(function(){const b=$('wake');let lock=null;if(!('wakeLock' in navigator)){b.hidden=true;return;}
+  async function on(){try{lock=await navigator.wakeLock.request('screen');b.setAttribute('aria-pressed','true');$('wake-label').textContent='Encendida';lock.addEventListener('release',()=>{b.setAttribute('aria-pressed','false');$('wake-label').textContent='Pantalla';lock=null;});}catch(e){$('wake-label').textContent='No disponible';}}
+  b.addEventListener('click',()=>{if(lock){lock.release();}else on();});
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&b.getAttribute('aria-pressed')==='true'&&!lock)on();});})();
+
+/* ------------------------------------------------------------- arranque */
+try{initThree();}catch(e){if(!fallback)initFallback();}
+setPos(0,false);
+})();
+</script>
