@@ -19,10 +19,10 @@
  },
  "picaflor-chico": {
   "file": "picaflor-chico.jpg",
-  "via": "lead",
-  "source": "Green-backed firecrown (Sephanoides sephaniodes) female Tricao.jpg",
-  "url": "https://commons.wikimedia.org/wiki/File:Green-backed%20firecrown%20(Sephanoides%20sephaniodes)%20female%20Tricao.jpg",
-  "author": "Charles J. Sharp",
+  "via": "search:Sephanoides sephaniodes male",
+  "source": "Sephanoides sephaniodes.jpg",
+  "url": "https://commons.wikimedia.org/wiki/File:Sephanoides%20sephaniodes.jpg",
+  "author": "Diucón",
   "license": "CC BY-SA 4.0",
   "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
  },
@@ -199,7 +199,7 @@
  },
  "pololo-verde": {
   "file": "pololo-verde.jpg",
-  "via": "lead",
+  "via": "search:Hylamorpha elegans",
   "source": "Hylamorpha elegans.JPG",
   "url": "https://commons.wikimedia.org/wiki/File:Hylamorpha%20elegans.JPG",
   "author": "Rodrigo Fernández",
