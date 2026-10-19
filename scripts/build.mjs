@@ -3,9 +3,16 @@ import fs from 'node:fs/promises';
 
 const src = await fs.readFile('src/page.html', 'utf8');
 const title = (src.match(/<title>(.*?)<\/title>/) || [, 'Cerro Caracol en Familia'])[1];
-const body = src
+let body = src
   .replace(/<title>.*?<\/title>\s*/, '')
   .replace(/<meta name="claude:viewport-fit-sides"[^>]*>\s*/, '');
+// En Pages servimos Three.js desde el propio sitio, sin depender de un CDN.
+{
+  const a = body.indexOf('<script src="https://cdnjs');
+  const marker = "');}</script>";
+  const b = body.indexOf(marker, a);
+  if (a >= 0 && b > a) body = body.slice(0, a) + '<script src="vendor/three.min.js"></script>' + body.slice(b + marker.length);
+}
 
 const icon = encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#2f6b3a"/><path d="M6 50l15-24 10 14 7-9 20 19z" fill="#eef2ea"/><circle cx="46" cy="18" r="6" fill="#e0a83f"/></svg>');
 
@@ -36,5 +43,6 @@ await fs.writeFile('_site/index.html', html);
 await fs.writeFile('_site/.nojekyll', '');
 try { await fs.cp('img', '_site/img', { recursive: true }); } catch { console.log('sin carpeta img todavía'); }
 await fs.mkdir('_site/data', { recursive: true });
+try { await fs.cp('vendor', '_site/vendor', { recursive: true }); } catch { console.log('falta vendor/'); }
 for (const f of ['terrain.json', 'route.json']) { try { await fs.copyFile('data/' + f, '_site/data/' + f); } catch { console.log('falta data/' + f); } }
 console.log('_site listo');
